@@ -9,17 +9,6 @@ export interface IXMLFileAdaptor {
     writeFile(path: string, content: string): Promise<void>
 }
 
-export interface test {
-    test: {
-        name: string,
-        age: number
-        job: {
-            name: string,
-            salary: number
-        }[]
-    }
-}
-
 export default class MMCMECParser {
     private readonly fileAdaptor: IXMLFileAdaptor;
     private mmcFile: string;
