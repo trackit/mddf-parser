@@ -1,5 +1,6 @@
 import { MMCChecker, MECChecker } from "./MMCMECChecker.ts/MMCMMEChecker";
 import { DOMParser } from 'xmldom';
+import { MECInterface } from './MECInterface';
 // import xml2js from 'xml2js';
 // import { Bag } from 'typescript-collections';
 // import * as xpath from 'xpath';
@@ -7,144 +8,6 @@ import { DOMParser } from 'xmldom';
 export interface IXMLFileAdaptor {
     readFile(path: string): Promise<string>
     writeFile(path: string, content: string): Promise<void>
-}
-
-export interface MECInterface {
-  "xmlns:md": string;
-  "xmlns:xsi": string;
-  "xmlns:mdmec": string;
-  "xsi:schemaLocation": string;
-
-  Basic: {
-    ContentID: string;
-    _prefix: "mdmec";
-    LocalizedInfo: {
-      language: string;
-      default?: string;
-      _prefix: string;
-      TitleDisplay60?: {
-        _tagText: string;
-      };
-      TitleDisplayUnlimited?: {
-        _tagText: string;
-      };
-      TitleSort?: {
-        _tagText: string;
-      };
-      ArtReference: {
-        resolution: string;
-        _prefix: string;
-        _tagText: string;
-      };
-      Summary190?: {
-        _tagText: string;
-      };
-      Summary4000: {
-        _tagText: string;
-      };
-      Genre: {
-        level: string;
-        source: string;
-        _prefix: string;
-        _tagText: string;
-      }[];
-      OriginalTitle: {
-        _tagText: string;
-      };
-      CopyrightLine?: {
-        _tagText: string;
-      };
-    }[];
-    RunLength?: {
-      _tagText: string;
-    };
-    ReleaseYear: {
-      _tagText: string;
-    };
-    ReleaseDate?: {
-      _tagText: string;
-    };
-    ReleaseHistory?: {
-      ReleaseType: {
-        wide: string;
-        _prefix: string;
-        _tagText: string;
-      };
-      DistrTerritory?: {
-        country: {
-          _tagText: string;
-        };
-      };
-      Date?: {
-        scheduled: string;
-        _prefix: string;
-        _tagText: string;
-      };
-      Description?: {
-        _tagText: string;
-      };
-      ReleaseOrg?: {
-        organizationID: string;
-        idType: string;
-        _prefix: string;
-        DisplayName?: {
-          _tagText: string;
-        };
-        SortName?: {
-          _tagText: string;
-        };
-        AlternateName?: {
-          _tagText: string;
-        };
-      };
-    }[];
-    WorkType: {
-      _tagText: string;
-    };
-    PictureColorType?: {
-      _tagText: string;
-    };
-    RatingSet: {
-      Rating: {
-        Region: {
-          country: {
-            _tagText: string;
-          };
-        };
-        System: {
-          _tagText: string;
-        };
-        Value: {
-          _tagText: string;
-        };
-      }[];
-    };
-    People?: {
-      Job: {
-        JobFunction: {
-          _tagText: string;
-        };
-        JobDisplay: {
-          _tagText: string;
-        };
-        BillingBlockOrder?: {
-          _tagText: string;
-        };
-      };
-      Name: {
-        DisplayName: {
-          _tagText: string;
-        };
-      };
-    }[];
-  };
-  CompanyDisplayCredit?: {
-    DisplayString: {
-      language: string;
-      _prefix?: "md";
-      _tagText: string;
-    };
-  };
 }
 
 export default class MMCMECParser {
@@ -218,7 +81,7 @@ export default class MMCMECParser {
           const titleDisplay60Node = localizedInfoNode.getElementsByTagName("md:TitleDisplay60")[0];
           const titleDisplayUnlimitedNode = localizedInfoNode.getElementsByTagName("md:TitleDisplayUnlimited")[0];
           const titleSortNode = localizedInfoNode.getElementsByTagName("md:TitleSort")[0];
-          const artReferenceNode = localizedInfoNode.getElementsByTagName("md:ArtReference")[0];
+          const artReferenceNodes = localizedInfoNode.getElementsByTagName("md:ArtReference");
           const summary190Node = localizedInfoNode.getElementsByTagName("md:Summary190")[0];
           const summary4000Node = localizedInfoNode.getElementsByTagName("md:Summary4000")[0];
           const genreNodes = localizedInfoNode.getElementsByTagName("md:Genre");
@@ -229,21 +92,23 @@ export default class MMCMECParser {
             const level = genreNode.getAttribute("level") ?? "";
             const source = genreNode.getAttribute("source") ?? "";
             const genreText = genreNode.textContent ?? "";
-            return { level, source, _prefix: "md", _tagText: genreText };
+            return { level, source, _tagText: genreText };
+          });
+
+          const artReferenceArray = Array.from(artReferenceNodes).map((artReferenceNode) => {
+            const resolution = artReferenceNode.getAttribute("resolution") ?? "";
+            const purpose = artReferenceNode.getAttribute("purpose") ?? "";
+            const artReferenceText = artReferenceNode.textContent ?? "";
+            return { resolution, purpose, _tagText: artReferenceText };
           });
       
           return {
             language,
             default: defaultLang ? defaultLang : undefined,
-            _prefix: "md",
             TitleDisplay60: titleDisplay60Node ? { _tagText: titleDisplay60Node.textContent ?? "" } : undefined,
             TitleDisplayUnlimited: titleDisplayUnlimitedNode ? { _tagText: titleDisplayUnlimitedNode.textContent ?? "" } : undefined,
             TitleSort: titleSortNode ? { _tagText: titleSortNode.textContent ?? "" } : undefined,
-            ArtReference: {
-              resolution: artReferenceNode?.getAttribute("resolution") ?? "",
-              _prefix: "md",
-              _tagText: artReferenceNode?.textContent ?? "",
-            },
+            ArtReference: artReferenceArray,
             Summary190: summary190Node ? { _tagText: summary190Node.textContent ?? "" } : undefined,
             Summary4000: { _tagText: summary4000Node.textContent ?? "" },
             Genre: genreArray,
@@ -251,9 +116,60 @@ export default class MMCMECParser {
             CopyrightLine: { _tagText: copyrightLineNode.textContent ?? "" },
           };
         });
+
+        const runLengthNode = basicNode.getElementsByTagName("md:RunLength")[0];
+        if (runLengthNode) {
+          mecData.Basic.RunLength = { _tagText: runLengthNode.textContent ?? "" };
+        }
+        const releaseYearNode = basicNode.getElementsByTagName("md:ReleaseYear")[0];
+        if (releaseYearNode) {
+          mecData.Basic.ReleaseYear = { _tagText: releaseYearNode.textContent ?? "" };
+        }
+        const releaseDateNode = basicNode.getElementsByTagName("md:ReleaseDate")[0];
+        if (releaseDateNode) {
+          mecData.Basic.ReleaseDate = { _tagText: releaseDateNode.textContent ?? "" };
+        }
+        const releaseHistoryNodes = basicNode.getElementsByTagName("md:ReleaseHistory");
+        mecData.Basic.ReleaseHistory = Array.from(releaseHistoryNodes).map((releaseHistoryNode) => {
+          const ReleaseType = { wide: releaseHistoryNode.getElementsByTagName("md:ReleaseType")[0].getAttribute("wide") ?? "", _tagText: releaseHistoryNode.getElementsByTagName("md:ReleaseType")[0].textContent ?? "" };
+          const DistrTerritory = { country: { _tagText: releaseHistoryNode.getElementsByTagName("md:DistrTerritory")[0].getElementsByTagName("md:country")[0].textContent ?? "" }};
+          const Date = { _tagText: releaseHistoryNode.getElementsByTagName("md:Date")[0].textContent ?? "", scheduled: releaseHistoryNode.getElementsByTagName("md:Date")[0].getAttribute("scheduled") ?? "" };
+          const Description = { _tagText: releaseHistoryNode.getElementsByTagName("md:Description")[0].textContent ?? "" };
+          const ReleaseOrg = { organizationID: releaseHistoryNode.getElementsByTagName("md:ReleaseOrg")[0].getAttribute("organizationID") ?? "", idType: releaseHistoryNode.getElementsByTagName("md:ReleaseOrg")[0].getAttribute("idType") ?? "", DisplayName: { _tagText: releaseHistoryNode.getElementsByTagName("md:ReleaseOrg")[0].getElementsByTagName("md:DisplayName")[0].textContent ?? "" }, SortName: { _tagText: releaseHistoryNode.getElementsByTagName("md:ReleaseOrg")[0].getElementsByTagName("md:SortName")[0].textContent ?? "" }, AlternateName: { _tagText: releaseHistoryNode.getElementsByTagName("md:ReleaseOrg")[0].getElementsByTagName("md:AlternateName")[0].textContent ?? "" } };
+          return { ReleaseType, DistrTerritory, Date, Description, ReleaseOrg };
+        });
+        const WorkTypeNode = basicNode.getElementsByTagName("md:WorkType")[0];
+        if (WorkTypeNode) {
+          mecData.Basic.WorkType = { _tagText: WorkTypeNode.textContent ?? "" };
+        }
+        const PictureColorTypeNode = basicNode.getElementsByTagName("md:PictureColorType")[0];
+        if (PictureColorTypeNode) {
+          mecData.Basic.PictureColorType = { _tagText: PictureColorTypeNode.textContent ?? "" };
+        }
+        const RatingSetNode = basicNode.getElementsByTagName("md:RatingSet")[0];
+        if (RatingSetNode) {
+          // const Rating = { Region: { country: { _tagText: RatingSetNode.getElementsByTagName("md:Rating")[0].getElementsByTagName("md:Region")[0].getElementsByTagName("md:country")[0].textContent ?? "" }}, System: { _tagText: RatingSetNode.getElementsByTagName("md:Rating")[0].getElementsByTagName("md:System")[0].textContent ?? "" }, Value: { _tagText: RatingSetNode.getElementsByTagName("md:Rating")[0].getElementsByTagName("md:Value")[0].textContent ?? "" },};
+          const RatingNodes = RatingSetNode.getElementsByTagName("md:Rating");
+          mecData.Basic.RatingSet.Rating = Array.from(RatingNodes).map((RatingNode) => {
+            const Region = { country: { _tagText: RatingNode.getElementsByTagName("md:Region")[0].getElementsByTagName("md:country")[0].textContent ?? "" }};
+            const System = { _tagText: RatingNode.getElementsByTagName("md:System")[0].textContent ?? "" };
+            const Value = { _tagText: RatingNode.getElementsByTagName("md:Value")[0].textContent ?? "" };
+            return { Region, System, Value };
+          });
+        }
+        const PeopleNodes = basicNode.getElementsByTagName("md:People");
+        mecData.Basic.People = Array.from(PeopleNodes).map((PeopleNode) => {
+          const JobNode = {JobFunction: { _tagText: PeopleNode.getElementsByTagName("md:Job")[0].getElementsByTagName("md:JobFunction")[0].textContent ?? "" }, JobDisplay: { _tagText: PeopleNode.getElementsByTagName("md:Job")[0].getElementsByTagName("md:JobDisplay")[0].textContent ?? "" }, BillingBlockOrder: { _tagText: PeopleNode.getElementsByTagName("md:Job")[0].getElementsByTagName("md:BillingBlockOrder")[0].textContent ?? "" }};
+          const NameNode = { DisplayName: { _tagText: PeopleNode.getElementsByTagName("md:Name")[0].getElementsByTagName("md:DisplayName")[0].textContent ?? "" }};
+          return { Job: JobNode, Name: NameNode };
+        });
       }
-      
-      console.log(mecData.Basic.LocalizedInfo);
+      const CompanyDisplayCreditNode = basicNode.getElementsByTagName("md:CompanyDisplayCredit")[0];
+      if (CompanyDisplayCreditNode) {
+        mecData.CompanyDisplayCredit = { DisplayString: { language: CompanyDisplayCreditNode.getElementsByTagName("md:DisplayString")[0].getAttribute("language") ?? "", _tagText: CompanyDisplayCreditNode.getElementsByTagName("md:DisplayString")[0].textContent ?? "" }};
+      }
+
+      console.log(mecData);
       return Promise.resolve(mecData);
     }
             
