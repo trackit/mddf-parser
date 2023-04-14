@@ -31,6 +31,7 @@ export interface MECInterface {
         _tagText: string;
       };
       Genre: {
+        id: string;
         level: string;
         source: string;
         _tagText: string;
