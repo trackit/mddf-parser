@@ -1,6 +1,7 @@
 import { MMCChecker, MECChecker } from "./MMCMECChecker/MMCMMEChecker";
 import { loadMECDataFromXml } from "./MECXMLParser";
 import { MECInterface } from './MECInterface';
+import { MMCInterface } from "./MMCInterface";
 
 export interface IXMLFileAdaptor {
     readFile(path: string): Promise<string>
@@ -12,12 +13,14 @@ export default class MMCMECParser {
     private mmcFile: string;
     private mecFile: string;
     private mecData: MECInterface;
+    private mmcData: MMCInterface;
 
     public constructor({fileAdaptor}: {fileAdaptor: IXMLFileAdaptor}) {
         this.fileAdaptor = fileAdaptor;
         this.mmcFile = '';
         this.mecFile = '';
         this.mecData = {} as MECInterface;
+        this.mmcData = {} as MMCInterface;
     }
 
     public async parseMMC(path: string): Promise<unknown> {
@@ -31,7 +34,11 @@ export default class MMCMECParser {
             throw new Error('MMC file is not valid');
         }
 
-        // parser
+        // try {
+        //     this.mmcData = await loadMMCDataFromXml(this.mmcFile);
+        // } catch (err) {
+        //     throw err
+        // }
         return {}
     }       
 
@@ -51,7 +58,7 @@ export default class MMCMECParser {
         } catch (err) {
             throw err
         }
-        return {}
+        return this.mecData;
     }
 
     public async exportMEC(path: string, data: unknown): Promise<void> {

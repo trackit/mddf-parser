@@ -48,6 +48,7 @@ export function loadMECDataFromXml(xmlString: string): Promise<MECInterface> {
         const titleSortNode = localizedInfoNode.getElementsByTagName("md:TitleSort")[0];
         const artReferenceNodes = localizedInfoNode.getElementsByTagName("md:ArtReference");
         const summary190Node = localizedInfoNode.getElementsByTagName("md:Summary190")[0];
+        const summary400Node = localizedInfoNode.getElementsByTagName("md:Summary400")[0];
         const summary4000Node = localizedInfoNode.getElementsByTagName("md:Summary4000")[0];
         const genreNodes = localizedInfoNode.getElementsByTagName("md:Genre");
         const originalTitleNode = localizedInfoNode.getElementsByTagName("md:OriginalTitle")[0];
@@ -76,7 +77,8 @@ export function loadMECDataFromXml(xmlString: string): Promise<MECInterface> {
           TitleSort: titleSortNode ? { _tagText: titleSortNode.textContent ?? "" } : undefined,
           ArtReference: artReferenceArray,
           Summary190: summary190Node ? { _tagText: summary190Node.textContent ?? "" } : undefined,
-          Summary4000: { _tagText: summary4000Node.textContent ?? "" },
+          Summary400: summary400Node ? { _tagText: summary400Node.textContent ?? "" } : undefined,
+          Summary4000: summary4000Node ? { _tagText: summary4000Node.textContent ?? "" } : undefined,
           Genre: genreArray,
           OriginalTitle: { _tagText: originalTitleNode.textContent ?? "" },
           CopyrightLine: { _tagText: copyrightLineNode.textContent ?? "" },

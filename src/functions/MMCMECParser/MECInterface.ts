@@ -27,7 +27,10 @@ export interface MECInterface {
       Summary190?: {
         _tagText: string;
       };
-      Summary4000: {
+      Summary400?: {
+        _tagText: string;
+      };
+      Summary4000?: {
         _tagText: string;
       };
       Genre: {
