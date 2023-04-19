@@ -23,7 +23,8 @@ export interface MMCInterface {
         };
         ContainerReference: {
           ContainerLocation: {
-          _tagText: string }
+          _tagText: string
+        }
       };
         _AudioTrackID: string;
       }[];
@@ -46,7 +47,7 @@ export interface MMCInterface {
               _tagText: string
             };
           };
-      };
+        };
       }[];
       Subtitle: {
         Type: {
@@ -117,7 +118,7 @@ export interface MMCInterface {
         _PresentationID: string;
       }[];
     };
-    PlayableSequences: {
+    PlayableSequences?: {
       PlayableSequence: {
         Clip: {
           PresentationID: {
@@ -171,7 +172,7 @@ export interface MMCInterface {
             _tagText: string
           };
         };
-        PictureGroupID: {
+        PictureGroupID?: {
           _tagText: string
         };
         ExperienceChild?: {

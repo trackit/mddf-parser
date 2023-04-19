@@ -1,5 +1,6 @@
 import { MMCChecker, MECChecker } from "./MMCMECChecker/MMCMMEChecker";
 import { loadMECDataFromXml } from "./MECXMLParser";
+import { loadMMCDataFromXml } from "./MMCXMLParser";
 import { MECInterface } from './MECInterface';
 import { MMCInterface } from "./MMCInterface";
 
@@ -34,12 +35,12 @@ export default class MMCMECParser {
             throw new Error('MMC file is not valid');
         }
 
-        // try {
-        //     this.mmcData = await loadMMCDataFromXml(this.mmcFile);
-        // } catch (err) {
-        //     throw err
-        // }
-        return {}
+        try {
+            this.mmcData = await loadMMCDataFromXml(this.mmcFile);
+        } catch (err) {
+            throw err
+        }
+        return this.mmcData;
     }       
 
     public async parseMEC(path: string): Promise<unknown> {
