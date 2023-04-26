@@ -88,8 +88,11 @@ export default class MMCMECParser {
         rootElement.appendChild(compatibilityElement);
       
         const inventoryElement = document.createElement("Inventory");
-        data.Inventory.Audio.forEach(audio => {
+
+        // Audio
+        for (const audio of this.mmcData.Inventory.Audio) {
             const audioElement = document.createElement("Audio");
+
             const typeElement = document.createElement("Type");
             typeElement.textContent = audio.Type._tagText;
             audioElement.appendChild(typeElement);
@@ -109,37 +112,171 @@ export default class MMCMECParser {
 
             audioElement.setAttribute("AudioTrackID", audio._AudioTrackID);
             inventoryElement.appendChild(audioElement);
-        });
+        }
 
-        // Répétez le processus similaire pour Video, Subtitle, Image et Metadata.
-        // ...
+        // Video
+        for (const video of this.mmcData.Inventory.Video) {
+            const videoElement = document.createElement("Video");
+
+            const typeElement = document.createElement("Type");
+            typeElement.textContent = video.Type._tagText;
+            videoElement.appendChild(typeElement);
+
+            const pictureElement = document.createElement("Picture");
+            videoElement.appendChild(pictureElement);
+
+            const containerReferenceElement = document.createElement("ContainerReference");
+            const containerLocationElement = document.createElement("ContainerLocation");
+            containerLocationElement.textContent = video.ContainerReference.ContainerLocation._tagText;
+            containerReferenceElement.appendChild(containerLocationElement);
+            videoElement.appendChild(containerReferenceElement);
+
+            videoElement.setAttribute("VideoTrackID", video._VideoTrackID);
+
+            if (video.CardsetList) {
+                const cardsetListElement = document.createElement("CardsetList");
+            
+                const cardsetElement = document.createElement("Cardset");
+            
+                const typeElement = document.createElement("Type");
+                typeElement.textContent = video.CardsetList.Cardset.Type._tagText;
+                cardsetElement.appendChild(typeElement);
+            
+                const languageElement = document.createElement("Language");
+                languageElement.textContent = video.CardsetList.Cardset.Language._tagText;
+                cardsetElement.appendChild(languageElement);
+            
+                cardsetListElement.appendChild(cardsetElement);
+            
+                videoElement.appendChild(cardsetListElement);
+            }
+
+            inventoryElement.appendChild(videoElement);
+        }
+
+        // Subtitle
+        for (const subtitle of this.mmcData.Inventory.Subtitle) {
+            const subtitleElement = document.createElement("Subtitle");
+
+            const typeElement = document.createElement("Type");
+            typeElement.textContent = subtitle.Type._tagText;
+            subtitleElement.appendChild(typeElement);
+
+            const languageElement = document.createElement("Language");
+            languageElement.textContent = subtitle.Language._tagText;
+            if (subtitle.Language._dubbed) {
+                languageElement.setAttribute("dubbed", subtitle.Language._dubbed);
+            }
+            subtitleElement.appendChild(languageElement);
+
+            const containerReferenceElement = document.createElement("ContainerReference");
+            const containerLocationElement = document.createElement("ContainerLocation");
+            containerLocationElement.textContent = subtitle.ContainerReference.ContainerLocation._tagText;
+            containerReferenceElement.appendChild(containerLocationElement);
+            subtitleElement.appendChild(containerReferenceElement);
+
+            subtitleElement.setAttribute("SubtitleTrackID", subtitle._SubtitleTrackID);
+            inventoryElement.appendChild(subtitleElement);
+        }
+
+        // Image
+        for (const image of this.mmcData.Inventory.Image) {
+            const imageElement = document.createElement("Image");
+
+            const widthElement = document.createElement("Width");
+            widthElement.textContent = image.Width._tagText;
+            imageElement.appendChild(widthElement);
+
+            const heightElement = document.createElement("Height");
+            heightElement.textContent = image.Height._tagText;
+            imageElement.appendChild(heightElement);
+            const encodingElement = document.createElement("Encoding");
+            encodingElement.textContent = image.Encoding._tagText;
+            imageElement.appendChild(encodingElement);
+
+            const languageElement = document.createElement("Language");
+            languageElement.textContent = image.Language._tagText;
+            imageElement.appendChild(languageElement);
+
+            const containerReferenceElement = document.createElement("ContainerReference");
+            const containerLocationElement = document.createElement("ContainerLocation");
+            containerLocationElement.textContent = image.ContainerReference.ContainerLocation._tagText;
+            containerReferenceElement.appendChild(containerLocationElement);
+            imageElement.appendChild(containerReferenceElement);
+
+            imageElement.setAttribute("ImageID", image._ImageID);
+            inventoryElement.appendChild(imageElement);
+        }
+
+        // Metadata
+        for (const metadata of this.mmcData.Inventory.Metadata) {
+            const metadataElement = document.createElement("Metadata");
+
+            const containerReferenceElement = document.createElement("ContainerReference");
+            containerReferenceElement.setAttribute("type", metadata.ContainerReference._type);
+
+            const containerLocationElement = document.createElement("ContainerLocation");
+            containerLocationElement.textContent = metadata.ContainerReference.ContainerLocation._tagText;
+            containerReferenceElement.appendChild(containerLocationElement);
+            metadataElement.appendChild(containerReferenceElement);
+
+            metadataElement.setAttribute("ContentID", metadata._ContentID);
+            inventoryElement.appendChild(metadataElement);
+        }
 
         rootElement.appendChild(inventoryElement);
       
 
         const presentationsElement = document.createElement("Presentations");
-        data.Presentations.Presentation.forEach(presentation => {
-            const presentationElement = document.createElement("Presentation");
+        for (const presentation of this.mmcData.Presentations.Presentation) {
+        const presentationElement = document.createElement("Presentation");
 
-            const trackMetadataElement = document.createElement("TrackMetadata");
-            const trackSelectionNumberElement = document.createElement("TrackSelectionNumber");
-            trackSelectionNumberElement.textContent = presentation.TrackMetadata.TrackSelectionNumber._tagText;
-            trackMetadataElement.appendChild(trackSelectionNumberElement);
+        const trackMetadataElement = document.createElement("TrackMetadata");
+        const trackSelectionNumberElement = document.createElement("TrackSelectionNumber");
+        trackSelectionNumberElement.textContent = presentation.TrackMetadata.TrackSelectionNumber._tagText;
+        trackMetadataElement.appendChild(trackSelectionNumberElement);
 
+        if (presentation.TrackMetadata.VideoTrackReference) {
             const videoTrackReferenceElement = document.createElement("VideoTrackReference");
-            const videoTrackIDElement = document.createElement("VideoTrackID");
-            videoTrackIDElement.textContent = presentation.TrackMetadata.VideoTrackReference.VideoTrackID._tagText;
-            videoTrackReferenceElement.appendChild(videoTrackIDElement);
+            for (const videoTrackRef of presentation.TrackMetadata.VideoTrackReference) {
+                const videoTrackIDElement = document.createElement("VideoTrackID");
+                videoTrackIDElement.textContent = videoTrackRef.VideoTrackID._tagText;
+                videoTrackReferenceElement.appendChild(videoTrackIDElement);
+            }
             trackMetadataElement.appendChild(videoTrackReferenceElement);
+        }
 
-            // Répétez le processus similaire pour AudioTrackReference et SubtitleTrackReference.
-            // ...
+        if (presentation.TrackMetadata.AudioTrackReference) {
+            const audioTrackReferenceElement = document.createElement("AudioTrackReference");
+            if (Array.isArray(presentation.TrackMetadata.AudioTrackReference)) {
+            for (const audioTrackRef of presentation.TrackMetadata.AudioTrackReference) {
+                const audioTrackIDElement = document.createElement("AudioTrackID");
+                audioTrackIDElement.textContent = audioTrackRef.AudioTrackID._tagText;
+                audioTrackReferenceElement.appendChild(audioTrackIDElement);
+            }
+            } else {
+            const audioTrackIDElement = document.createElement("AudioTrackID");
+            audioTrackIDElement.textContent = presentation.TrackMetadata.AudioTrackReference.AudioTrackID._tagText;
+            audioTrackReferenceElement.appendChild(audioTrackIDElement);
+            }
+            trackMetadataElement.appendChild(audioTrackReferenceElement);
+        }
 
-            presentationElement.appendChild(trackMetadataElement);
-            presentationElement.setAttribute("PresentationID", presentation._PresentationID);
-            presentationsElement.appendChild(presentationElement);
-        });
+        if (presentation.TrackMetadata.SubtitleTrackReference) {
+            const subtitleTrackReferenceElement = document.createElement("SubtitleTrackReference");
+            for (const subtitleTrackRef of presentation.TrackMetadata.SubtitleTrackReference) {
+                const subtitleTrackIDElement = document.createElement("SubtitleTrackID");
+                subtitleTrackIDElement.textContent = subtitleTrackRef.SubtitleTrackID._tagText;
+                subtitleTrackReferenceElement.appendChild(subtitleTrackIDElement);
+            }
+            trackMetadataElement.appendChild(subtitleTrackReferenceElement);
+        }
 
+        presentationElement.appendChild(trackMetadataElement);
+        presentationElement.setAttribute("PresentationID", presentation._PresentationID);
+        presentationsElement.appendChild(presentationElement);
+        }
+        
         rootElement.appendChild(presentationsElement);
 
         const playableSequencesElement = document.createElement("PlayableSequences");
@@ -193,6 +330,7 @@ export default class MMCMECParser {
 
         data.Experiences.Experience.forEach(experience => {
             const experienceElement = document.createElement("Experience");
+
             if (experience.ExcludedRegion) {
                 const excludedRegionElement = document.createElement("ExcludedRegion");
                 const countryElement = document.createElement("country");
@@ -200,18 +338,42 @@ export default class MMCMECParser {
                 excludedRegionElement.appendChild(countryElement);
                 experienceElement.appendChild(excludedRegionElement);
             }
+
             const contentIDElement = document.createElement("ContentID");
             contentIDElement.textContent = experience.ContentID._tagText;
             experienceElement.appendChild(contentIDElement);
-            const audiovisualElement = document.createElement("Audiovisual");
-            // Ajouter les autres éléments selon l'interface, comme Type, SubType, PlayableSequenceID, etc.
-            // ...
-            experienceElement.appendChild(audiovisualElement);
+
+            const audioVisualElement = document.createElement("Audiovisual");
+            const avTypeElement = document.createElement("Type");
+            avTypeElement.textContent = experience.Audiovisual.Type._tagText;
+            audioVisualElement.appendChild(avTypeElement);
+
+            const avSubTypeElement = document.createElement("SubType");
+            avSubTypeElement.textContent = experience.Audiovisual.SubType._tagText;
+            audioVisualElement.appendChild(avSubTypeElement);
+
+            if (experience.Audiovisual.PlayableSequenceID) {
+            const playableSequenceIDElement = document.createElement("PlayableSequenceID");
+            playableSequenceIDElement.textContent = experience.Audiovisual.PlayableSequenceID._tagText;
+            audioVisualElement.appendChild(playableSequenceIDElement);
+            }
+
+            audioVisualElement.setAttribute("ContentID", experience.Audiovisual._ContentID);
+
+            if (experience.Audiovisual.PresentationID) {
+            const presentationIDElement = document.createElement("PresentationID");
+            presentationIDElement.textContent = experience.Audiovisual.PresentationID._tagText;
+            audioVisualElement.appendChild(presentationIDElement);
+            }
+
+            experienceElement.appendChild(audioVisualElement);
+
             if (experience.PictureGroupID) {
                 const pictureGroupIDElement = document.createElement("PictureGroupID");
                 pictureGroupIDElement.textContent = experience.PictureGroupID._tagText;
                 experienceElement.appendChild(pictureGroupIDElement);
             }
+
             if (experience.ExperienceChild) {
                 experience.ExperienceChild.forEach(experienceChild => {
                     const experienceChildElement = document.createElement("ExperienceChild");

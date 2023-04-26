@@ -101,7 +101,7 @@ export interface MMCInterface {
           VideoTrackReference: {
             VideoTrackID: {
             _tagText: string }
-        };
+        }[];
           AudioTrackReference?: {
             AudioTrackID: {
               _tagText: string

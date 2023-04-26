@@ -149,31 +149,56 @@ function parseInventory(xmlDoc: Document): MMCInterface['Inventory'] {
     const presentationList: MMCInterface['Presentations']['Presentation'] = Array.from(presentationElements).map(presentationElement => {
       const trackMetadataElement = presentationElement.getElementsByTagName('manifest:TrackMetadata')[0];
   
-      const audioTrackReferenceElement = trackMetadataElement.getElementsByTagName('manifest:AudioTrackReference')[0];
-      const audioTrackIdElements = audioTrackReferenceElement ? Array.from(audioTrackReferenceElement.getElementsByTagName('manifest:AudioTrackID')) : [];
-      const audioTrackReference = audioTrackReferenceElement
-        ? audioTrackIdElements.length > 1
-          ? audioTrackIdElements.map(audioTrackIdElement => {
-              return {
-                AudioTrackID: {
-                  _tagText: audioTrackIdElement.textContent || '',
-                },
-              };
-            })
-          : { AudioTrackID: { _tagText: audioTrackIdElements[0].textContent || '' } }
-        : undefined;
+      const videoTrackReferenceElements = Array.from(trackMetadataElement.getElementsByTagName('manifest:VideoTrackReference'));
+      const videoTrackReferences: any[] = [];
+      
+      for (const videoTrackReferenceElement of videoTrackReferenceElements) {
+        const videoTrackIdElements = Array.from(videoTrackReferenceElement.getElementsByTagName('manifest:VideoTrackID'));
+      
+        const videoTrackIds = videoTrackIdElements.map(videoTrackIdElement => {
+          return {
+            VideoTrackID: {
+              _tagText: videoTrackIdElement.textContent || '',
+            },
+          };
+        });
+      
+        videoTrackReferences.push(...videoTrackIds);
+      }
 
-      const subtitleTrackReferenceElement = trackMetadataElement.getElementsByTagName('manifest:SubtitleTrackReference')[0];
-      const subtitleTrackIdElements = subtitleTrackReferenceElement ? Array.from(subtitleTrackReferenceElement.getElementsByTagName('manifest:SubtitleTrackID')) : [];
-      const subtitleTrackReference = subtitleTrackReferenceElement
-        ? subtitleTrackIdElements.map(subtitleTrackIdElement => {
-            return {
-              SubtitleTrackID: {
-                _tagText: subtitleTrackIdElement.textContent || '',
-              },
-            };
-          })
-        : undefined;
+      const audioTrackReferenceElements = Array.from(trackMetadataElement.getElementsByTagName('manifest:AudioTrackReference'));
+      const audioTrackReferences: any[] = [];
+
+      for (const audioTrackReferenceElement of audioTrackReferenceElements) {
+        const audioTrackIdElements = Array.from(audioTrackReferenceElement.getElementsByTagName('manifest:AudioTrackID'));
+
+        const audioTrackIds = audioTrackIdElements.map(audioTrackIdElement => {
+          return {
+            AudioTrackID: {
+              _tagText: audioTrackIdElement.textContent || '',
+            },
+          };
+        });
+
+        audioTrackReferences.push(...audioTrackIds);
+      }
+
+      const subtitleTrackReferenceElements = Array.from(trackMetadataElement.getElementsByTagName('manifest:SubtitleTrackReference'));
+      const subtitleTrackReferences: any[] = [];
+      
+      for (const subtitleTrackReferenceElement of subtitleTrackReferenceElements) {
+        const subtitleTrackIdElements = Array.from(subtitleTrackReferenceElement.getElementsByTagName('manifest:SubtitleTrackID'));
+      
+        const subtitleTrackIds = subtitleTrackIdElements.map(subtitleTrackIdElement => {
+          return {
+            SubtitleTrackID: {
+              _tagText: subtitleTrackIdElement.textContent || '',
+            },
+          };
+        });
+      
+        subtitleTrackReferences.push(...subtitleTrackIds);
+      }
         
   
       return {
@@ -181,15 +206,11 @@ function parseInventory(xmlDoc: Document): MMCInterface['Inventory'] {
           TrackSelectionNumber: {
             _tagText: getTextContent(trackMetadataElement, 'manifest:TrackSelectionNumber'),
           },
-          VideoTrackReference: {
-            VideoTrackID: {
-              _tagText: getTextContent(trackMetadataElement, 'manifest:VideoTrackID'),
-            },
-          },
-          AudioTrackReference: audioTrackReference,
-          SubtitleTrackReference: subtitleTrackReference,
+          VideoTrackReference: videoTrackReferences,
+          AudioTrackReference: audioTrackReferences.length > 0 ? audioTrackReferences : undefined,
+          SubtitleTrackReference: subtitleTrackReferences.length > 0 ? subtitleTrackReferences : undefined,
         },
-        _PresentationID: getAttribute(presentationElement, 'manifest:PresentationID'),
+        _PresentationID: getAttribute(presentationElement, 'PresentationID'),
       };
     });
   
