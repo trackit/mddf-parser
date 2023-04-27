@@ -12,7 +12,6 @@ export function loadMECDataFromXml(xmlString: string): Promise<MECInterface> {
       "xsi:schemaLocation": xmlDoc.documentElement.getAttribute("xsi:schemaLocation") ?? "",
       Basic: {
         ContentID: "",
-        _prefix: "mdmec",
         LocalizedInfo: [],
         RunLength: undefined,
         ReleaseYear: {
@@ -34,9 +33,9 @@ export function loadMECDataFromXml(xmlString: string): Promise<MECInterface> {
     const basicNode = xmlDoc.getElementsByTagName("mdmec:Basic")[0];
 
     if (basicNode) {
-      const contentIDNode = basicNode.getElementsByTagName("md:ContentID")[0];
+      const contentIDNode = basicNode.getAttribute("ContentID");
       if (contentIDNode) {
-        mecData.Basic.ContentID = contentIDNode.textContent ?? "";
+        mecData.Basic.ContentID = contentIDNode;
       }
     
       const localizedInfoNodes = basicNode.getElementsByTagName("md:LocalizedInfo");

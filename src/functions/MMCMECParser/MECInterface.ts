@@ -6,7 +6,6 @@ export interface MECInterface {
 
   Basic: {
     ContentID: string;
-    _prefix: "mdmec";
     LocalizedInfo: {
       language: string;
       default?: string;
