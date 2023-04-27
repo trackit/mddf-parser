@@ -224,13 +224,13 @@ function parseInventory(xmlDoc: Document): MMCInterface['Inventory'] {
   
     const playableSequences: MMCInterface["PlayableSequences"] = {
       PlayableSequence: playableSequenceElements.map((playableSequenceElement) => {
-        const sequenceId = playableSequenceElement.getAttribute("_PlayableSequenceID") || "";
+        const sequenceId = playableSequenceElement.getAttribute("PlayableSequenceID") || "";
   
         const clipElements = Array.from(playableSequenceElement.getElementsByTagName("manifest:Clip"));
         const clips = clipElements.map((clipElement) => {
           const presentationIdElement = clipElement.getElementsByTagName("manifest:PresentationID")[0];
-          const sequenceAttribute = clipElement.getAttribute("_sequence") || "";
-          const audioLanguageAttribute = clipElement.getAttribute("_audioLanguage") || undefined;
+          const sequenceAttribute = clipElement.getAttribute("sequence") || "";
+          const audioLanguageAttribute = clipElement.getAttribute("audioLanguage") || undefined;
   
           return {
             PresentationID: {
@@ -260,7 +260,7 @@ function parseInventory(xmlDoc: Document): MMCInterface['Inventory'] {
     };
   
     pictureGroupElements.forEach((pictureGroupElement) => {
-      const pictureGroupID = pictureGroupElement.getAttribute("_PictureGroupID") || "";
+      const pictureGroupID = pictureGroupElement.getAttribute("PictureGroupID") || "";
       pictureGroup._PictureGroupID = pictureGroupID;
   
       const pictureElements = Array.from(pictureGroupElement.getElementsByTagName("manifest:Picture"));
@@ -294,8 +294,8 @@ function parseInventory(xmlDoc: Document): MMCInterface['Inventory'] {
     let i = 0;
     const experiences: MMCInterface["Experiences"]["Experience"] = experienceElements.map((experienceElement) => {
       i += 1;
-      const experienceID = experienceElement.getAttribute("_ExperienceID") || "";
-      const version = experienceElement.getAttribute("_version") || "";
+      const experienceID = experienceElement.getAttribute("ExperienceID") || "";
+      const version = experienceElement.getAttribute("version") || "";
   
       const excludedRegionElement = experienceElement.getElementsByTagName("manifest:ExcludedRegion")[0];
       const excludedRegion = excludedRegionElement
@@ -317,7 +317,7 @@ function parseInventory(xmlDoc: Document): MMCInterface['Inventory'] {
         PlayableSequenceID: playableSequenceIDElement
           ? { _tagText: playableSequenceIDElement.textContent || "" }
           : undefined,
-        _ContentID: audiovisualElement.getAttribute("_ContentID") || "",
+        _ContentID: audiovisualElement.getAttribute("ContentID") || "",
         PresentationID: presentationIDElement ? { _tagText: presentationIDElement.textContent || "" } : undefined,
       };
   
