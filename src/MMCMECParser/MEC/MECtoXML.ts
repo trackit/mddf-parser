@@ -22,7 +22,6 @@ export function createMECtoXML(mecData: MECInterface): string {
           localizedInfoElement.setAttribute('default', localizedInfo.default);
         }
     
-        // Add LocalizedInfo sub-elements
         if (localizedInfo.TitleDisplay60) {
           const titleDisplay60Element = xmlDoc.createElement('md:TitleDisplay60');
           titleDisplay60Element.textContent = localizedInfo.TitleDisplay60._tagText;
@@ -95,37 +94,31 @@ export function createMECtoXML(mecData: MECInterface): string {
           basicElement.appendChild(localizedInfoElement);
         }
       
-        // Add RunLength element
         if (mecData.Basic.RunLength) {
           const runLengthElement = xmlDoc.createElement('md:RunLength');
           runLengthElement.textContent = mecData.Basic.RunLength._tagText;
           basicElement.appendChild(runLengthElement);
         }
       
-        // Add ReleaseYear element
         const releaseYearElement = xmlDoc.createElement('md:ReleaseYear');
         releaseYearElement.textContent = mecData.Basic.ReleaseYear._tagText;
         basicElement.appendChild(releaseYearElement);
       
-        // Add ReleaseDate element
         if (mecData.Basic.ReleaseDate) {
           const releaseDateElement = xmlDoc.createElement('md:ReleaseDate');
           releaseDateElement.textContent = mecData.Basic.ReleaseDate._tagText;
           basicElement.appendChild(releaseDateElement);
         }
       
-        // Add ReleaseHistory elements
         if (mecData.Basic.ReleaseHistory) {
             for (const releaseHistory of mecData.Basic.ReleaseHistory) {
             const releaseHistoryElement = xmlDoc.createElement('md:ReleaseHistory');
         
-            // Add ReleaseType element
             const releaseTypeElement = xmlDoc.createElement('md:ReleaseType');
             releaseTypeElement.setAttribute('wide', releaseHistory.ReleaseType.wide);
             releaseTypeElement.textContent = releaseHistory.ReleaseType._tagText;
             releaseHistoryElement.appendChild(releaseTypeElement);
         
-            // Add DistrTerritory element
             if (releaseHistory.DistrTerritory) {
                 const distrTerritoryElement = xmlDoc.createElement('md:DistrTerritory');
         
@@ -136,7 +129,6 @@ export function createMECtoXML(mecData: MECInterface): string {
                 releaseHistoryElement.appendChild(distrTerritoryElement);
             }
         
-            // Add Date element
             if (releaseHistory.Date) {
                 const dateElement = xmlDoc.createElement('md:Date');
                 dateElement.setAttribute('scheduled', releaseHistory.Date.scheduled);
@@ -144,14 +136,12 @@ export function createMECtoXML(mecData: MECInterface): string {
                 releaseHistoryElement.appendChild(dateElement);
             }
         
-            // Add Description element
             if (releaseHistory.Description) {
                 const descriptionElement = xmlDoc.createElement('md:Description');
                 descriptionElement.textContent = releaseHistory.Description._tagText;
                 releaseHistoryElement.appendChild(descriptionElement);
             }
         
-            // Add ReleaseOrg element
             if (releaseHistory.ReleaseOrg) {
                 const releaseOrgElement = xmlDoc.createElement('md:ReleaseOrg');
                 releaseOrgElement.setAttribute('organizationID', releaseHistory.ReleaseOrg.organizationID);
@@ -179,22 +169,18 @@ export function createMECtoXML(mecData: MECInterface): string {
             }
         }
       
-        // Add WorkType element
         const workTypeElement = xmlDoc.createElement('md:WorkType');
         workTypeElement.textContent = mecData.Basic.WorkType._tagText;
         basicElement.appendChild(workTypeElement);
       
-        // Add PictureColorType element
         if (mecData.Basic.PictureColorType) {
           const pictureColorTypeElement = xmlDoc.createElement('md:PictureColorType');
           pictureColorTypeElement.textContent = mecData.Basic.PictureColorType._tagText;
           basicElement.appendChild(pictureColorTypeElement);
         }
       
-        // Add RatingSet element
         const ratingSetElement = xmlDoc.createElement('md:RatingSet');
       
-        // Add Rating elements
         for (const rating of mecData.Basic.RatingSet.Rating) {
           const ratingElement = xmlDoc.createElement('md:Rating');
       
@@ -217,7 +203,6 @@ export function createMECtoXML(mecData: MECInterface): string {
       
         basicElement.appendChild(ratingSetElement);
       
-        // Add People elements
         if (mecData.Basic.People) {
             for (const person of mecData.Basic.People) {
             const personElement = xmlDoc.createElement('md:People');

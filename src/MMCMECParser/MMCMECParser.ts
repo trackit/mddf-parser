@@ -1,10 +1,10 @@
 import { MMCChecker, MECChecker } from "./MMCMECChecker/MMCMMEChecker";
-import { loadMECDataFromXml } from "./MECXMLParser";
-import { loadMMCDataFromXml } from "./MMCXMLParser";
-import { MECInterface } from './MECInterface';
-import { MMCInterface } from './MMCInterface';
-import { createMMCtoXML } from "./MMCtoXML";
-import { createMECtoXML } from "./MECtoXML";
+import { loadMECDataFromXml } from "./MEC/MECXMLParser";
+import { loadMMCDataFromXml } from "./MMC/MMCXMLParser";
+import { MECInterface } from './MEC/MECInterface';
+import { MMCInterface } from './MMC/MMCInterface';
+import { createMMCtoXML } from "./MMC/MMCtoXML";
+import { createMECtoXML } from "./MEC/MECtoXML";
 
 export interface IXMLFileAdaptor {
     readFile(path: string): Promise<string>

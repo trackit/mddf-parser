@@ -27,7 +27,6 @@ export function createMMCtoXML(data: MMCInterface): string {
   
     const inventoryElement = document.createElement("manifest:Inventory");
 
-    // Audio
     for (const audio of data.Inventory.Audio) {
         const audioElement = document.createElement("manifest:Audio");
 
@@ -52,7 +51,6 @@ export function createMMCtoXML(data: MMCInterface): string {
         inventoryElement.appendChild(audioElement);
     }
 
-    // Video
     for (const video of data.Inventory.Video) {
         const videoElement = document.createElement("manifest:Video");
 
@@ -92,7 +90,6 @@ export function createMMCtoXML(data: MMCInterface): string {
         inventoryElement.appendChild(videoElement);
     }
 
-    // Subtitle
     for (const subtitle of data.Inventory.Subtitle) {
         const subtitleElement = document.createElement("manifest:Subtitle");
 
@@ -117,7 +114,6 @@ export function createMMCtoXML(data: MMCInterface): string {
         inventoryElement.appendChild(subtitleElement);
     }
 
-    // Image
     for (const image of data.Inventory.Image) {
         const imageElement = document.createElement("manifest:Image");
 
@@ -146,7 +142,6 @@ export function createMMCtoXML(data: MMCInterface): string {
         inventoryElement.appendChild(imageElement);
     }
 
-    // Metadata
     for (const metadata of data.Inventory.Metadata) {
         const metadataElement = document.createElement("manifest:Metadata");
 
