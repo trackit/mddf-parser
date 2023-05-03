@@ -1,8 +1,8 @@
 export interface MECInterface {
-  "xmlns:md": string;
-  "xmlns:xsi": string;
-  "xmlns:mdmec": string;
-  "xsi:schemaLocation": string;
+  'xmlns:md': string;
+  'xmlns:xsi': string;
+  'xmlns:mdmec': string;
+  'xsi:schemaLocation': string;
 
   Basic: {
     ContentID: string;
@@ -79,7 +79,7 @@ export interface MECInterface {
 
         };
         SortName?: {
-          _tagText: string;  
+          _tagText: string;
         };
         AlternateName?: {
           _tagText: string;
