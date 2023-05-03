@@ -5,6 +5,7 @@ import { MECInterface } from './MEC/MECInterface';
 import { MMCInterface } from './MMC/MMCInterface';
 import { createMMCtoXML } from './MMC/MMCtoXML';
 import { createMECtoXML } from './MEC/MECtoXML';
+import { LibraryExceptions } from './exceptions/LibraryExceptions';
 
 export interface IXMLFileAdaptor {
   readFile(path: string): Promise<string>
@@ -34,7 +35,7 @@ export default class MMCMECParser {
     this.mmcFile = await this.fileAdaptor.readFile(path);
 
     if (!MMCChecker(this.mmcFile)) {
-      throw new Error('MMC file is not valid');
+      throw new LibraryExceptions('MMC file is not valid');
     }
 
     this.mmcData = await loadMMCDataFromXml(this.mmcFile);
@@ -45,32 +46,32 @@ export default class MMCMECParser {
     this.mecFile = await this.fileAdaptor.readFile(path);
 
     if (!MECChecker(this.mecFile)) {
-      throw new Error('MEC file is not valid');
+      throw new LibraryExceptions('MEC file is not valid');
     }
 
     this.mecData = await loadMECDataFromXml(this.mecFile);
     return this.mecData;
   }
 
-  public async exportMEC(path: string, data: unknown): Promise<void> {
+  public async exportMEC(path: string, data: MECInterface): Promise<void> {
     if (data === undefined) {
-      throw new Error('No data to export');
+      throw new LibraryExceptions('No data to export');
     }
     const mec = data as MECInterface;
     if (mec.Basic === undefined || mec['xmlns:mdmec'] === undefined) {
-      throw new Error('Invalid MEC data');
+      throw new LibraryExceptions('Invalid MEC data');
     }
     const xml = createMECtoXML(mec);
     await this.fileAdaptor.writeFile(path, xml);
   }
 
-  public async exportMMC(path: string, data: unknown): Promise<void> {
+  public async exportMMC(path: string, data: MMCInterface): Promise<void> {
     if (data === undefined) {
-      throw new Error('No data to export');
+      throw new LibraryExceptions('No data to export');
     }
     const mmc = data as MMCInterface;
     if (mmc.Inventory === undefined || mmc.Presentations === undefined) {
-      throw new Error('Invalid MMC data');
+      throw new LibraryExceptions('Invalid MMC data');
     }
     const xml = createMMCtoXML(mmc);
     await this.fileAdaptor.writeFile(path, xml);
