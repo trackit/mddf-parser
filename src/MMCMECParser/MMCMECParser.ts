@@ -6,6 +6,8 @@ import { MMCInterface } from './MMC/MMCInterface';
 import { createMMCtoXML } from './MMC/MMCtoXML';
 import { createMECtoXML } from './MEC/MECtoXML';
 import { LibraryExceptions } from './exceptions/LibraryExceptions';
+import { isValidMECInterface } from './MEC/MECInterfaceValidator';
+import { isValidMMCInterface } from './MMC/MMCInterfaceValidator';
 
 export interface IXMLFileAdaptor {
   readFile(path: string): Promise<string>
@@ -58,7 +60,7 @@ export default class MMCMECParser {
       throw new LibraryExceptions('No data to export');
     }
     const mec = data as MECInterface;
-    if (mec.Basic === undefined || mec['xmlns:mdmec'] === undefined) {
+    if (!isValidMECInterface(mec)) {
       throw new LibraryExceptions('Invalid MEC data');
     }
     const xml = createMECtoXML(mec);
@@ -70,7 +72,7 @@ export default class MMCMECParser {
       throw new LibraryExceptions('No data to export');
     }
     const mmc = data as MMCInterface;
-    if (mmc.Inventory === undefined || mmc.Presentations === undefined) {
+    if (!isValidMMCInterface(mmc)) {
       throw new LibraryExceptions('Invalid MMC data');
     }
     const xml = createMMCtoXML(mmc);
