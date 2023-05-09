@@ -3,7 +3,7 @@ import { MMCInterface } from '../MMC/MMCInterface';
 import { expectedMEC } from './ExpectedValues/MECInterface';
 import { expectedMMC } from './ExpectedValues/MMCInterface';
 import { LocalXMLFileAdaptor } from '../adaptors/secondary/LocalXMLFileAdaptor';
-import MMCMECParser from '../MMCMECParser';
+import { MMCParser, MECParser} from '../MMCMECParser';
 
 describe('MMCMECParser', () => {
   interface TestParametersParseMEC {
@@ -22,14 +22,14 @@ describe('MMCMECParser', () => {
 
   const testParseMEC = async ({ pathToXml, expected }: TestParametersParseMEC) => {
     const fileAdaptor = new LocalXMLFileAdaptor();
-    const domain = new MMCMECParser({ fileAdaptor });
-    expect(await domain.parseMEC(pathToXml)).toEqual(expected.returnValue);
+    const mecParser = new MECParser({ fileAdaptor });
+    expect(await mecParser.parse(pathToXml)).toEqual(expected.returnValue);
   };
 
   const testParseMMC = async ({ pathToXml, expected }: TestParametersParseMMC) => {
     const fileAdaptor = new LocalXMLFileAdaptor();
-    const domain = new MMCMECParser({ fileAdaptor });
-    expect(await domain.parseMMC(pathToXml)).toEqual(expected.returnValue);
+    const mmcParser = new MMCParser({ fileAdaptor });
+    expect(await mmcParser.parse(pathToXml)).toEqual(expected.returnValue);
   };
 
   it('Test Parse MEC Function', async () => {
