@@ -1,4 +1,3 @@
-
 export type LocalizedInfoDeliverytype = BasicMetadataInfotype & {
   ContentID?: string;
   updateNum?: number;
@@ -13,7 +12,7 @@ export type AssociatedOrgtype = OrgNametype & {
   role?: string;
   roleCategory?: string;
 };
-export type ColorTypetype = "color" | "bandw" | "colorized" | "composite" | "unknown";
+export type ColorTypetype = 'color' | 'bandw' | 'colorized' | 'composite' | 'unknown';
 export type BasicMetadatatype2CountryOfOrigin = Regiontype & {
   intepretation?: string;
 };
@@ -34,8 +33,8 @@ export type QCCategoryErrortypeArtwork = QCErrorArtworktype & {
 };
 export type QCCategoryErrortypeMetadata = QCErrorMetadatatype & {
 };
-export type StringVideoPicPixelAspect = "NTSC" | "PAL" | "square" | "other";
-export type StringVideoPicProgressivescanOrder = "BFF" | "TFF" | "PPF";
+export type StringVideoPicPixelAspect = 'NTSC' | 'PAL' | 'square' | 'other';
+export type StringVideoPicProgressivescanOrder = 'BFF' | 'TFF' | 'PPF';
 export type Publishertype = OrgNametype & {
   ContactInfo?: ContactInfotype;
   retailerSpecificID?: string;
@@ -569,17 +568,17 @@ export interface BasicMetadataParenttype {
   Region: [Regiontype, ...Regiontype[]];
   ExcludedRegion: [Regiontype, ...Regiontype[]];
   relationshipType?:
-    | "isclipof"
-    | "isepisodeof"
-    | "isseasonof"
-    | "ispieceof"
-    | "ispartof"
-    | "isderivedfrom"
-    | "iscompositeof"
-    | "issupplementto"
-    | "ispromotionfor"
-    | "isabsedon"
-    | "isdescendentof";
+  | 'isclipof'
+  | 'isepisodeof'
+  | 'isseasonof'
+  | 'ispieceof'
+  | 'ispartof'
+  | 'isderivedfrom'
+  | 'iscompositeof'
+  | 'issupplementto'
+  | 'ispromotionfor'
+  | 'isabsedon'
+  | 'isdescendentof';
 }
 export interface DigitalAssetMetadatatype2 {
   Audio: DigitalAssetAudioDatatype;
@@ -706,7 +705,7 @@ export interface QCCategoryErrortype {
       | QCCategoryErrortypeMetadata
       | QCXMLErrortype
       | QCErrorExceltype
-    )[]
+    )[],
   ];
 }
 export interface QCErrorAudiotype {
@@ -798,11 +797,11 @@ export interface AssetIntentReferencetype1 {
 export interface PrivateDatatype {
   Any: [
     {
-  
+
     },
     ...{
-  
-    }[]
+
+    }[],
   ];
 }
 export interface DigitalAssetVideoDatatype {
@@ -878,7 +877,7 @@ export interface DigitalAssetVideoPicturetype3 {
 }
 export interface DigitalAssetVideoPictureFrameRatetype {
   _tagText?: number;
-  multiplier?: "1000/1001";
+  multiplier?: '1000/1001';
   timecode?: string;
 }
 export interface DigitalAssetVideoPictureProgressivetype {
@@ -981,15 +980,15 @@ export interface DigitalAssetSubtitleDatatype {
   FormatType?: string;
   Language: [DigitalAssetSubtitleDatatype2, ...DigitalAssetSubtitleDatatype2[]];
   Encoding?:
-    | string
-    | number
-    | number
-    | boolean
-    | null
-    | {
-    
-      }
-    | unknown[];
+  | string
+  | number
+  | number
+  | boolean
+  | null
+  | {
+
+  }
+  | unknown[];
   Properties?: DigitalAssetSubtitlePropertiestype;
   PictureDetails?: DigitalAssetVideoPicturetype;
   DynamicRangeProfile?: DigitalAssetSubtitleDatatype3;
