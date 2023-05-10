@@ -3,7 +3,7 @@ import { MMCInterface } from '../MMC/MMCInterface';
 import { expectedMEC } from './ExpectedValues/MECInterface';
 import { expectedMMC } from './ExpectedValues/MMCInterface';
 import { LocalXMLFileAdaptor } from '../adaptors/secondary/LocalXMLFileAdaptor';
-import { MMCParser, MECParser} from '../MMCMECParser';
+import { MMCParser, MECParser } from '../MMCMECParser';
 
 describe('MMCMECParser', () => {
   interface TestParametersParseMEC {
