@@ -1,5 +1,6 @@
 node_modules/
-test.ts
+test*
 assets/
 out*
 trash*
+*.zip
