@@ -62,8 +62,8 @@ export interface BasicMetadataInfotype {
   Genre?: BasicMetadataInfotype5[];
   Keyword?: string[];
   VersionNotes?: string;
-  Region: [Regiontype, ...Regiontype[]];
-  ExcludedRegion: [Regiontype, ...Regiontype[]];
+  Region?: [Regiontype, ...Regiontype[]];
+  ExcludedRegion?: [Regiontype, ...Regiontype[]];
   TargetAudience?: Audiencetype[];
   OriginalTitle?: string;
   CopyrightLine?: string;
@@ -98,7 +98,7 @@ export interface BasicMetadataInfotype5 {
 }
 export interface Regiontype {
   country: string;
-  countryRegion: string;
+  countryRegion?: string;
 }
 export interface Audiencetype {
   Description?: string;
@@ -300,6 +300,10 @@ export interface Compatibilitytype1 {
   subProfile?: string;
 }
 export interface CoreMetadataType {
+  'xmlns:md': string;
+  'xmlns:xsi': string;
+  'xmlns:mdmec': string;
+  'xsi:schemaLocation': string;
   Compatibility?: Compatibilitytype;
   Basic: BasicMetadatatype;
   DigitalAsset?: DigitalAssetMetadatatype[];
@@ -318,7 +322,7 @@ export interface BasicMetadatatype2 {
   UpdateNum?: number;
   LocalizedInfo: [BasicMetadataInfotype, ...BasicMetadataInfotype[]];
   RunLength?: string;
-  ReleaseYear: unknown;
+  ReleaseYear: string;
   ReleaseDate?: string;
   ReleaseHistory?: ReleaseHistorytype[];
   WorkType: string;
@@ -375,7 +379,7 @@ export interface BasicMetadatatype22 {
   original?: boolean;
 }
 export interface ContentRatingtype {
-  NotRated: ContentRatingtype1;
+  NotRated?: ContentRatingtype1;
   Rating: [ContentRatingDetailtype, ...ContentRatingDetailtype[]];
   AdultContent?: boolean;
 }
@@ -1160,10 +1164,6 @@ export interface CompanyCreditstype1 {
 }
 export interface MECInterface {
   CoreMetadata: [CoreMetadataType, ...CoreMetadataType[]];
-  'xmlns:md': string;
-  'xmlns:xsi': string;
-  'xmlns:mdmec': string;
-  'xsi:schemaLocation': string;
   updateNum?: number;
   workflow?: string;
   updateDeliveryType?: string;
