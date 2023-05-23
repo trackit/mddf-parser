@@ -108,15 +108,15 @@ export type FileDeleteManifesttype = FileManifesttype & {
   reference?: string;
 };
 
-// export interface MdV211Xsd {
-//   MediaPresentation?: Presentationtype;
-//   FileManifest?: FileManifesttype;
-//   MediaManifest?: MediaManifesttype;
-//   MediaPresentationManifest?: PresentationManifesttype;
-//   MediaManifestEdit?: MediaManifestEdittype;
-//   MediaInventory?: MediaInventorytype;
-//   FileDeleteManifest?: FileDeleteManifesttype;
-// }
+export interface MMCInterface {
+  MediaPresentation?: Presentationtype;
+  FileManifest?: FileManifesttype;
+  MediaManifest?: MediaManifesttype;
+  MediaPresentationManifest?: PresentationManifesttype;
+  MediaManifestEdit?: MediaManifestEdittype;
+  MediaInventory?: MediaInventorytype;
+  FileDeleteManifest?: FileDeleteManifesttype;
+}
 
 export interface Presentationtype {
   TrackMetadata: [PresentationtypeTrackMetadata, ...PresentationtypeTrackMetadata[]];
@@ -1055,7 +1055,11 @@ export interface ContactInfotype1 {
   _tagText?: string;
   type?: string;
 }
-export interface MMCInterface {
+export interface MediaManifesttype {
+  'xmlns:manifest': string;
+  'xmlns:md': string;
+  'xmlns:xsi': string;
+  'xsi:schemaLocation': string;
   Compatibility: Compatibilitytype;
   Source?: ManifestSourcetype;
   Inventory: Inventorytype;
@@ -1247,8 +1251,8 @@ export interface Experiencetype {
   TimedSequenceID?: string[];
   ExperienceChild?: ExperienceChildtype[];
   updateNum?: number;
-  ExperienceID?: string;
   version: string;
+  ExperienceID?: string;
 }
 export interface Audiovisualtype {
   Type: string;

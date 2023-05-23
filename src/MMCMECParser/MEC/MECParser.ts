@@ -5,7 +5,7 @@ import { LibraryExceptions } from '../exceptions/LibraryExceptions';
 import { IXMLFileAdaptor } from '../interfaces/IXMLFileAdaptor';
 import { IParser } from '../interfaces/IParser';
 import { FormatXML } from '../tools/FormatXML';
-import { isValidMECInterface } from './MECInterfaceValidator';
+import { InterfacesValidator } from '../tools/InterfacesValidator';
 
 export class MECParser implements IParser<MECInterface> {
   private readonly fileAdaptor: IXMLFileAdaptor;
@@ -31,6 +31,9 @@ export class MECParser implements IParser<MECInterface> {
     'Any', 'CaptureMethod', 'Language', 'SubtitleLanguage', 'CardsetList', 'ColorTransformMetadata', 'ContentMax',
     'FrameAverageMax', 'Type', 'Cardset', 'ContainsAnnotation', 'WritingFeatures', 'Purpose', 'EnvironmentAttribute',
     'BaseTrackIdentifier', 'AlternateEmail', 'Address', 'Phone', 'DisplayString', 'CoreMetadata'];
+
+  private requiredFields: Array<string> = ['xmlns:md', 'xmlns:xsi', 'xmlns:mdmec', 'xsi:schemaLocation', 'Basic', 'ContentID',
+    'CoreMetadata', 'LocalizedInfo'];
 
   public constructor({ fileAdaptor }: { fileAdaptor: IXMLFileAdaptor }) {
     this.fileAdaptor = fileAdaptor;
@@ -70,12 +73,15 @@ export class MECParser implements IParser<MECInterface> {
       throw new LibraryExceptions('No data to export');
     }
 
-    if (!isValidMECInterface(this.mecData)) {
-      throw new LibraryExceptions('Invalid MEC data');
+    const validator = new InterfacesValidator();
+    try {
+      validator.validate(data, this.requiredFields);
+    } catch (error) {
+      throw new LibraryExceptions(error as string);
     }
 
-    this.mecData = this.formatXML.transformSpecificKeys(this.mecData);
-    this.mecData = this.formatXML.addPrefixes(this.mecData);
+    this.mecData = this.formatXML.transformSpecificKeys(this.mecData) as MECInterface;
+    this.mecData = this.formatXML.addPrefixes(this.mecData) as MECInterface;
     const xml = toXml(JSON.stringify(data).replaceAll('_tagText', '$t'));
     await this.fileAdaptor.writeFile(path, xml);
   }
