@@ -1,70 +1,83 @@
-// import { MMCInterface } from './MMCInterface';
+import { MMCInterface } from './MMCInterface';
 
-// export function isValidMMCInterface(mmc: MMCInterface): boolean {
-//   if (!mmc['_xmlns:manifest'] || !mmc['_xmlns:md'] || !mmc['_xmlns:xsi'] || !mmc['_xsi:schemaLocation'] || !mmc._ManifestID) {
-//     return false;
-//   }
+export function isValidMMCInterface(mmc: MMCInterface): boolean {
+  // if (!mmc['_xmlns:manifest'] || !mmc['_xmlns:md'] || !mmc['_xmlns:xsi'] || !mmc['_xsi:schemaLocation'] || !mmc.MediaManifest?.ManifestID) {
+  //   return false;
+  // }
 
-//   if (!mmc.Compatibility || !mmc.Compatibility.SpecVersion || !mmc.Compatibility.SpecVersion._tagText
-//     || !mmc.Compatibility.Profile || !mmc.Compatibility.Profile._tagText) {
-//     return false;
-//   }
+  if (!mmc.MediaManifest?.Compatibility || !mmc.MediaManifest?.Compatibility.SpecVersion || !mmc.MediaManifest?.Compatibility.SpecVersion
+    || !mmc.MediaManifest?.Compatibility.Profile || !mmc.MediaManifest?.Compatibility.Profile) {
+      console.log('1');
+    return false;
+  }
 
-//   if (!mmc.Inventory || !mmc.Inventory.Metadata || mmc.Inventory.Metadata.length === 0) {
-//     return false;
-//   }
+  if (!mmc.MediaManifest?.Inventory || !mmc.MediaManifest?.Inventory.Metadata || mmc.MediaManifest?.Inventory.Metadata.length === 0) {
+    console.log('2');
+    return false;
+  }
 
-//   let isValid = true;
+  let isValid = true;
 
-//   mmc.Inventory.Metadata.forEach((metadata) => {
-//     if (!metadata.ContainerReference || !metadata.ContainerReference.ContainerLocation
-//         || !metadata.ContainerReference.ContainerLocation._tagText || !metadata.ContainerReference._type || !metadata._ContentID) {
-//       isValid = false;
-//     }
-//   });
+  mmc.MediaManifest?.Inventory.Metadata.forEach((metadata) => {
+    if (!metadata.ContainerReference || !metadata.ContainerReference[0].ContainerLocation
+        || !metadata.ContainerReference[0].ContainerLocation || !metadata.ContainerReference[0].type || !metadata.ContentID) {
+          console.log('3');
+      isValid = false;
+    }
+  });
 
-//   if (!isValid) {
-//     return false;
-//   }
+  if (!isValid) {
+    console.log('4');
+    return false;
+  }
 
-//   if (!mmc.Presentations || !mmc.Presentations.Presentation || mmc.Presentations.Presentation.length === 0) {
-//     return false;
-//   }
+  if (!mmc.MediaManifest?.Presentations || !mmc.MediaManifest?.Presentations.Presentation
+    || mmc.MediaManifest?.Presentations.Presentation.length === 0) {
+      console.log('5');
+    return false;
+  }
 
-//   mmc.Presentations.Presentation.forEach((presentation) => {
-//     if (!presentation.TrackMetadata || !presentation.TrackMetadata.TrackSelectionNumber
-//         || !presentation.TrackMetadata.TrackSelectionNumber._tagText || !presentation._PresentationID) {
-//       isValid = false;
-//     }
-//   });
+  mmc.MediaManifest?.Presentations.Presentation.forEach((presentation) => {
+    if (!presentation.TrackMetadata || !presentation.TrackMetadata[0].TrackSelectionNumber
+        || !presentation.TrackMetadata[0].TrackSelectionNumber || !presentation.PresentationID) {
+          console.log('6');
+      isValid = false;
+    }
+  });
 
-//   if (!isValid) {
-//     return false;
-//   }
+  if (!isValid) {
+    console.log('7');
+    return false;
+  }
 
-//   if (!mmc.PictureGroups || !mmc.PictureGroups.PictureGroup) {
-//     return false;
-//   }
+  if (!mmc.MediaManifest?.PictureGroups || !mmc.MediaManifest?.PictureGroups.PictureGroup) {
+    console.log('8');
+    return false;
+  }
 
-//   if (!mmc.Experiences || !mmc.Experiences.Experience || mmc.Experiences.Experience.length === 0) {
-//     return false;
-//   }
+  if (!mmc.MediaManifest?.Experiences || !mmc.MediaManifest?.Experiences.Experience || mmc.MediaManifest?.Experiences.Experience.length === 0) {
+    console.log('9');
+    return false;
+  }
 
-//   mmc.Experiences.Experience.forEach((experience) => {
-//     if (!experience.ContentID || !experience.ContentID._tagText || !experience.Audiovisual
-//         || !experience.Audiovisual.Type || !experience.Audiovisual.Type._tagText || !experience.Audiovisual.SubType
-//         || !experience.Audiovisual.SubType._tagText || !experience.Audiovisual._ContentID || !experience._ExperienceID || !experience._version) {
-//       isValid = false;
-//     }
-//   });
+  mmc.MediaManifest?.Experiences.Experience.forEach((experience) => {
+    if (!experience.ContentID || !experience.ContentID || !experience.Audiovisual
+        || !experience.Audiovisual.Type || !experience.Audiovisual.Type || !experience.Audiovisual.SubType
+        || !experience.Audiovisual.SubType || !experience.Audiovisual.ContentID || !experience.ExperienceID || !experience.version) {
+          console.log('10');
+      isValid = false;
+    }
+  });
 
-//   if (!isValid) {
-//     return false;
-//   }
+  if (!isValid) {
+    console.log('11');
+    return false;
+  }
 
-//   if (!mmc.ALIDExperienceMaps || !mmc.ALIDExperienceMaps.ALIDExperienceMap) {
-//     return false;
-//   }
+  if (!mmc.MediaManifest?.ALIDExperienceMaps || !mmc.MediaManifest?.ALIDExperienceMaps.ALIDExperienceMap) {
+    console.log('12');
+    return false;
+  }
 
-//   return true;
-// }
+  return true;
+}
