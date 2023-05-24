@@ -1,4 +1,6 @@
 import { toJson, toXml } from 'xml2json';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import * as pd from 'pretty-data';
 import { MECChecker } from './MECChecker';
 import { MECInterface } from './MECInterface';
 import { LibraryExceptions } from '../exceptions/LibraryExceptions';
@@ -12,7 +14,7 @@ export class MECParser implements IParser<MECInterface> {
 
   private readonly formatXML: FormatXML;
 
-  private mecFile: string;
+  public mecFile: string;
 
   private mecData: MECInterface;
 
@@ -68,6 +70,25 @@ export class MECParser implements IParser<MECInterface> {
     return this.mecData;
   }
 
+  public convert(data: MECInterface): Promise<string> {
+    if (data === undefined) {
+      throw new LibraryExceptions('No data to export');
+    }
+
+    const validator = new InterfacesValidator();
+    try {
+      validator.validate(data, this.requiredFields);
+    } catch (error) {
+      throw new LibraryExceptions(error as string);
+    }
+
+    let formatedData = this.formatXML.transformSpecificKeys(data) as MECInterface;
+    formatedData = this.formatXML.addPrefixes(formatedData) as MECInterface;
+    const xml = this.formatXML.removeAttributePrefixes(toXml(JSON.stringify(formatedData).replaceAll('_tagText', '$t')));
+    const prettyXml = pd.pd.xml(xml);
+    return Promise.resolve(prettyXml);
+  }
+
   public async export(path: string, data: MECInterface): Promise<void> {
     if (data === undefined) {
       throw new LibraryExceptions('No data to export');
@@ -80,9 +101,11 @@ export class MECParser implements IParser<MECInterface> {
       throw new LibraryExceptions(error as string);
     }
 
-    this.mecData = this.formatXML.transformSpecificKeys(this.mecData) as MECInterface;
-    this.mecData = this.formatXML.addPrefixes(this.mecData) as MECInterface;
-    const xml = toXml(JSON.stringify(data).replaceAll('_tagText', '$t'));
-    await this.fileAdaptor.writeFile(path, xml);
+    let formatedData = this.formatXML.transformSpecificKeys(data) as MECInterface;
+    formatedData = this.formatXML.addPrefixes(formatedData) as MECInterface;
+    const xml = this.formatXML.removeAttributePrefixes(toXml(JSON.stringify(formatedData).replaceAll('_tagText', '$t')));
+    const prettyXml = pd.pd.xml(xml);
+    await this.fileAdaptor.writeFile(path, prettyXml);
+    return Promise.resolve();
   }
 }

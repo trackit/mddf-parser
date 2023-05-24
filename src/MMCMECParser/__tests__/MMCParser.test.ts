@@ -1,30 +1,23 @@
-import { MMCInterface } from '../MMC/MMCInterface';
-import { expectedMMC } from './ExpectedValues/MMCInterface';
 import { LocalXMLFileAdaptor } from '../adaptors/secondary/LocalXMLFileAdaptor';
 import { MMCParser } from '../MMCMECParser';
 
-describe('MMCMECParser', () => {
+describe('MMCParser', () => {
   interface TestParametersParseMMC {
     pathToXml: string,
-    expected: {
-      returnValue: MMCInterface,
-    }
   }
 
-  const testParseMMC = async ({ pathToXml, expected }: TestParametersParseMMC) => {
+  const testParseMMC = async ({ pathToXml }: TestParametersParseMMC) => {
     const fileAdaptor = new LocalXMLFileAdaptor();
     const mmcParser = new MMCParser({ fileAdaptor });
-    expect(await mmcParser.parse(pathToXml)).toEqual(expected.returnValue);
+    const tmp = await mmcParser.convert(await mmcParser.parse(pathToXml));
+    expect(tmp).toEqual(mmcParser.mmcFile);
   };
 
-  it('Test MMC Function', async () => {
+  it('Test Parse MMC Function', async () => {
     const exampleXML = './src/MMCMECParser/__tests__/assets/movielabs/fullMMC.xml';
 
     await testParseMMC({
       pathToXml: exampleXML,
-      expected: {
-        returnValue: expectedMMC,
-      },
     });
   });
 });

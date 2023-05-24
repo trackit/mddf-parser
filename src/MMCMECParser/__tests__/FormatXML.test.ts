@@ -1,58 +1,56 @@
 import { FormatXML } from '../tools/FormatXML';
 
-const sampleXml = `
-<mdmec:Basic id="1">
-    <mdmec:movie>Example1</mdmec:movie>
-    <mdmec:movie>Example2</mdmec:movie>
-    <mdmec:movie>Example3</mdmec:movie>
-</mdmec:Basic>
-`;
-
-const formatXml = new FormatXML('mdmec', 'md', ['movie']);
-
 describe('FormatXML', () => {
-  it('should format XML tags correctly', () => {
-    const result = formatXml.formatTags(sampleXml);
+  const prefix1 = 'p1';
+  const prefix2 = 'p2';
+  const keysToAddPrefix1 = ['k1', 'k2'];
 
-    expect(result).toContain('<Basic id="1">');
-    expect(result).toContain('<movie>Example1</movie>');
-  });
+  const formatXML = new FormatXML(prefix1, prefix2, keysToAddPrefix1);
 
-  it('should transform text nodes correctly', () => {
-    const obj = {
-      movie: {
-        _tagText: 'Example1',
+  const xml = `<${prefix1}:root><${prefix1}:child>Hello!</${prefix1}:child></${prefix1}:root>`;
+
+  const object = {
+    root: {
+      child: {
+        _tagText: 'Hello!',
       },
-    };
+    },
+  };
 
-    formatXml.transformTextNodes(obj);
-    expect(obj.movie).toEqual('Example1');
+  it('formatTags', () => {
+    expect(formatXML.formatTags(xml)).toBe('<root><child>Hello!</child></root>');
   });
 
-  it('should transform specific keys correctly', () => {
-    const obj = {
-      movie: 'Example1',
-    };
-    const result = formatXml.transformSpecificKeys(obj);
-
-    expect(result.movie).toEqual({ $t: 'Example1' });
+  it('transformTextNodes', () => {
+    formatXML.transformTextNodes(object);
+    expect(object).toEqual({ root: { child: 'Hello!' } });
   });
 
-  it('should remove prefixes and collect keys correctly', () => {
-    const obj = {
-      'mdmec:movie': 'Example1',
-    };
-    const result = formatXml.removePrefixesAndCollectKeys(obj);
-
-    expect(result.movie).toEqual('Example1');
+  it('transformSpecificKeys', () => {
+    formatXML.transformSpecificKeys(object);
+    expect(object).toEqual({ root: { child: { $t: 'Hello!' } } });
   });
 
-  it('should add prefixes correctly', () => {
-    const obj = {
-      movie: 'Example1',
-    };
-    const result = formatXml.addPrefixes(obj);
+  it('removePrefixesAndCollectKeys', () => {
+    expect(formatXML.removePrefixesAndCollectKeys(object)).toEqual(object);
+  });
 
-    expect(result['mdmec:movie']).toEqual('Example1');
+  it('addPrefixes', () => {
+    expect(formatXML.addPrefixes(object)).toEqual(object);
+  });
+
+  it('extractParentElements', () => {
+    expect(formatXML.extractParentElements(xml, ['child'])).toEqual(new Map().set('child', ['root']));
+  });
+
+  it('checkKeyAndParent', () => {
+    const map = new Map().set('child', ['root']);
+    expect(formatXML.checkKeyAndParent('child', 'root', map)).toBe(true);
+  });
+
+  it('removeAttributePrefixes', () => {
+    const xmlWithAttr = `<root ${prefix1}:attr="value"><child>Hello!</child></root>`;
+    const expectedXml = '<root attr="value"><child>Hello!</child></root>';
+    expect(formatXML.removeAttributePrefixes(xmlWithAttr)).toBe(expectedXml);
   });
 });

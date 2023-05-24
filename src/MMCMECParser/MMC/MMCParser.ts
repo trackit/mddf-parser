@@ -1,4 +1,6 @@
 import { toJson, toXml } from 'xml2json';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import * as pd from 'pretty-data';
 import { MMCChecker } from './MMCChecker';
 import { MMCInterface } from './MMCInterface';
 import { LibraryExceptions } from '../exceptions/LibraryExceptions';
@@ -12,7 +14,7 @@ export class MMCParser implements IParser<MMCInterface> {
 
   private readonly formatXML: FormatXML;
 
-  private mmcFile: string;
+  public mmcFile: string;
 
   private mmcData: MMCInterface;
 
@@ -92,6 +94,25 @@ export class MMCParser implements IParser<MMCInterface> {
     return this.mmcData;
   }
 
+  public convert(data: MMCInterface): Promise<string> {
+    if (data === undefined) {
+      throw new LibraryExceptions('No data to export');
+    }
+
+    const validator = new InterfacesValidator();
+    try {
+      validator.validate(data, this.requiredFields);
+    } catch (error) {
+      throw new LibraryExceptions(error as string);
+    }
+
+    let formatedData = this.formatXML.transformSpecificKeys(data) as MMCInterface;
+    formatedData = this.formatXML.addPrefixes(formatedData) as MMCInterface;
+    const xml = this.formatXML.removeAttributePrefixes(toXml(JSON.stringify(formatedData).replaceAll('_tagText', '$t')));
+    const prettyXml = pd.pd.xml(xml);
+    return Promise.resolve(prettyXml);
+  }
+
   public async export(path: string, data: MMCInterface): Promise<void> {
     if (data === undefined) {
       throw new LibraryExceptions('No data to export');
@@ -104,9 +125,10 @@ export class MMCParser implements IParser<MMCInterface> {
       throw new LibraryExceptions(error as string);
     }
 
-    this.mmcData = this.formatXML.transformSpecificKeys(this.mmcData) as MMCInterface;
-    this.mmcData = this.formatXML.addPrefixes(this.mmcData) as MMCInterface;
-    const xml = this.formatXML.removeAttributePrefixes(toXml(JSON.stringify(this.mmcData).replaceAll('_tagText', '$t')));
-    await this.fileAdaptor.writeFile(path, xml);
+    let formatedData = this.formatXML.transformSpecificKeys(data) as MMCInterface;
+    formatedData = this.formatXML.addPrefixes(formatedData) as MMCInterface;
+    const xml = this.formatXML.removeAttributePrefixes(toXml(JSON.stringify(formatedData).replaceAll('_tagText', '$t')));
+    const prettyXml = pd.pd.xml(xml);
+    await this.fileAdaptor.writeFile(path, prettyXml);
   }
 }
