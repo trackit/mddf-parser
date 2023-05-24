@@ -8,7 +8,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: ArtiomTr/jest-coverage-report-action@v2
-              id: coverage
+              id: tests
               with:
                 test-script: npm run test
                 output: report-markdown
