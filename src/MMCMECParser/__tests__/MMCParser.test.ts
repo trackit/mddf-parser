@@ -14,7 +14,7 @@ describe('MMCParser', () => {
   };
 
   it('Test Parse MMC Function', async () => {
-    const exampleXML = './src/MMCMECParser/__tests__/assets/movielabs/fullMMC.xml';
+    const exampleXML = './src/MMCMECParser/__tests__/ressources/movielabs/fullMMC.xml';
 
     await testParseMMC({
       pathToXml: exampleXML,
