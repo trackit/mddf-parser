@@ -14,7 +14,7 @@ describe('MECParser', () => {
   };
 
   it('Test Parse MEC Function', async () => {
-    const exampleXML = './src/MMCMECParser/__tests__/assets/movielabs/fullMEC.xml';
+    const exampleXML = './src/MMCMECParser/__tests__/ressources/movielabs/fullMEC.xml';
 
     await testParseMEC({
       pathToXml: exampleXML,
