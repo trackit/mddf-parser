@@ -58,6 +58,31 @@ The project is structured as follows:
 </br>
 </br>
 
+## Usage
+
+The `mddf-parser` library provides `MMCParser` and `MECParser` classes for parsing MMC and MEC XML data respectively. Here is a basic example of how to use these classes:
+
+```typescript
+// Import the required classes
+import { MMCParser, MECParser } from 'MMCMECParser';
+
+// Create a new instance of each parser
+const mmcParser = new MMCParser();
+const mecParser = new MECParser();
+
+// Use the parser's parse method to parse your MMC and MEC data files
+let mmcData = mmcParser.parse('<Path-to-MMC-XML-File>');
+let mecData = mecParser.parse('<Path-to-MEC-XML-File>');
+
+// Now mmcData and mecData contain the parsed data in corresponding interfaces
+console.log(mmcData);
+console.log(mecData);
+
+// Use the export method to export your data to an XML file
+mmcParser.export(mmcData, '<Path-to-MMC-XML-Export-File>');
+mecParser.export(mecData, '<Path-to-MEC-XML-Export-File>');
+```
+
 ## How to Contribute
 
 We welcome contributions to this project, and your help is greatly appreciated! Please ensure the following guidelines are met:
