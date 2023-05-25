@@ -24,34 +24,84 @@ However, accessing these data can be challenging for developers without the prop
 The project is structured as follows:
 
 - `MMCMECParser`: The main folder containing all the project files.
-  - `adaptors`
-    - `secondary`
+  - `adaptors`: Contains the adaptors used for handling data sources.
+    - `primary`: Intended for primary data source adaptors (empty in this snapshot).
+    - `secondary`: Intended for secondary data source adaptors.
       - `LocalXMLFileAdaptor.ts`: An adaptor for reading local XML files.
-  - `MEC`: Folder containing files related to the MEC format.
-    - `MECInterface.ts`: Contains the TypeScript interface for the MEC format.
-    - `MECtoXML.ts`: Contains the function to convert a MEC interface into an XML file.
-    - `MECXMLParser.ts`: Contains the class for parsing MEC XML files.
-  - `MMC`: Folder containing files related to the MMC format.
-    - `MMCInterface.ts`: Contains the TypeScript interface for the MMC format.
-    - `MMCtoXML.ts`: Contains the function to convert a MMC interface into an XML file.
-    - `MMCXMLParser.ts`: Contains the class for parsing MMC XML files.
-  - `MMCMECChecker`
-    - `MMCMMEChecker.ts`: Contains the class for checking consistency between MMC and MEC formats.
-  - `MMCMECParser.ts`: The main file for interacting with different parts of the project.
+  - `exceptions`
+    - `LibraryExceptions.ts`: Contains custom exceptions for the library.
+  - `interfaces`: Contains the interfaces used throughout the project.
+    - `IFormatXML.ts`: Interface for XML formatting.
+    - `IParser.ts`: Interface for parsers.
+    - `IValidator.ts`: Interface for validators.
+    - `IXMLFileAdaptor.ts`: Interface for XML file adaptors.
+  - `MEC`: Contains classes and interfaces related to the MEC data format.
+    - `MECChecker.ts`: Contains logic for checking MEC data for correctness.
+    - `MECInterface.ts`: Contains the TypeScript interface for MEC data.
+    - `MECParser.ts`: Contains logic for parsing MEC data.
+  - `MMC`: Contains classes and interfaces related to the MMC data format.
+    - `MMCChecker.ts`: Contains logic for checking MMC data for correctness.
+    - `MMCInterface.ts`: Contains the TypeScript interface for MMC data.
+    - `MMCParser.ts`: Contains logic for parsing MMC data.
+  - `MMCMECParser.ts`: The main entry point for interacting with this library.
+  - `__tests__`: Contains tests for the library.
+    - `FormatXML.test.ts`: Tests for XML formatting.
+    - `MECParser.test.ts`: Tests for MEC parsing.
+    - `MMCParser.test.ts`: Tests for MMC parsing.
+    - `ressources`: Test resources.
+      - `movielabs`: Samples from MovieLabs.
+        - `fullMEC.xml`: Full MEC data sample.
+        - `fullMMC.xml`: Full MMC data sample.
+  - `tools`: Contains utility classes.
+    - `FormatXML.ts`: Logic for formatting XML.
+    - `InterfacesValidator.ts`: Logic for validating interfaces.
 </br>
 </br>
 
 ## How to Contribute
 
-When a new element is added to an interface, it is important to update three files accordingly to ensure proper functionality and maintain consistency throughout the project. These files are:
+We welcome contributions to this project, and your help is greatly appreciated! Please ensure the following guidelines are met:
 
-1. The interface file: Update the TypeScript interface to include the new element, defining its structure and any associated properties or constraints.
+- **Code Style**: Ensure your code adheres to our ESLint rules. Properly formatted and linted code is crucial for maintainability and helps others understand your changes. To check your code for any linting errors, run the following command:
 
-2. The parser file: Modify the parser to correctly read and interpret the new element from the input data source (e.g., an XML file). This may involve updating parsing logic, handling optional attributes, or managing complex structures.
+    ```
+    npm run lint
+    ```
 
-3. The XML generator file: Adjust the XML generator to incorporate the new element when converting the interface into an XML file. This includes creating the appropriate XML tags, setting attributes, and managing nested elements.
+- **Testing**: A maximum of tests should be performed on the added features. Tests help ensure the stability of the project and reduce the possibility of regressions.
 
-By updating these three files in tandem, you can ensure that the new element is properly integrated into the project and that all components work seamlessly together.
+To contribute, follow these steps:
+
+1. **Fork the Repository:** First, create a personal fork of the project on GitHub.
+
+2. **Clone the Repository:** After creating your own fork, clone it to your local machine. Use the `git clone` command with the URL of your fork.
+
+    ```
+    git clone git@github.com:trackit/mddf-parser.git
+    ```
+
+3. **Create a New Branch:** Change to the directory of the project and create a new branch using the `git checkout` command:
+
+    ```
+    cd mddf-parser
+    git checkout -b <your-new-branch-name>
+    ```
+
+4. **Make Your Changes:** Make the changes to the files and commit them. Make sure to follow coding standards and keep your changes as clean and concise as possible. Ensure any new code includes appropriate tests.
+
+5. **Push the Changes:** After committing your changes locally, push them to your forked repository on GitHub. To do this, use the `git push` command.
+
+    ```
+    git push origin <your-branch-name>
+    ```
+
+6. **Submit a Pull Request:** On your GitHub fork, select your new branch and click the "Pull request" button. Fill in the form and submit a pull request to the original repository.
+
+Before submitting your pull request, please make sure your changes are well-documented. Explain the purpose of your changes and how they contribute to the project.
+
+Please note that your pull request will be reviewed by the maintainers. They may ask you to make changes or improvements. This review process helps ensure the quality of the project's code and keeps everything well-organized.
+
+Thank you for contributing!
 
 </br>
 </br>
