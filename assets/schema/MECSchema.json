@@ -1,0 +1,4357 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MECInterface",
+    "definitions": {
+      "MECInterface": {
+        "type": "object",
+        "properties": {
+          "CoreMetadata": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CoreMetadataType"
+            },
+            "minItems": 1
+          },
+          "updateNum": {
+            "type": "number"
+          },
+          "workflow": {
+            "type": "string"
+          },
+          "updateDeliveryType": {
+            "type": "string"
+          },
+          "versionDescription": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "CoreMetadata"
+        ],
+        "additionalProperties": false
+      },
+      "CoreMetadataType": {
+        "type": "object",
+        "properties": {
+          "xmlns:md": {
+            "type": "string"
+          },
+          "xmlns:xsi": {
+            "type": "string"
+          },
+          "xmlns:mdmec": {
+            "type": "string"
+          },
+          "xsi:schemaLocation": {
+            "type": "string"
+          },
+          "Compatibility": {
+            "$ref": "#/definitions/Compatibilitytype"
+          },
+          "Basic": {
+            "$ref": "#/definitions/BasicMetadatatype"
+          },
+          "DigitalAsset": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetMetadatatype"
+            }
+          },
+          "TitleInternalAlias": {
+            "type": "string"
+          },
+          "TrackingID": {
+            "type": "string"
+          },
+          "Source": {
+            "$ref": "#/definitions/Publishertype"
+          },
+          "CompanyDisplayCredit": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CompanyCreditstype"
+            }
+          },
+          "GroupingEntity": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/GroupingEntitytype"
+            }
+          },
+          "updateNum": {
+            "type": "number"
+          },
+          "workflow": {
+            "type": "string"
+          },
+          "updateDeliveryType": {
+            "type": "string"
+          },
+          "versionDescription": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "xmlns:md",
+          "xmlns:xsi",
+          "xmlns:mdmec",
+          "xsi:schemaLocation",
+          "Basic"
+        ],
+        "additionalProperties": false
+      },
+      "Compatibilitytype": {
+        "type": "object",
+        "properties": {
+          "SpecVersion": {
+            "type": "string"
+          },
+          "System": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "Profile": {
+            "$ref": "#/definitions/Compatibilitytype1"
+          },
+          "ValidatorParameter": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Termstype"
+            }
+          }
+        },
+        "required": [
+          "SpecVersion",
+          "Profile"
+        ],
+        "additionalProperties": false
+      },
+      "Compatibilitytype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "subProfile": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Termstype": {
+        "type": "object",
+        "properties": {
+          "Money": {
+            "$ref": "#/definitions/Moneytype"
+          },
+          "Event": {
+            "type": "string"
+          },
+          "Text": {
+            "type": "string"
+          },
+          "Boolean": {
+            "type": "boolean"
+          },
+          "Duration": {
+            "type": "string"
+          },
+          "URI": {
+            "type": "string"
+          },
+          "Language": {
+            "type": "string"
+          },
+          "ID": {
+            "type": "string"
+          },
+          "AltIdentifier": {
+            "$ref": "#/definitions/ContentIdentifiertype"
+          },
+          "YearDateTime": {
+            "type": "string"
+          },
+          "Time": {
+            "type": "string"
+          },
+          "Region": {
+            "$ref": "#/definitions/Regiontype"
+          },
+          "Timecode": {
+            "$ref": "#/definitions/Timecodetype"
+          },
+          "Any": {
+            "type": "object",
+            "additionalProperties": false
+          },
+          "termName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "Money",
+          "Event",
+          "Text",
+          "Boolean",
+          "Duration",
+          "URI",
+          "Language",
+          "ID",
+          "AltIdentifier",
+          "YearDateTime",
+          "Time",
+          "Region",
+          "Timecode",
+          "Any",
+          "termName"
+        ],
+        "additionalProperties": false
+      },
+      "Moneytype": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentIdentifiertype": {
+        "type": "object",
+        "properties": {
+          "Namespace": {
+            "type": "string"
+          },
+          "Identifier": {
+            "type": "string"
+          },
+          "Location": {
+            "type": "string"
+          },
+          "Scope": {
+            "$ref": "#/definitions/ContentIdentifiertype1"
+          }
+        },
+        "required": [
+          "Namespace",
+          "Identifier"
+        ],
+        "additionalProperties": false
+      },
+      "ContentIdentifiertype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "subscope": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Regiontype": {
+        "type": "object",
+        "properties": {
+          "country": {
+            "type": "string"
+          },
+          "countryRegion": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "country"
+        ],
+        "additionalProperties": false
+      },
+      "Timecodetype": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "dropframe": {
+            "type": "boolean"
+          },
+          "format": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BasicMetadatatype": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "UpdateNum": {
+            "type": "number"
+          },
+          "LocalizedInfo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataInfotype"
+            },
+            "minItems": 1
+          },
+          "RunLength": {
+            "type": "string"
+          },
+          "ReleaseYear": {
+            "type": "string"
+          },
+          "ReleaseDate": {
+            "type": "string"
+          },
+          "ReleaseHistory": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ReleaseHistorytype"
+            }
+          },
+          "WorkType": {
+            "type": "string"
+          },
+          "WorkTypeDetail": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "PictureColorType": {
+            "$ref": "#/definitions/ColorTypetype"
+          },
+          "PictureFormat": {
+            "type": "string"
+          },
+          "ThreeD": {
+            "$ref": "#/definitions/BasicMetadatatype21"
+          },
+          "AspectRatio": {
+            "$ref": "#/definitions/BasicMetadatatype22"
+          },
+          "AltIdentifier": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentIdentifiertype"
+            }
+          },
+          "RatingSet": {
+            "$ref": "#/definitions/ContentRatingtype"
+          },
+          "People": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataPeopletype"
+            }
+          },
+          "CountryOfOrigin": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadatatype2CountryOfOrigin"
+            }
+          },
+          "PrimarySpokenLanguage": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "OriginalLanguage": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "VersionLanguage": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "VersionIntent": {
+            "$ref": "#/definitions/VersionIntenttype"
+          },
+          "AssociatedOrg": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/AssociatedOrgtype"
+            }
+          },
+          "ContentRelatedTo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRelatedTotype"
+            }
+          },
+          "AncillaryDescription": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/AncillaryDescriptiontype"
+            }
+          },
+          "SequenceInfo": {
+            "$ref": "#/definitions/ContentSequenceInfotype"
+          },
+          "Parent": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataParenttype"
+            }
+          },
+          "ContentID": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "ContentID",
+          "LocalizedInfo",
+          "ReleaseYear",
+          "WorkType"
+        ]
+      },
+      "BasicMetadataInfotype": {
+        "type": "object",
+        "properties": {
+          "TitleDisplay19": {
+            "type": "string"
+          },
+          "TitleDisplay60": {
+            "type": "string"
+          },
+          "TitleDisplayUnlimited": {
+            "type": "string"
+          },
+          "TitleSort": {
+            "type": "string"
+          },
+          "ArtReference": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataInfotype1"
+            }
+          },
+          "Summary190": {
+            "$ref": "#/definitions/BasicMetadataInfotype2"
+          },
+          "Summary400": {
+            "$ref": "#/definitions/BasicMetadataInfotype3"
+          },
+          "Summary4000": {
+            "$ref": "#/definitions/BasicMetadataInfotype4"
+          },
+          "DisplayIndicators": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "Genre": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataInfotype5"
+            }
+          },
+          "Keyword": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "VersionNotes": {
+            "type": "string"
+          },
+          "Region": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Regiontype"
+            },
+            "minItems": 1
+          },
+          "ExcludedRegion": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Regiontype"
+            },
+            "minItems": 1
+          },
+          "TargetAudience": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Audiencetype"
+            }
+          },
+          "OriginalTitle": {
+            "type": "string"
+          },
+          "CopyrightLine": {
+            "type": "string"
+          },
+          "PeopleLocal": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataPeopletype"
+            }
+          },
+          "TitleAlternate": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataInfotype6"
+            }
+          },
+          "language": {
+            "type": "string"
+          },
+          "default": {
+            "type": "boolean"
+          },
+          "condition": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "language"
+        ],
+        "additionalProperties": false
+      },
+      "BasicMetadataInfotype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "resolution": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BasicMetadataInfotype2": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "cast": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BasicMetadataInfotype3": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "cast": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BasicMetadataInfotype4": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "cast": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BasicMetadataInfotype5": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "level": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Audiencetype": {
+        "type": "object",
+        "properties": {
+          "Description": {
+            "type": "string"
+          },
+          "Who": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "When": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Audiencetype1"
+            }
+          },
+          "What": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Audiencetype2"
+            }
+          },
+          "Identification": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentIdentifiertype"
+            }
+          },
+          "Terms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Termstype"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "Audiencetype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Audiencetype2": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "bonus": {
+            "type": "boolean"
+          },
+          "condition": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BasicMetadataPeopletype": {
+        "type": "object",
+        "properties": {
+          "Job": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataJobtype"
+            },
+            "minItems": 1
+          },
+          "Name": {
+            "$ref": "#/definitions/PersonNametype"
+          },
+          "Identifier": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/PersonIdentifiertype"
+            }
+          },
+          "Gender": {
+            "$ref": "#/definitions/Gendertype"
+          },
+          "Pronouns": {
+            "$ref": "#/definitions/Pronounstype"
+          },
+          "Salutations": {
+            "$ref": "#/definitions/Salutationstype"
+          },
+          "ImageReference": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataPeopletype1"
+            }
+          },
+          "Biography": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataPeopletype2"
+            }
+          }
+        },
+        "required": [
+          "Job",
+          "Name"
+        ],
+        "additionalProperties": false
+      },
+      "BasicMetadataJobtype": {
+        "type": "object",
+        "properties": {
+          "JobFunction": {
+            "$ref": "#/definitions/BasicMetadataJobtype1"
+          },
+          "JobDisplay": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataJobtype2"
+            }
+          },
+          "BillingBlockOrder": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataJobtype3"
+            }
+          },
+          "Character": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "CharacterInfo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataCharactertype"
+            }
+          },
+          "Guest": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "JobFunction"
+        ],
+        "additionalProperties": false
+      },
+      "BasicMetadataJobtype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "scheme": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BasicMetadataJobtype2": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BasicMetadataJobtype3": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "number"
+          },
+          "topBilled": {
+            "type": "boolean"
+          },
+          "region": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "BasicMetadataCharactertype": {
+        "type": "object",
+        "properties": {
+          "CharacterName": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataCharactertype1"
+            },
+            "minItems": 1
+          },
+          "CharacterID": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/PersonIdentifiertype"
+            }
+          },
+          "Nonfictional": {
+            "$ref": "#/definitions/BasicMetadataCharactertype2"
+          },
+          "Gender": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Gendertype"
+            }
+          },
+          "Pronouns": {
+            "$ref": "#/definitions/Pronounstype"
+          },
+          "Salutations": {
+            "$ref": "#/definitions/Salutationstype"
+          },
+          "GroupingEntity": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/GroupingEntitytype"
+            }
+          },
+          "ImageReference": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataCharactertype3"
+            }
+          },
+          "CharacterDescription": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataCharactertype4"
+            }
+          },
+          "sequence": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "CharacterName"
+        ],
+        "additionalProperties": false
+      },
+      "BasicMetadataCharactertype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PersonIdentifiertype": {
+        "type": "object",
+        "properties": {
+          "Identifier": {
+            "type": "string"
+          },
+          "Namespace": {
+            "type": "string"
+          },
+          "ReferenceLocation": {
+            "type": "string"
+          },
+          "Scope": {
+            "$ref": "#/definitions/PersonIdentifiertype1"
+          }
+        },
+        "required": [
+          "Identifier",
+          "Namespace"
+        ],
+        "additionalProperties": false
+      },
+      "PersonIdentifiertype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "subscope": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BasicMetadataCharactertype2": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "boolean"
+          },
+          "appearance": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Gendertype": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "transgender": {
+            "type": "boolean"
+          },
+          "specificGender": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Pronounstype": {
+        "type": "object",
+        "properties": {
+          "Subjective": {
+            "type": "string"
+          },
+          "Objective": {
+            "type": "string"
+          },
+          "Adjective": {
+            "type": "string"
+          },
+          "Possessive": {
+            "type": "string"
+          },
+          "Reflexive": {
+            "type": "string"
+          },
+          "noProunouns": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Salutationstype": {
+        "type": "object",
+        "properties": {
+          "Title": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Salutationstype1"
+            }
+          },
+          "noTitle": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Salutationstype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "_default": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GroupingEntitytype": {
+        "type": "object",
+        "properties": {
+          "Type": {
+            "type": "string"
+          },
+          "GroupIdentity": {
+            "type": "string"
+          },
+          "DisplayName": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/GroupingEntitytype1"
+            },
+            "minItems": 1
+          },
+          "Region": {
+            "$ref": "#/definitions/Regiontype"
+          },
+          "AltGroupIdentifier": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentIdentifiertype"
+            }
+          }
+        },
+        "required": [
+          "Type",
+          "GroupIdentity",
+          "DisplayName"
+        ],
+        "additionalProperties": false
+      },
+      "GroupingEntitytype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BasicMetadataCharactertype3": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "resolution": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BasicMetadataCharactertype4": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PersonNametype": {
+        "type": "object",
+        "properties": {
+          "DisplayName": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/StringAndLanguagetype"
+            },
+            "minItems": 1
+          },
+          "SortName": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/StringAndLanguagetype"
+            }
+          },
+          "FirstGivenName": {
+            "type": "string"
+          },
+          "SecondGivenName": {
+            "type": "string"
+          },
+          "FamilyName": {
+            "type": "string"
+          },
+          "Suffix": {
+            "type": "string"
+          },
+          "Moniker": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "DisplayName"
+        ],
+        "additionalProperties": false
+      },
+      "StringAndLanguagetype": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BasicMetadataPeopletype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "resolution": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BasicMetadataPeopletype2": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BasicMetadataInfotype6": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReleaseHistorytype": {
+        "type": "object",
+        "properties": {
+          "ReleaseType": {
+            "$ref": "#/definitions/ReleaseHistorytype1"
+          },
+          "DistrTerritory": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Regiontype"
+            }
+          },
+          "Date": {
+            "$ref": "#/definitions/ReleaseHistorytype2"
+          },
+          "Description": {
+            "type": "string"
+          },
+          "ReleaseOrg": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/AssociatedOrgtype"
+            }
+          }
+        },
+        "required": [
+          "ReleaseType",
+          "Date"
+        ],
+        "additionalProperties": false
+      },
+      "ReleaseHistorytype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "wide": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReleaseHistorytype2": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "scheduled": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssociatedOrgtype": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "role": {
+            "type": "string"
+          },
+          "roleCategory": {
+            "type": "string"
+          },
+          "DisplayName": {
+            "type": "string"
+          },
+          "SortName": {
+            "type": "string"
+          },
+          "AlternateName": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "organizationID": {
+            "type": "string"
+          },
+          "departmentID": {
+            "type": "string"
+          },
+          "idType": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "DisplayName"
+        ]
+      },
+      "ColorTypetype": {
+        "type": "string",
+        "enum": [
+          "color",
+          "bandw",
+          "colorized",
+          "composite",
+          "unknown"
+        ]
+      },
+      "BasicMetadatatype21": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "boolean"
+          },
+          "three60": {
+            "type": "boolean"
+          },
+          "multiview": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BasicMetadatatype22": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "original": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentRatingtype": {
+        "type": "object",
+        "properties": {
+          "NotRated": {
+            "$ref": "#/definitions/ContentRatingtype1"
+          },
+          "Rating": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRatingDetailtype"
+            },
+            "minItems": 1
+          },
+          "AdultContent": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "Rating"
+        ],
+        "additionalProperties": false
+      },
+      "ContentRatingtype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "boolean"
+          },
+          "condition": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentRatingDetailtype": {
+        "type": "object",
+        "properties": {
+          "Region": {
+            "$ref": "#/definitions/Regiontype"
+          },
+          "System": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "string"
+          },
+          "Reason": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRatingDetailtype1"
+            }
+          },
+          "LinkToLogo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRatingDetailtype2"
+            }
+          },
+          "Description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRatingDetailtype3"
+            }
+          }
+        },
+        "required": [
+          "Region",
+          "System",
+          "Value"
+        ],
+        "additionalProperties": false
+      },
+      "ContentRatingDetailtype1": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentRatingDetailtype2": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentRatingDetailtype3": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "authoritative": {
+            "type": "boolean"
+          },
+          "origin": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BasicMetadatatype2CountryOfOrigin": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "intepretation": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "countryRegion": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "country"
+        ]
+      },
+      "VersionIntenttype": {
+        "type": "object",
+        "properties": {
+          "Audience": {
+            "$ref": "#/definitions/Audiencetype"
+          },
+          "Description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/VersionIntenttype1"
+            }
+          },
+          "EditUse": {
+            "type": "string"
+          },
+          "EditClass": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "MadeForRegion": {
+            "$ref": "#/definitions/Regiontype"
+          },
+          "Terms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Termstype"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "VersionIntenttype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentRelatedTotype": {
+        "type": "object",
+        "properties": {
+          "Relationship": {
+            "$ref": "#/definitions/ContentRelatedToRelationshiptype"
+          },
+          "Description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRelatedTotype1"
+            }
+          },
+          "Work": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRelatedToWorktype"
+            },
+            "minItems": 1
+          },
+          "Character": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRelatedToCharactertype"
+            },
+            "minItems": 1
+          },
+          "PersonOrGroup": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRelatedToPersontype"
+            },
+            "minItems": 1
+          },
+          "Period": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRelatedToPeriodtype"
+            },
+            "minItems": 1
+          },
+          "Place": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRelatedToPlacetype"
+            },
+            "minItems": 1
+          },
+          "Event": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRelatedToEventtype"
+            },
+            "minItems": 1
+          },
+          "GroupingEntity": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/GroupingEntitytype"
+            }
+          },
+          "Terms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Termstype"
+            }
+          }
+        },
+        "required": [
+          "Relationship",
+          "Work",
+          "Character",
+          "PersonOrGroup",
+          "Period",
+          "Place",
+          "Event"
+        ],
+        "additionalProperties": false
+      },
+      "ContentRelatedToRelationshiptype": {
+        "type": "object",
+        "properties": {
+          "Type": {
+            "type": "string"
+          },
+          "SubType": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "Description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRelatedToRelationshiptype1"
+            }
+          },
+          "primary": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "Type"
+        ],
+        "additionalProperties": false
+      },
+      "ContentRelatedToRelationshiptype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentRelatedTotype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentRelatedToWorktype": {
+        "type": "object",
+        "properties": {
+          "WorkType": {
+            "type": "string"
+          },
+          "ContentID": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "OtherIdentifier": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentIdentifiertype"
+            }
+          },
+          "Description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRelatedToWorktype1"
+            }
+          },
+          "primary": {
+            "type": "boolean"
+          },
+          "fictional": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentRelatedToWorktype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentRelatedToCharactertype": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRelatedToCharactertype1"
+            }
+          },
+          "primary": {
+            "type": "boolean"
+          },
+          "fictional": {
+            "type": "boolean"
+          },
+          "CharacterName": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataCharactertype1"
+            },
+            "minItems": 1
+          },
+          "CharacterID": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/PersonIdentifiertype"
+            }
+          },
+          "Nonfictional": {
+            "$ref": "#/definitions/BasicMetadataCharactertype2"
+          },
+          "Gender": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Gendertype"
+            }
+          },
+          "Pronouns": {
+            "$ref": "#/definitions/Pronounstype"
+          },
+          "Salutations": {
+            "$ref": "#/definitions/Salutationstype"
+          },
+          "GroupingEntity": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/GroupingEntitytype"
+            }
+          },
+          "ImageReference": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataCharactertype3"
+            }
+          },
+          "CharacterDescription": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataCharactertype4"
+            }
+          },
+          "sequence": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "CharacterName"
+        ]
+      },
+      "ContentRelatedToCharactertype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentRelatedToPersontype": {
+        "type": "object",
+        "properties": {
+          "Identifier": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/PersonIdentifiertype"
+            }
+          },
+          "Name": {
+            "$ref": "#/definitions/PersonNametype"
+          },
+          "Description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRelatedToPersontype1"
+            }
+          },
+          "primary": {
+            "type": "boolean"
+          },
+          "fictional": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "Name"
+        ],
+        "additionalProperties": false
+      },
+      "ContentRelatedToPersontype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentRelatedToPeriodtype": {
+        "type": "object",
+        "properties": {
+          "Date": {
+            "$ref": "#/definitions/ContentRelatedToPeriodtype1"
+          },
+          "Duration": {
+            "$ref": "#/definitions/ContentRelatedToPeriodtype2"
+          },
+          "Description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRelatedToPeriodtype3"
+            }
+          },
+          "primary": {
+            "type": "boolean"
+          },
+          "fictional": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "Date"
+        ],
+        "additionalProperties": false
+      },
+      "ContentRelatedToPeriodtype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "approximate": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentRelatedToPeriodtype2": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "approximate": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentRelatedToPeriodtype3": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentRelatedToPlacetype": {
+        "type": "object",
+        "properties": {
+          "Region": {
+            "$ref": "#/definitions/Regiontype"
+          },
+          "Address": {
+            "type": "string"
+          },
+          "EarthCoordinate": {
+            "$ref": "#/definitions/CoordinateEarthtype"
+          },
+          "OtherCoordinate": {
+            "$ref": "#/definitions/CoordinateOthertype"
+          },
+          "Description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRelatedToPlacetype1"
+            }
+          },
+          "primary": {
+            "type": "boolean"
+          },
+          "fictional": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CoordinateEarthtype": {
+        "type": "object",
+        "properties": {
+          "Latitude": {
+            "type": "number"
+          },
+          "Longitude": {
+            "type": "number"
+          },
+          "ElevationMeters": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Latitude",
+          "Longitude"
+        ],
+        "additionalProperties": false
+      },
+      "CoordinateOthertype": {
+        "type": "object",
+        "properties": {
+          "Coordinate": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CoordinateOthertype1"
+            },
+            "minItems": 1
+          },
+          "system": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "Coordinate",
+          "system"
+        ],
+        "additionalProperties": false
+      },
+      "CoordinateOthertype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "label"
+        ],
+        "additionalProperties": false
+      },
+      "ContentRelatedToPlacetype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentRelatedToEventtype": {
+        "type": "object",
+        "properties": {
+          "Type": {
+            "type": "string"
+          },
+          "SubType": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "Date": {
+            "$ref": "#/definitions/ContentRelatedToEventtype1"
+          },
+          "Duration": {
+            "$ref": "#/definitions/ContentRelatedToEventtype2"
+          },
+          "Description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRelatedToEventtype3"
+            }
+          },
+          "primary": {
+            "type": "boolean"
+          },
+          "fictional": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentRelatedToEventtype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "approximate": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentRelatedToEventtype2": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "approximate": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentRelatedToEventtype3": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AncillaryDescriptiontype": {
+        "type": "object",
+        "properties": {
+          "Type": {
+            "type": "string"
+          },
+          "SubType": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "Description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/AncillaryDescriptiontype1"
+            },
+            "minItems": 1
+          },
+          "AdditionalTerms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Termstype"
+            }
+          },
+          "ancillaryDescriptionID": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "Type",
+          "Description"
+        ],
+        "additionalProperties": false
+      },
+      "AncillaryDescriptiontype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentSequenceInfotype": {
+        "type": "object",
+        "properties": {
+          "Number": {
+            "type": "number"
+          },
+          "DistributionNumber": {
+            "$ref": "#/definitions/ComplexSequenceInfoDistributionNumber"
+          },
+          "HouseSequence": {
+            "$ref": "#/definitions/ComplexSequenceInfoHouseSequence"
+          },
+          "AlternateNumber": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ComplexSequenceInfoAlternateNumber"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "ComplexSequenceInfoDistributionNumber": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ComplexSequenceInfoHouseSequence": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ComplexSequenceInfoAlternateNumber": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BasicMetadataParenttype": {
+        "type": "object",
+        "properties": {
+          "ParentContentID": {
+            "type": "string"
+          },
+          "Parent": {
+            "$ref": "#/definitions/BasicMetadatatype2"
+          },
+          "SequenceInfo": {
+            "$ref": "#/definitions/ContentSequenceInfotype"
+          },
+          "Region": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Regiontype"
+            },
+            "minItems": 1
+          },
+          "ExcludedRegion": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Regiontype"
+            },
+            "minItems": 1
+          },
+          "relationshipType": {
+            "type": "string",
+            "enum": [
+              "isclipof",
+              "isepisodeof",
+              "isseasonof",
+              "ispieceof",
+              "ispartof",
+              "isderivedfrom",
+              "iscompositeof",
+              "issupplementto",
+              "ispromotionfor",
+              "isabsedon",
+              "isdescendentof"
+            ]
+          }
+        },
+        "required": [
+          "ParentContentID",
+          "Parent",
+          "Region",
+          "ExcludedRegion"
+        ],
+        "additionalProperties": false
+      },
+      "BasicMetadatatype2": {
+        "type": "object",
+        "properties": {
+          "UpdateNum": {
+            "type": "number"
+          },
+          "LocalizedInfo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataInfotype"
+            },
+            "minItems": 1
+          },
+          "RunLength": {
+            "type": "string"
+          },
+          "ReleaseYear": {
+            "type": "string"
+          },
+          "ReleaseDate": {
+            "type": "string"
+          },
+          "ReleaseHistory": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ReleaseHistorytype"
+            }
+          },
+          "WorkType": {
+            "type": "string"
+          },
+          "WorkTypeDetail": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "PictureColorType": {
+            "$ref": "#/definitions/ColorTypetype"
+          },
+          "PictureFormat": {
+            "type": "string"
+          },
+          "ThreeD": {
+            "$ref": "#/definitions/BasicMetadatatype21"
+          },
+          "AspectRatio": {
+            "$ref": "#/definitions/BasicMetadatatype22"
+          },
+          "AltIdentifier": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentIdentifiertype"
+            }
+          },
+          "RatingSet": {
+            "$ref": "#/definitions/ContentRatingtype"
+          },
+          "People": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataPeopletype"
+            }
+          },
+          "CountryOfOrigin": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadatatype2CountryOfOrigin"
+            }
+          },
+          "PrimarySpokenLanguage": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "OriginalLanguage": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "VersionLanguage": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "VersionIntent": {
+            "$ref": "#/definitions/VersionIntenttype"
+          },
+          "AssociatedOrg": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/AssociatedOrgtype"
+            }
+          },
+          "ContentRelatedTo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentRelatedTotype"
+            }
+          },
+          "AncillaryDescription": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/AncillaryDescriptiontype"
+            }
+          },
+          "SequenceInfo": {
+            "$ref": "#/definitions/ContentSequenceInfotype"
+          },
+          "Parent": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataParenttype"
+            }
+          },
+          "ContentID": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "LocalizedInfo",
+          "ReleaseYear",
+          "WorkType",
+          "ContentID"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetMetadatatype": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Audio": {
+            "$ref": "#/definitions/DigitalAssetAudioDatatype"
+          },
+          "Video": {
+            "$ref": "#/definitions/DigitalAssetVideoDatatype"
+          },
+          "Subtitle": {
+            "$ref": "#/definitions/DigitalAssetSubtitleDatatype"
+          },
+          "Image": {
+            "$ref": "#/definitions/DigitalAssetImageDatatype"
+          },
+          "Interactive": {
+            "$ref": "#/definitions/DigitalAssetInteractiveDatatype"
+          },
+          "Ancillary": {
+            "$ref": "#/definitions/DigitalAssetAncillaryDatatype"
+          }
+        },
+        "required": [
+          "Ancillary",
+          "Audio",
+          "Image",
+          "Interactive",
+          "Subtitle",
+          "Video"
+        ]
+      },
+      "DigitalAssetAudioDatatype": {
+        "type": "object",
+        "properties": {
+          "Description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetAudioDatatype1"
+            }
+          },
+          "Type": {
+            "type": "string"
+          },
+          "SubType": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "Encoding": {
+            "$ref": "#/definitions/DigitalAssetAudioEncodingtype"
+          },
+          "Language": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetAudioLanguagetype"
+            },
+            "minItems": 1
+          },
+          "People": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicMetadataPeopletype"
+            }
+          },
+          "Channels": {
+            "type": "string"
+          },
+          "MCALabelSubdescriptor": {
+            "$ref": "#/definitions/DigitalAssetAudioMCALabeltype"
+          },
+          "Compliance": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Compliancetype"
+            }
+          },
+          "AssetIntent": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/AssetIntenttype"
+            }
+          },
+          "TrackReference": {
+            "type": "string"
+          },
+          "TrackIdentifier": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentIdentifiertype"
+            }
+          },
+          "Private": {
+            "$ref": "#/definitions/PrivateDatatype"
+          }
+        },
+        "required": [
+          "Language"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetAudioDatatype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetAudioEncodingtype": {
+        "type": "object",
+        "properties": {
+          "Codec": {
+            "type": "string"
+          },
+          "CodecType": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "BitrateMax": {
+            "type": "number"
+          },
+          "BitrateAverage": {
+            "type": "number"
+          },
+          "VBR": {
+            "type": "string"
+          },
+          "SampleRate": {
+            "type": "number"
+          },
+          "SampleBitDepth": {
+            "type": "number"
+          },
+          "ChannelMapping": {
+            "$ref": "#/definitions/DigitalAssetAudioEncodingtype1"
+          },
+          "Watermark": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetWatermarktype"
+            }
+          },
+          "ActualLength": {
+            "type": "string"
+          },
+          "Ambisonics": {
+            "$ref": "#/definitions/DigitalAssetAudioAmbisonicstype"
+          },
+          "Loudness": {
+            "$ref": "#/definitions/DigitalAssetAudioLoudnesstype"
+          }
+        },
+        "required": [
+          "Codec"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetAudioEncodingtype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "isSingleTrack": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetWatermarktype": {
+        "type": "object",
+        "properties": {
+          "Vendor": {
+            "type": "string"
+          },
+          "ProductAndVersionID": {
+            "type": "string"
+          },
+          "Data": {
+            "type": "string"
+          },
+          "guaranteedAbsent": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "Vendor",
+          "ProductAndVersionID"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetAudioAmbisonicstype": {
+        "type": "object",
+        "properties": {
+          "Type": {
+            "type": "string"
+          },
+          "Order": {
+            "type": "number"
+          },
+          "VeriticalOrder": {
+            "type": "number"
+          },
+          "Normalization": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "Order",
+          "Normalization"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetAudioLoudnesstype": {
+        "type": "object",
+        "properties": {
+          "Level": {
+            "type": "number"
+          },
+          "Deviation": {
+            "type": "number"
+          },
+          "LeqM": {
+            "type": "number"
+          },
+          "Compliance": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetAudioLanguagetype": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "dubbed": {
+            "type": "boolean"
+          },
+          "forced": {
+            "type": "boolean"
+          },
+          "disposition": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetAudioMCALabeltype": {
+        "type": "object",
+        "properties": {
+          "ContentKind": {
+            "type": "string"
+          },
+          "ElementKind": {
+            "type": "string"
+          },
+          "Content": {
+            "type": "string"
+          },
+          "UseClass": {
+            "type": "string"
+          },
+          "ContentSubtype": {
+            "type": "string"
+          },
+          "ContentDifferentiator": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Compliancetype": {
+        "type": "object",
+        "properties": {
+          "Category": {
+            "type": "string"
+          },
+          "Standard": {
+            "type": "string"
+          },
+          "StandardDetail": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "Disposition": {
+            "type": "string"
+          },
+          "CompetentAuthority": {
+            "$ref": "#/definitions/AssociatedOrgtype"
+          },
+          "Certificate": {
+            "$ref": "#/definitions/Compliancetype1"
+          },
+          "TestingOrganization": {
+            "$ref": "#/definitions/AssociatedOrgtype"
+          },
+          "TestingMethod": {
+            "type": "string"
+          },
+          "TestingDate": {
+            "type": "string"
+          },
+          "ErrorDescription": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/QCErrorDescriptiontype"
+            }
+          },
+          "Comments": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "Disposition"
+        ],
+        "additionalProperties": false
+      },
+      "Compliancetype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "MIME": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "QCErrorDescriptiontype": {
+        "type": "object",
+        "properties": {
+          "ErrorReference": {
+            "type": "string"
+          },
+          "ErrorCategory": {
+            "type": "string"
+          },
+          "ErrorTerm": {
+            "type": "string"
+          },
+          "CategorySpecificInfo": {
+            "$ref": "#/definitions/QCCategoryErrortype"
+          },
+          "Comments": {
+            "type": "string"
+          },
+          "FullOrPartialQC": {
+            "type": "string"
+          },
+          "QCReportLocation": {
+            "type": "string"
+          },
+          "Severity": {
+            "$ref": "#/definitions/QCErrorDescriptiontype1"
+          }
+        },
+        "required": [
+          "ErrorCategory",
+          "ErrorTerm"
+        ],
+        "additionalProperties": false
+      },
+      "QCCategoryErrortype": {
+        "type": "object",
+        "properties": {
+          "AudioOrVideoOrTimedText": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/QCCategoryErrortypeAudio"
+                },
+                {
+                  "$ref": "#/definitions/QCCategoryErrortypeVideo"
+                },
+                {
+                  "$ref": "#/definitions/QCCategoryErrortypeTimedText"
+                },
+                {
+                  "$ref": "#/definitions/QCCategoryErrortypeArtwork"
+                },
+                {
+                  "$ref": "#/definitions/QCErrorPackagetype"
+                },
+                {
+                  "$ref": "#/definitions/QCCategoryErrortypeMetadata"
+                },
+                {
+                  "$ref": "#/definitions/QCXMLErrortype"
+                },
+                {
+                  "$ref": "#/definitions/QCErrorExceltype"
+                }
+              ]
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "AudioOrVideoOrTimedText"
+        ],
+        "additionalProperties": false
+      },
+      "QCCategoryErrortypeAudio": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "TimeRange": {
+            "$ref": "#/definitions/QCTimeRangetype"
+          },
+          "TimeOffset": {
+            "type": "string"
+          }
+        }
+      },
+      "QCTimeRangetype": {
+        "type": "object",
+        "properties": {
+          "StartTimecode": {
+            "$ref": "#/definitions/Timecodetype"
+          },
+          "EndTimecode": {
+            "$ref": "#/definitions/Timecodetype"
+          }
+        },
+        "required": [
+          "StartTimecode"
+        ],
+        "additionalProperties": false
+      },
+      "QCCategoryErrortypeVideo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "TimeRange": {
+            "$ref": "#/definitions/QCTimeRangetype"
+          },
+          "Area": {
+            "$ref": "#/definitions/QCAreatype"
+          }
+        }
+      },
+      "QCAreatype": {
+        "type": "object",
+        "properties": {
+          "XOffset": {
+            "type": "number"
+          },
+          "YOffset": {
+            "type": "number"
+          },
+          "Width": {
+            "type": "number"
+          },
+          "Height": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "XOffset",
+          "YOffset",
+          "Width",
+          "Height"
+        ],
+        "additionalProperties": false
+      },
+      "QCCategoryErrortypeTimedText": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "TimeRange": {
+            "$ref": "#/definitions/QCTimeRangetype"
+          },
+          "TimeOffset": {
+            "type": "string"
+          },
+          "Text": {
+            "type": "string"
+          }
+        }
+      },
+      "QCCategoryErrortypeArtwork": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Area": {
+            "$ref": "#/definitions/QCAreatype"
+          },
+          "Text": {
+            "type": "string"
+          }
+        }
+      },
+      "QCErrorPackagetype": {
+        "type": "object",
+        "properties": {
+          "ObjectInError": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/QCErrorPackagetype1"
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "ObjectInError"
+        ],
+        "additionalProperties": false
+      },
+      "QCErrorPackagetype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "disposition": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "QCCategoryErrortypeMetadata": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "XMLError": {
+            "$ref": "#/definitions/QCXMLErrortype"
+          }
+        },
+        "required": [
+          "XMLError"
+        ]
+      },
+      "QCXMLErrortype": {
+        "type": "object",
+        "properties": {
+          "XPath": {
+            "type": "string"
+          },
+          "LineNumber": {
+            "type": "number"
+          },
+          "ValidatorLevel": {
+            "type": "string"
+          },
+          "ValidatorTag": {
+            "type": "string"
+          },
+          "ValidatorSummary": {
+            "type": "string"
+          },
+          "ValidatorFile": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "QCErrorExceltype": {
+        "type": "object",
+        "properties": {
+          "Row": {
+            "type": "number"
+          },
+          "Column": {
+            "type": "string"
+          },
+          "Cell": {
+            "$ref": "#/definitions/QCErrorExceltype1"
+          },
+          "ValidatorLevel": {
+            "type": "string"
+          },
+          "ValidatorTag": {
+            "type": "string"
+          },
+          "ValidatorSummary": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "Row",
+          "Column",
+          "Cell"
+        ],
+        "additionalProperties": false
+      },
+      "QCErrorExceltype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "endCell": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "QCErrorDescriptiontype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "resolution": {
+            "type": "string"
+          },
+          "originalSeverity": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssetIntenttype": {
+        "type": "object",
+        "properties": {
+          "Type": {
+            "type": "string"
+          },
+          "SubType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/AssetIntenttype1"
+            }
+          },
+          "Description": {
+            "$ref": "#/definitions/AssetIntenttype2"
+          },
+          "AssetReference": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/AssetIntentReferencetype"
+            }
+          },
+          "AssociatedOrg": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/AssociatedOrgtype"
+            }
+          },
+          "WIP": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "Type"
+        ],
+        "additionalProperties": false
+      },
+      "AssetIntenttype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "ordinal": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssetIntenttype2": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssetIntentReferencetype": {
+        "type": "object",
+        "properties": {
+          "ContentID": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "OtherIdentifier": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentIdentifiertype"
+            }
+          },
+          "Description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/AssetIntentReferencetype1"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssetIntentReferencetype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PrivateDatatype": {
+        "type": "object",
+        "properties": {
+          "Any": {
+            "type": "array",
+            "minItems": 1,
+            "items": [
+              {
+                "type": "object",
+                "additionalProperties": false
+              }
+            ],
+            "additionalItems": {
+              "type": "object",
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "Any"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetVideoDatatype": {
+        "type": "object",
+        "properties": {
+          "Description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetVideoDatatype1"
+            }
+          },
+          "Type": {
+            "type": "string"
+          },
+          "SubType": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "Encoding": {
+            "$ref": "#/definitions/DigitalAssetVideoEncodingtype"
+          },
+          "Picture": {
+            "$ref": "#/definitions/DigitalAssetVideoPicturetype"
+          },
+          "ColorType": {
+            "$ref": "#/definitions/ColorTypetype"
+          },
+          "PictureFormat": {
+            "type": "string"
+          },
+          "CaptureMethod": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "Language": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetVideoDatatype2"
+            }
+          },
+          "SubtitleLanguage": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetVideoSubtitleLanguagetype"
+            }
+          },
+          "SignedLanguage": {
+            "$ref": "#/definitions/DigitalAssetVideoDatatype3"
+          },
+          "CardsetList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetCardsetListtype"
+            }
+          },
+          "Compliance": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Compliancetype"
+            }
+          },
+          "AssetIntent": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/AssetIntenttype"
+            }
+          },
+          "TrackReference": {
+            "type": "string"
+          },
+          "TrackIdentifier": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentIdentifiertype"
+            }
+          },
+          "Private": {
+            "$ref": "#/definitions/PrivateDatatype"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetVideoDatatype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetVideoEncodingtype": {
+        "type": "object",
+        "properties": {
+          "Codec": {
+            "type": "string"
+          },
+          "CodecType": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "MPEGProfile": {
+            "type": "string"
+          },
+          "MPEGLevel": {
+            "type": "string"
+          },
+          "CodecProfile": {
+            "type": "string"
+          },
+          "BitrateMax": {
+            "type": "number"
+          },
+          "BitRateAverage": {
+            "type": "number"
+          },
+          "VBR": {
+            "type": "string"
+          },
+          "Watermark": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetWatermarktype"
+            }
+          },
+          "ActualLength": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "Codec"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetVideoPicturetype": {
+        "type": "object",
+        "properties": {
+          "AspectRatio": {
+            "$ref": "#/definitions/DigitalAssetVideoPicturetype1"
+          },
+          "PixelAspect": {
+            "$ref": "#/definitions/StringVideoPicPixelAspect"
+          },
+          "WidthPixels": {
+            "type": "number"
+          },
+          "HeightPixels": {
+            "type": "number"
+          },
+          "ActiveWidthPixels": {
+            "$ref": "#/definitions/DigitalAssetVideoPicturetype2"
+          },
+          "ActiveHeightPixels": {
+            "$ref": "#/definitions/DigitalAssetVideoPicturetype3"
+          },
+          "FrameRate": {
+            "$ref": "#/definitions/DigitalAssetVideoPictureFrameRatetype"
+          },
+          "Progressive": {
+            "$ref": "#/definitions/DigitalAssetVideoPictureProgressivetype"
+          },
+          "ColorSubsampling": {
+            "type": "string"
+          },
+          "BitDepth": {
+            "$ref": "#/definitions/DigitalAssetVideoPicturetype4"
+          },
+          "Colorimetry": {
+            "type": "string"
+          },
+          "Type3D": {
+            "type": "string"
+          },
+          "MasteredColorVolume": {
+            "$ref": "#/definitions/DigitalAssetColorVolumetype"
+          },
+          "ColorEncoding": {
+            "$ref": "#/definitions/DigitalAssetColorEncodingtype"
+          },
+          "ColorTransformMetadata": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetColorTransformMetadatatype"
+            }
+          },
+          "LightLevel": {
+            "$ref": "#/definitions/DigitalAssetVideoPictureLightLeveltype"
+          },
+          "HDRPlaybackInfo": {
+            "$ref": "#/definitions/DigitalAssetVideoPictureHDRPlaybackInfotype"
+          },
+          "ThreeSixty": {
+            "$ref": "#/definitions/DigitalAssetVideoPicture360Type"
+          },
+          "OriginalPicture": {
+            "$ref": "#/definitions/DigitalAssetVideoPictureOriginaltype"
+          },
+          "Any": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetVideoPicturetype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "original": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StringVideoPicPixelAspect": {
+        "type": "string",
+        "enum": [
+          "NTSC",
+          "PAL",
+          "square",
+          "other"
+        ]
+      },
+      "DigitalAssetVideoPicturetype2": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "number"
+          },
+          "xOffset": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetVideoPicturetype3": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "number"
+          },
+          "yOffset": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetVideoPictureFrameRatetype": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "number"
+          },
+          "multiplier": {
+            "type": "string",
+            "const": "1000/1001"
+          },
+          "timecode": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetVideoPictureProgressivetype": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "boolean"
+          },
+          "scanOrder": {
+            "$ref": "#/definitions/StringVideoPicProgressivescanOrder"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StringVideoPicProgressivescanOrder": {
+        "type": "string",
+        "enum": [
+          "BFF",
+          "TFF",
+          "PPF"
+        ]
+      },
+      "DigitalAssetVideoPicturetype4": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "number"
+          },
+          "alphaDepth": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetColorVolumetype": {
+        "type": "object",
+        "properties": {
+          "PrimaryRChromaticity": {
+            "$ref": "#/definitions/DigitalAssetChromaticitytype"
+          },
+          "PrimaryGChromaticity": {
+            "$ref": "#/definitions/DigitalAssetChromaticitytype"
+          },
+          "PrimaryBChromaticity": {
+            "$ref": "#/definitions/DigitalAssetChromaticitytype"
+          },
+          "WhitePointChromaticity": {
+            "$ref": "#/definitions/DigitalAssetChromaticitytype"
+          },
+          "LuminanceMin": {
+            "type": "number"
+          },
+          "LuminanceMax": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "PrimaryRChromaticity",
+          "PrimaryGChromaticity",
+          "PrimaryBChromaticity",
+          "WhitePointChromaticity",
+          "LuminanceMin",
+          "LuminanceMax"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetChromaticitytype": {
+        "type": "object",
+        "properties": {
+          "ChromaticityCIEx": {
+            "type": "number"
+          },
+          "ChromaticityCIEy": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "ChromaticityCIEx",
+          "ChromaticityCIEy"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetColorEncodingtype": {
+        "type": "object",
+        "properties": {
+          "Primaries": {
+            "type": "string"
+          },
+          "TransferFunction": {
+            "type": "string"
+          },
+          "ColorDifferencing": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "Primaries",
+          "TransferFunction",
+          "ColorDifferencing"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetColorTransformMetadatatype": {
+        "type": "object",
+        "properties": {
+          "ColorVolumeTransform": {
+            "type": "string"
+          },
+          "ApplicationIdentifier": {
+            "$ref": "#/definitions/DigitalAssetColorTransformMetadatatype1"
+          },
+          "TargetSystemDisplay": {
+            "$ref": "#/definitions/DigitalAssetColorVolumetype"
+          },
+          "DoNotTranscodeBase": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ColorVolumeTransform"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetColorTransformMetadatatype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "number"
+          },
+          "applicationVersion": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetVideoPictureLightLeveltype": {
+        "type": "object",
+        "properties": {
+          "ContentMax": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetVideoPictureLightLeveltype1"
+            }
+          },
+          "FrameAverageMax": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetVideoPictureLightLeveltype2"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetVideoPictureLightLeveltype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "number"
+          },
+          "interpretation": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetVideoPictureLightLeveltype2": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "number"
+          },
+          "interpretation": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetVideoPictureHDRPlaybackInfotype": {
+        "type": "object",
+        "properties": {
+          "SDRDownconversion": {
+            "type": "string"
+          },
+          "Any": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetVideoPicture360Type": {
+        "type": "object",
+        "properties": {
+          "Projection": {
+            "type": "string"
+          },
+          "Rendering": {
+            "type": "string"
+          },
+          "InitialView": {
+            "$ref": "#/definitions/DigitalAssetVideoPicture360Initialtype"
+          }
+        },
+        "required": [
+          "Projection"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetVideoPicture360Initialtype": {
+        "type": "object",
+        "properties": {
+          "HeadingDegrees": {
+            "type": "number"
+          },
+          "PitchDegrees": {
+            "type": "number"
+          },
+          "RollDegress": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "HeadingDegrees",
+          "PitchDegrees",
+          "RollDegress"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetVideoPictureOriginaltype": {
+        "type": "object",
+        "properties": {
+          "FrameRate": {
+            "$ref": "#/definitions/DigitalAssetVideoPictureFrameRatetype"
+          },
+          "Progressive": {
+            "$ref": "#/definitions/DigitalAssetVideoPictureProgressivetype"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetVideoDatatype2": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "disposition": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetVideoSubtitleLanguagetype": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "closed": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string"
+          },
+          "disposition": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetVideoDatatype3": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "disposition": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetCardsetListtype": {
+        "type": "object",
+        "properties": {
+          "Type": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "Region": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "Cardset": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetCardsettype"
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "Cardset"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetCardsettype": {
+        "type": "object",
+        "properties": {
+          "Type": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "Description": {
+            "type": "string"
+          },
+          "Sequence": {
+            "type": "number"
+          },
+          "Language": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "Type"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetSubtitleDatatype": {
+        "type": "object",
+        "properties": {
+          "Format": {
+            "$ref": "#/definitions/DigitalAssetSubtitleFormattype"
+          },
+          "Description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetSubtitleDatatype1"
+            }
+          },
+          "Type": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "SubType": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "FormatType": {
+            "type": "string"
+          },
+          "Language": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetSubtitleDatatype2"
+            },
+            "minItems": 1
+          },
+          "Encoding": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {}
+              }
+            ]
+          },
+          "Properties": {
+            "$ref": "#/definitions/DigitalAssetSubtitlePropertiestype"
+          },
+          "PictureDetails": {
+            "$ref": "#/definitions/DigitalAssetVideoPicturetype"
+          },
+          "DynamicRangeProfile": {
+            "$ref": "#/definitions/DigitalAssetSubtitleDatatype3"
+          },
+          "ColorGamutProfile": {
+            "type": "string"
+          },
+          "Creation": {
+            "$ref": "#/definitions/DigitalAssetSubtitleCreationtype"
+          },
+          "AdditionalOffset": {
+            "$ref": "#/definitions/Timecodetype"
+          },
+          "DropFrame": {
+            "type": "boolean"
+          },
+          "CardsetList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetCardsetListtype"
+            }
+          },
+          "Compliance": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Compliancetype"
+            }
+          },
+          "AssetIntent": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/AssetIntenttype"
+            }
+          },
+          "TrackReference": {
+            "type": "string"
+          },
+          "TrackIdentifier": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentIdentifiertype"
+            }
+          },
+          "Private": {
+            "$ref": "#/definitions/PrivateDatatype"
+          }
+        },
+        "required": [
+          "Type",
+          "Language"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetSubtitleFormattype": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "SDImage": {
+            "type": "boolean"
+          },
+          "HDImage": {
+            "type": "boolean"
+          },
+          "UHDImage": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetSubtitleDatatype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetSubtitleDatatype2": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "disposition": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetSubtitlePropertiestype": {
+        "type": "object",
+        "properties": {
+          "MaxCPS": {
+            "$ref": "#/definitions/DigitalAssetSubtitlePropertiestype1"
+          },
+          "MaxLinesPerEvent": {
+            "$ref": "#/definitions/DigitalAssetSubtitlePropertiestype2"
+          },
+          "FormattingStripped": {
+            "type": "boolean"
+          },
+          "ContainsAnnotation": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetSubtitlePropertiestype3"
+            }
+          },
+          "WritingFeatures": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Termstype"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetSubtitlePropertiestype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "number"
+          },
+          "strict": {
+            "type": "boolean"
+          },
+          "algorithm": {
+            "type": "string"
+          },
+          "spacesCounted": {
+            "type": "boolean"
+          },
+          "punctuationCounted": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetSubtitlePropertiestype2": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "number"
+          },
+          "strict": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetSubtitlePropertiestype3": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetSubtitleDatatype3": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "LuminanceMin": {
+            "type": "number"
+          },
+          "LuminanceMax": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetSubtitleCreationtype": {
+        "type": "object",
+        "properties": {
+          "AutoTTS": {
+            "$ref": "#/definitions/DigitalAssetSubtitleCreationtype1"
+          },
+          "AutoSegmentation": {
+            "$ref": "#/definitions/DigitalAssetSubtitleCreationtype2"
+          },
+          "AutoTranslation": {
+            "$ref": "#/definitions/DigitalAssetSubtitleCreationtype3"
+          },
+          "OCR": {
+            "$ref": "#/definitions/DigitalAssetSubtitleCreationtype4"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetSubtitleCreationtype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "boolean"
+          },
+          "full": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetSubtitleCreationtype2": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "boolean"
+          },
+          "full": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetSubtitleCreationtype3": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "boolean"
+          },
+          "full": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetSubtitleCreationtype4": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "boolean"
+          },
+          "full": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetImageDatatype": {
+        "type": "object",
+        "properties": {
+          "Description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetImageDatatype1"
+            }
+          },
+          "Type": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "SubType": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "Purpose": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "Width": {
+            "type": "number"
+          },
+          "Height": {
+            "type": "number"
+          },
+          "Encoding": {
+            "type": "string"
+          },
+          "PictureDetails": {
+            "$ref": "#/definitions/DigitalAssetVideoPicturetype"
+          },
+          "DynamicRangeProfile": {
+            "$ref": "#/definitions/DigitalAssetImageDatatype2"
+          },
+          "ColorGamutProfile": {
+            "type": "string"
+          },
+          "Language": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetImageDatatype3"
+            }
+          },
+          "CardsetList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetCardsetListtype"
+            }
+          },
+          "Compliance": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Compliancetype"
+            }
+          },
+          "AssetIntent": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/AssetIntenttype"
+            }
+          },
+          "TrackReference": {
+            "type": "string"
+          },
+          "TrackIdentifier": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentIdentifiertype"
+            }
+          },
+          "Private": {
+            "$ref": "#/definitions/PrivateDatatype"
+          }
+        },
+        "required": [
+          "Width",
+          "Height",
+          "Encoding"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetImageDatatype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetImageDatatype2": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "LuminanceMin": {
+            "type": "number"
+          },
+          "LuminanceMax": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetImageDatatype3": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "disposition": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetInteractiveDatatype": {
+        "type": "object",
+        "properties": {
+          "Type": {
+            "type": "string"
+          },
+          "SubType": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "FormatType": {
+            "type": "string"
+          },
+          "Language": {
+            "type": "string"
+          },
+          "Encoding": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetInteractiveEncodingtype"
+            },
+            "minItems": 1
+          },
+          "Compliance": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Compliancetype"
+            }
+          },
+          "AssetIntent": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/AssetIntenttype"
+            }
+          },
+          "TrackReference": {
+            "type": "string"
+          },
+          "TrackIdentifier": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentIdentifiertype"
+            }
+          },
+          "Private": {
+            "$ref": "#/definitions/PrivateDatatype"
+          }
+        },
+        "required": [
+          "Type",
+          "Encoding"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetInteractiveEncodingtype": {
+        "type": "object",
+        "properties": {
+          "RuntimeEnvironment": {
+            "type": "string"
+          },
+          "EnvironmentAttribute": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DigitalAssetInteractiveEncodingtype1"
+            }
+          },
+          "FirstVersion": {
+            "type": "string"
+          },
+          "LastVersion": {
+            "type": "string"
+          },
+          "Any": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "RuntimeEnvironment"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetInteractiveEncodingtype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "recommended": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAssetAncillaryDatatype": {
+        "type": "object",
+        "properties": {
+          "Type": {
+            "type": "string"
+          },
+          "SubType": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "BaseTrackID": {
+            "type": "string"
+          },
+          "BaseTrackReference": {
+            "type": "string"
+          },
+          "BaseTrackIdentifier": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContentIdentifiertype"
+            }
+          },
+          "TrackMetadata": {
+            "$ref": "#/definitions/DigitalAssetMetadatatype2"
+          },
+          "CombinedMetadata": {
+            "$ref": "#/definitions/DigitalAssetMetadatatype2"
+          },
+          "Compliance": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Compliancetype"
+            }
+          },
+          "AssetIntent": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/AssetIntenttype"
+            }
+          },
+          "Private": {
+            "$ref": "#/definitions/PrivateDatatype"
+          }
+        },
+        "required": [
+          "Type"
+        ],
+        "additionalProperties": false
+      },
+      "DigitalAssetMetadatatype2": {
+        "type": "object",
+        "properties": {
+          "Audio": {
+            "$ref": "#/definitions/DigitalAssetAudioDatatype"
+          },
+          "Video": {
+            "$ref": "#/definitions/DigitalAssetVideoDatatype"
+          },
+          "Subtitle": {
+            "$ref": "#/definitions/DigitalAssetSubtitleDatatype"
+          },
+          "Image": {
+            "$ref": "#/definitions/DigitalAssetImageDatatype"
+          },
+          "Interactive": {
+            "$ref": "#/definitions/DigitalAssetInteractiveDatatype"
+          },
+          "Ancillary": {
+            "$ref": "#/definitions/DigitalAssetAncillaryDatatype"
+          }
+        },
+        "required": [
+          "Audio",
+          "Video",
+          "Subtitle",
+          "Image",
+          "Interactive",
+          "Ancillary"
+        ],
+        "additionalProperties": false
+      },
+      "Publishertype": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ContactInfo": {
+            "$ref": "#/definitions/ContactInfotype"
+          },
+          "retailerSpecificID": {
+            "type": "string"
+          },
+          "DisplayName": {
+            "type": "string"
+          },
+          "SortName": {
+            "type": "string"
+          },
+          "AlternateName": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "organizationID": {
+            "type": "string"
+          },
+          "departmentID": {
+            "type": "string"
+          },
+          "idType": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "DisplayName"
+        ]
+      },
+      "ContactInfotype": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string"
+          },
+          "PrimaryEmail": {
+            "type": "string"
+          },
+          "AlternateEmail": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "Address": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "Phone": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ContactInfotype1"
+            }
+          }
+        },
+        "required": [
+          "Name",
+          "PrimaryEmail"
+        ],
+        "additionalProperties": false
+      },
+      "ContactInfotype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompanyCreditstype": {
+        "type": "object",
+        "properties": {
+          "DisplayString": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CompanyCreditstype1"
+            },
+            "minItems": 1
+          },
+          "Region": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Regiontype"
+            }
+          },
+          "DisplaySequence": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "DisplayString"
+        ],
+        "additionalProperties": false
+      },
+      "CompanyCreditstype1": {
+        "type": "object",
+        "properties": {
+          "_tagText": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+  

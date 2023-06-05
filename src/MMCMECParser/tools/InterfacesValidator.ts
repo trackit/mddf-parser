@@ -1,8 +1,9 @@
+import Ajv, { JSONSchemaType } from 'ajv';
 import { IValidator } from '../interfaces/IValidator';
 import { LibraryExceptions } from '../exceptions/LibraryExceptions';
 
 export class InterfacesValidator implements IValidator {
-  public validate(data: unknown, keys: string[]): void {
+  public validateMainKeys(data: unknown, keys: string[]): void {
     if (typeof data !== 'object' || data === null) {
       throw new LibraryExceptions('Data is not an object.');
     }
@@ -37,5 +38,22 @@ export class InterfacesValidator implements IValidator {
         throw new LibraryExceptions(`The property "${key}" is missing.`);
       }
     });
+  }
+
+  // NOTE: This method is not currently used in the project, need to fix array issue first in parser.
+  public validateObjectFromSchema(data: unknown, schema: unknown): void {
+    if (typeof data !== 'object' || data === null) {
+      throw new LibraryExceptions('Data is not an object.');
+    }
+
+    const ajv = new Ajv({
+      strict: false,
+      allowUnionTypes: true,
+    });
+    const validate = ajv.compile(schema as JSONSchemaType<7>);
+
+    if (!validate(data)) {
+      throw new LibraryExceptions(JSON.stringify(validate.errors));
+    }
   }
 }

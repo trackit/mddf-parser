@@ -1,10 +1,13 @@
 node_modules/
 test*
-assets/
+assets/movie*
+assets/black*
+assets/xyz*
 out*
 trash*
 *.zip
 notes.txt
 .idea/
 act
+*Arrays
 ```

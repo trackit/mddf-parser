@@ -8,6 +8,7 @@ import { IXMLFileAdaptor } from '../interfaces/IXMLFileAdaptor';
 import { IParser } from '../interfaces/IParser';
 import { FormatXML } from '../tools/FormatXML';
 import { InterfacesValidator } from '../tools/InterfacesValidator';
+// import * as mmcSchema from '../../../assets/schema/MMCSchema.json';
 
 export class MMCParser implements IParser<MMCInterface> {
   private readonly fileAdaptor: IXMLFileAdaptor;
@@ -101,7 +102,8 @@ export class MMCParser implements IParser<MMCInterface> {
 
     const validator = new InterfacesValidator();
     try {
-      validator.validate(data, this.requiredFields);
+      validator.validateMainKeys(data, this.requiredFields);
+      // validator.validateObjectFromSchema(data, mmcSchema);
     } catch (error) {
       throw new LibraryExceptions(error as string);
     }
@@ -120,7 +122,8 @@ export class MMCParser implements IParser<MMCInterface> {
 
     const validator = new InterfacesValidator();
     try {
-      validator.validate(data, this.requiredFields);
+      validator.validateMainKeys(data, this.requiredFields);
+      // validator.validateObjectFromSchema(data, mmcSchema);
     } catch (error) {
       throw new LibraryExceptions(error as string);
     }
