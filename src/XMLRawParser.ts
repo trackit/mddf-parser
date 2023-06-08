@@ -8,10 +8,13 @@ export class XMLRawParser {
       mergeAttrs: true,
       explicitArray: false,
       charkey: 'Value',
+      trim: true,
+      explicitChildren: true,
+      explicitCharkey: true,
     });
   }
 
-  async parseString(xmlData: string) {
+  async parseString(xmlData: string): Promise<string> {
     return this.parser.parseStringPromise(xmlData);
   }
 }
