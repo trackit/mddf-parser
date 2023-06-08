@@ -1,0 +1,12 @@
+<sample>
+  <items>
+    <item>Sample Item 1</item>
+    <description>Description for Item 1</description>
+    <price>15.99</price>
+  </items>
+  <items>
+    <item>Sample Item 2</item>
+    <description>Description for Item 2</description>
+    <price>20.99</price>
+  </items>
+</sample>

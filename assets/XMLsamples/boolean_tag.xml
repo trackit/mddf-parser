@@ -1,0 +1,10 @@
+<sample>
+  <item>
+    <boolean>true</boolean>
+    Sample Item 1
+  </item>
+  <item>
+    <boolean>false</boolean>
+    Sample Item 2
+  </item>
+</sample>
