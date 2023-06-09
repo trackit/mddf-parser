@@ -1,0 +1,15 @@
+<books>
+  <book>
+    <title>Title 1</title>
+    <reviews>
+      <review>Review for Title 1</review>
+    </reviews>
+  </book>
+  <book>
+    <title>Title 2</title>
+    <reviews>
+      <review>First review for Title 2</review>
+      <review>Second review for Title 2</review>
+    </reviews>
+  </book>
+</books>
