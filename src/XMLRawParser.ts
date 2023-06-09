@@ -15,12 +15,12 @@ export class XMLRawParser {
     });
   }
 
-  private isParsableBoolean(value: unknown): value is string {
-    return value === 'true' || value === 'false';
-  }
-
-  private parseBoolean(value: string): boolean {
-    return value === 'true';
+  async parseString(xmlData: string): Promise<Record<string, unknown>> {
+    const parsedData = await this.parser.parseStringPromise(xmlData);
+    if (parsedData) {
+      this.parseBooleanStringsToBooleanRecursive(parsedData);
+    }
+    return parsedData;
   }
 
   private parseBooleanStringsToBooleanRecursive(obj: Record<string, unknown>): void {
@@ -34,11 +34,11 @@ export class XMLRawParser {
     });
   }
 
-  async parseString(xmlData: string): Promise<Record<string, unknown>> {
-    const parsedData = await this.parser.parseStringPromise(xmlData);
-    if (parsedData) {
-      this.parseBooleanStringsToBooleanRecursive(parsedData);
-    }
-    return parsedData;
+  private isParsableBoolean(value: unknown): value is string {
+    return value === 'true' || value === 'false';
+  }
+
+  private parseBoolean(value: string): boolean {
+    return value === 'true';
   }
 }
