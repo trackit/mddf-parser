@@ -1,12 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { Parser } from 'xml2js';
 
-type Data = Record<string, unknown>;
-
 export class XMLRawParser {
   private parser: Parser;
-
-  private data: Data | undefined;
 
   constructor() {
     this.parser = new Parser({
@@ -19,24 +15,30 @@ export class XMLRawParser {
     });
   }
 
-  private convertBooleans(obj: Data = this.data as Data): void {
+  private isParsableBoolean(value: unknown): value is string {
+    return value === 'true' || value === 'false';
+  }
+
+  private parseBoolean(value: string): boolean {
+    return value === 'true';
+  }
+
+  private parseBooleanStringsToBooleanRecursive(obj: Record<string, unknown>): void {
+    if (!obj) return;
     Object.entries(obj).forEach(([key, value]) => {
       if (typeof value === 'object' && value !== null) {
-        this.convertBooleans(value as Data);
-      } else if (value === 'true') {
-        obj[key] = true;
-      } else if (value === 'false') {
-        obj[key] = false;
+        this.parseBooleanStringsToBooleanRecursive(value as Record<string, unknown>);
+      } else if (this.isParsableBoolean(value)) {
+        obj[key] = this.parseBoolean(value);
       }
     });
   }
 
-  async parseString(xmlData: string): Promise<Data> {
+  async parseString(xmlData: string): Promise<Record<string, unknown>> {
     const parsedData = await this.parser.parseStringPromise(xmlData);
-    this.data = parsedData as Data;
-    if (this.data) {
-      this.convertBooleans();
+    if (parsedData) {
+      this.parseBooleanStringsToBooleanRecursive(parsedData);
     }
-    return this.data as Data;
+    return parsedData;
   }
 }
