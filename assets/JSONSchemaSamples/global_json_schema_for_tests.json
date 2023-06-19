@@ -1,0 +1,78 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "additionalProperties": false,
+    "definitions": {
+        "books.book.reviews": {
+            "type": "object",
+            "required": ["review"],
+            "additionalProperties": false,
+            "properties": {
+                "review": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "minItems": 1
+                }
+            }
+        },
+        "books.book": {
+            "type": "object",
+            "required": [
+                "title",
+                "reviews"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "title": {"type": "string"},
+                "reviews": {"$ref": "#/definitions/books.book.reviews"}
+            }
+        },
+        "books": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "book": {
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/books.book"},
+                    "minItems": 0
+                }
+            }
+        },
+        "sample.items.item": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "boolean_attribute": {"type": "boolean"},
+                "description": {"type": "string"},
+                "price": {"type": "number"},
+                "name": {"type": "string"}
+            }
+        },
+        "sample.items": {
+            "type": "object",
+            "required": ["item"],
+            "additionalProperties": false,
+            "properties": {
+                "item": {
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/sample.items.item"},
+                    "minItems": 1
+                }
+            }
+        },
+        "sample": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/sample.items"},
+                    "minItems": 0
+                }
+            }
+        }
+    },
+    "properties": {
+        "books": {"$ref": "#/definitions/books"},
+        "sample": {"$ref": "#/definitions/sample"}
+    }
+}

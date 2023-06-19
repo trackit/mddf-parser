@@ -1,0 +1,27 @@
+<company>
+    <name>My Company</name>
+    <address>
+        <street>Main St. 123</street>
+        <city>Big City</city>
+        <country>Country</country>
+    </address>
+    <employees>
+        <employee>
+            <name>John Doe</name>
+            <role>Developer</role>
+            <skills>
+                <skill>JavaScript</skill>
+                <skill>Typescript</skill>
+                <skill>React</skill>
+            </skills>
+        </employee>
+        <employee>
+            <name>Jane Doe</name>
+            <role>Product Manager</role>
+            <skills>
+                <skill>Scrum</skill>
+                <skill>Kanban</skill>
+            </skills>
+        </employee>
+    </employees>
+</company>
