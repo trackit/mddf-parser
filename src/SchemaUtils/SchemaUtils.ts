@@ -11,30 +11,22 @@ export interface JSONSchema {
 
 export default class SchemaUtils {
   public accessDefinition(schema: JSONSchema, path: string[]): JSONSchema | undefined {
-    // Start from the root of the schema
-    let current: JSONSchema | undefined = schema;
-
-    // Traverse the path
-    // eslint-disable-next-line no-restricted-syntax
-    for (const part of path) {
+    return path.reduce<JSONSchema | undefined>((current, part) => {
       if (!current) {
         // If current is undefined, the path does not exist in the schema
         return undefined;
       }
 
       // If current is an object, move to the next part of the path
-      // @ts-ignore
       if (current.properties && current.properties[part]) {
-        // @ts-ignore
+        // eslint-disable-next-line no-param-reassign
         current = current.properties[part] as JSONSchema;
 
-        current = this.handleNextSchema(schema, current);
-      } else {
-        current = undefined;
+        return this.handleNextSchema(schema, current);
       }
-    }
 
-    return current;
+      return undefined;
+    }, schema);
   }
 
   public getDefinition(schema: JSONSchema, ref: string): JSONSchema | undefined {
