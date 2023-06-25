@@ -1,0 +1,54 @@
+{
+    "$schema": "https://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "library.book.reviews.review": {
+            "type": "object",
+            "required": [
+                "text",
+                "rating"
+            ],
+            "properties": {
+                "text": {"type": "string"},
+                "rating": {"type": "number"}
+            }
+        },
+        "library.book.reviews": {
+            "type": "object",
+            "required": ["review"],
+            "properties": {
+                "review": {
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/library.book.reviews.review"},
+                    "minItems": 1
+                }
+            }
+        },
+        "library.book": {
+            "type": "object",
+            "required": [
+                "title",
+                "author",
+                "reviews"
+            ],
+            "properties": {
+                "title": {"type": "string"},
+                "author": {"type": "string"},
+                "reviews": {"$ref": "#/definitions/library.book.reviews"}
+            }
+        },
+        "library": {
+            "type": "object",
+            "required": ["book"],
+            "properties": {
+                "book": {
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/library.book"},
+                    "minItems": 1
+                }
+            }
+        }
+    },
+    "properties": {
+        "library": {"$ref": "#/definitions/library"}
+    }
+}

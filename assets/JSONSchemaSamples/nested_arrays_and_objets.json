@@ -1,0 +1,109 @@
+{
+    "definitions": {},
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "title": "The Root Schema",
+    "required": ["company"],
+    "properties": {
+      "company": {
+        "type": "object",
+        "required": ["name", "address", "employees"],
+        "properties": {
+          "name": {
+            "type": "object",
+            "required": ["charKey"],
+            "properties": {
+              "charKey": {
+                "type": "string"
+              }
+            }
+          },
+          "address": {
+            "type": "object",
+            "required": ["street", "city", "country"],
+            "properties": {
+              "street": {
+                "type": "object",
+                "required": ["charKey"],
+                "properties": {
+                  "charKey": {
+                    "type": "string"
+                  }
+                }
+              },
+              "city": {
+                "type": "object",
+                "required": ["charKey"],
+                "properties": {
+                  "charKey": {
+                    "type": "string"
+                  }
+                }
+              },
+              "country": {
+                "type": "object",
+                "required": ["charKey"],
+                "properties": {
+                  "charKey": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "employees": {
+            "type": "object",
+            "required": ["employee"],
+            "properties": {
+              "employee": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["name", "role", "skills"],
+                  "properties": {
+                    "name": {
+                      "type": "object",
+                      "required": ["charKey"],
+                      "properties": {
+                        "charKey": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "role": {
+                      "type": "object",
+                      "required": ["charKey"],
+                      "properties": {
+                        "charKey": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "skills": {
+                      "type": "object",
+                      "required": ["skill"],
+                      "properties": {
+                        "skill": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": ["charKey"],
+                            "properties": {
+                              "charKey": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  

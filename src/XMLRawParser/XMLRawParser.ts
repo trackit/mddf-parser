@@ -18,24 +18,30 @@ export class XMLRawParser {
   async parseString(xmlData: string): Promise<Record<string, unknown>> {
     const parsedData = await this.parser.parseStringPromise(xmlData);
     if (parsedData) {
-      this.parseBooleanStringsToBooleanRecursive(parsedData);
+      this.parsePrimitiveRecursive(parsedData);
     }
     return parsedData;
   }
 
-  private parseBooleanStringsToBooleanRecursive(obj: Record<string, unknown>): void {
+  private parsePrimitiveRecursive(obj: Record<string, unknown>): void {
     if (!obj) return;
     Object.entries(obj).forEach(([key, value]) => {
       if (typeof value === 'object' && value !== null) {
-        this.parseBooleanStringsToBooleanRecursive(value as Record<string, unknown>);
+        this.parsePrimitiveRecursive(value as Record<string, unknown>);
       } else if (this.isParsableBoolean(value)) {
         obj[key] = this.parseBoolean(value);
+      } else if (this.isParsableNumber(value)) {
+        obj[key] = Number(value);
       }
     });
   }
 
   private isParsableBoolean(value: unknown): value is string {
     return value === 'true' || value === 'false';
+  }
+
+  private isParsableNumber(value: unknown): value is string {
+    return !Number.isNaN(Number(value));
   }
 
   private parseBoolean(value: string): boolean {

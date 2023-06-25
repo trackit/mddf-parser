@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+    <book>
+        <title>To Kill a Mockingbird</title>
+        <author>Harper Lee</author>
+        <reviews>
+            <review>
+                <text>A beautifully written, classic tale of morality and human nature.</text>
+                <rating>5</rating>
+            </review>
+            <review>
+                <text>A compelling and timeless piece of literature.</text>
+                <rating>4.5</rating>
+            </review>
+        </reviews>
+    </book>
+    <book>
+        <title>1984</title>
+        <author>George Orwell</author>
+        <reviews>
+            <review>
+                <text>An eye-opening dystopian novel that everyone should read at least once.</text>
+                <rating>5</rating>
+            </review>
+            <review>
+                <text>A chilling portrayal of how power can lead to oppression and control.</text>
+                <rating>4</rating>
+            </review>
+        </reviews>
+    </book>
+    <book>
+        <title>Pride and Prejudice</title>
+        <author>Jane Austen</author>
+        <reviews>
+            <review>
+                <text>One of the best romantic novels with lively characters and intricate plotlines.</text>
+                <rating>4</rating>
+            </review>
+        </reviews>
+    </book>
+</library>
