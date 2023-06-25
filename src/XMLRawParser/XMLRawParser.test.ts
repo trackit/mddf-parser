@@ -9,6 +9,7 @@ import generateDifferentArrayLengthJSON from '../../assets/JSONSamples/same_arra
 import generateManyElementsArrayJSON from '../../assets/JSONSamples/many_elements_array';
 import generateSimpleStringJSON from '../../assets/JSONSamples/simple_string';
 import generateSingleElementArrayRawJSON from '../../assets/RawJSONSamples/simple_array_single_element';
+import generateLibrary from '../../assets/RawJSONSamples/library';
 
 const testsData = [
   { generateJSON: generateBooleanAttributeJSON, fileName: 'boolean_attribute.xml' },
@@ -20,6 +21,7 @@ const testsData = [
   { generateJSON: generateSingleElementArrayRawJSON, fileName: 'single_element_array.xml' },
   { generateJSON: generateManyElementsArrayJSON, fileName: 'many_elements_array.xml' },
   { generateJSON: generateSimpleStringJSON, fileName: 'simple_string.xml' },
+  { generateJSON: generateLibrary, fileName: 'library.xml' },
 ];
 
 describe('XMLRawParser', () => {
