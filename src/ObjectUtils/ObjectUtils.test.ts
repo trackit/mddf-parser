@@ -1,6 +1,6 @@
 import generateLibrary from '../../assets/RawJSONSamples/library';
 import ObjectUtils from './ObjectUtils';
-import { ObjectPath } from '../ObjectPath';
+import { ObjectPath } from '../ObjectPath/ObjectPath';
 
 describe('ObjectUtils', () => {
   describe('getDeepProperty', () => {

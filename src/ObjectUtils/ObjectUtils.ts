@@ -1,4 +1,4 @@
-import { ObjectPath, PathStep } from '../ObjectPath';
+import { ObjectPath, PathStep } from '../ObjectPath/ObjectPath';
 
 export default class ObjectUtils {
   public getDeepProperty(obj: Record<string, unknown>, path: ObjectPath): unknown {
