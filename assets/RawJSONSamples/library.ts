@@ -1,4 +1,4 @@
-export default function generateLibrary(charKey: string): object {
+export default function generateLibrary(charKey: string): Record<string, any> {
   return {
     library: {
       book: [
