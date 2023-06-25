@@ -1,4 +1,4 @@
-export default function generateSingleElementArrayJSON(charKey: string): object {
+export default function generateSingleElementArrayRawJSON(charKey: string): object {
   return {
     sample: {
       items: {

@@ -6,9 +6,9 @@ import generateElementsArrayWithDifferentTagsJSON from '../../assets/JSONSamples
 import generateManyAttributeOnSameTagJSON from '../../assets/JSONSamples/many_attribute_on_same_tag';
 import generateOptionalAttributeJSON from '../../assets/JSONSamples/optional_attribute';
 import generateDifferentArrayLengthJSON from '../../assets/JSONSamples/same_array_with_different_lenght';
-import generateSingleElementArrayJSON from '../../assets/JSONSamples/single_element_array';
 import generateManyElementsArrayJSON from '../../assets/JSONSamples/many_elements_array';
 import generateSimpleStringJSON from '../../assets/JSONSamples/simple_string';
+import generateSingleElementArrayRawJSON from '../../assets/RawJSONSamples/simple_array_single_element';
 
 const testsData = [
   { generateJSON: generateBooleanAttributeJSON, fileName: 'boolean_attribute.xml' },
@@ -17,7 +17,7 @@ const testsData = [
   { generateJSON: generateManyAttributeOnSameTagJSON, fileName: 'many_attribute_on_same_tag.xml' },
   { generateJSON: generateOptionalAttributeJSON, fileName: 'optional_attribute.xml' },
   { generateJSON: generateDifferentArrayLengthJSON, fileName: 'same_array_with_different_lenght.xml' },
-  { generateJSON: generateSingleElementArrayJSON, fileName: 'single_element_array.xml' },
+  { generateJSON: generateSingleElementArrayRawJSON, fileName: 'single_element_array.xml' },
   { generateJSON: generateManyElementsArrayJSON, fileName: 'many_elements_array.xml' },
   { generateJSON: generateSimpleStringJSON, fileName: 'simple_string.xml' },
 ];
