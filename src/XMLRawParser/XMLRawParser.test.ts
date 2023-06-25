@@ -1,14 +1,14 @@
 import { XMLRawParser } from './XMLRawParser';
-import { LocalXMLFileAdaptor } from './adaptors/secondary/LocalXMLFileAdaptor';
-import generateBooleanAttributeJSON from '../assets/JSONSamples/boolean_attribute';
-import generateBooleanTagJSON from '../assets/JSONSamples/boolean_tag';
-import generateElementsArrayWithDifferentTagsJSON from '../assets/JSONSamples/elements_array_with_different_tags';
-import generateManyAttributeOnSameTagJSON from '../assets/JSONSamples/many_attribute_on_same_tag';
-import generateOptionalAttributeJSON from '../assets/JSONSamples/optional_attribute';
-import generateDifferentArrayLengthJSON from '../assets/JSONSamples/same_array_with_different_lenght';
-import generateSingleElementArrayJSON from '../assets/JSONSamples/single_element_array';
-import generateManyElementsArrayJSON from '../assets/JSONSamples/many_elements_array';
-import generateSimpleStringJSON from '../assets/JSONSamples/simple_string';
+import { LocalXMLFileAdaptor } from '../adaptors/secondary/LocalXMLFileAdaptor';
+import generateBooleanAttributeJSON from '../../assets/JSONSamples/boolean_attribute';
+import generateBooleanTagJSON from '../../assets/JSONSamples/boolean_tag';
+import generateElementsArrayWithDifferentTagsJSON from '../../assets/JSONSamples/elements_array_with_different_tags';
+import generateManyAttributeOnSameTagJSON from '../../assets/JSONSamples/many_attribute_on_same_tag';
+import generateOptionalAttributeJSON from '../../assets/JSONSamples/optional_attribute';
+import generateDifferentArrayLengthJSON from '../../assets/JSONSamples/same_array_with_different_lenght';
+import generateSingleElementArrayJSON from '../../assets/JSONSamples/single_element_array';
+import generateManyElementsArrayJSON from '../../assets/JSONSamples/many_elements_array';
+import generateSimpleStringJSON from '../../assets/JSONSamples/simple_string';
 
 const testsData = [
   { generateJSON: generateBooleanAttributeJSON, fileName: 'boolean_attribute.xml' },
