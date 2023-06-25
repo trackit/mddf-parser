@@ -1,5 +1,5 @@
 import Ajv, { JSONSchemaType } from 'ajv';
-import { LocalXMLFileAdaptor } from './adaptors/secondary/LocalXMLFileAdaptor';
+import { LocalFileAdaptor } from './FileAdaptor/LocalFileAdaptor';
 import { SchemaConformer } from './SchemaConformer';
 
 // import the JSON generation functions
@@ -9,12 +9,12 @@ import generateElementsArrayWithDifferentTagsJSON from '../assets/JSONSamples/el
 import generateManyAttributeOnSameTagJSON from '../assets/JSONSamples/many_attribute_on_same_tag';
 import generateOptionalAttributeJSON from '../assets/JSONSamples/optional_attribute';
 import generateDifferentArrayLengthJSON from '../assets/JSONSamples/same_array_with_different_lenght';
-import generateSingleElementArrayJSON from '../assets/JSONSamples/single_element_array';
 import generateManyElementsArrayJSON from '../assets/JSONSamples/many_elements_array';
 import generateSimpleStringJSON from '../assets/JSONSamples/simple_string';
+import generateSingleElementArrayRawJSON from '../assets/RawJSONSamples/simple_array_single_element';
 
 describe('Object validation against JSON Schema', () => {
-  const fileAdaptor = new LocalXMLFileAdaptor();
+  const fileAdaptor = new LocalFileAdaptor();
 
   const tests = [
     { name: 'boolean_attribute_json', test: generateBooleanAttributeJSON('Value') },
@@ -23,7 +23,7 @@ describe('Object validation against JSON Schema', () => {
     { name: 'many_attribute_on_same_tag_json', test: generateManyAttributeOnSameTagJSON() },
     { name: 'optional_attribute_json', test: generateOptionalAttributeJSON() },
     { name: 'different_array_length_json', test: generateDifferentArrayLengthJSON('Value') },
-    { name: 'single_element_array_json', test: generateSingleElementArrayJSON('Value') },
+    { name: 'single_element_array_json', test: generateSingleElementArrayRawJSON('Value') },
     { name: 'many_elements_array_json', test: generateManyElementsArrayJSON('Value') },
     { name: 'simple_string_json', test: generateSimpleStringJSON('Value') },
   ];
