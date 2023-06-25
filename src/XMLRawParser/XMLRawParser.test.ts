@@ -1,5 +1,5 @@
 import { XMLRawParser } from './XMLRawParser';
-import { LocalXMLFileAdaptor } from '../adaptors/secondary/LocalXMLFileAdaptor';
+import { LocalFileAdaptor } from '../FileAdaptor/LocalFileAdaptor';
 import generateBooleanAttributeJSON from '../../assets/JSONSamples/boolean_attribute';
 import generateBooleanTagJSON from '../../assets/JSONSamples/boolean_tag';
 import generateElementsArrayWithDifferentTagsJSON from '../../assets/JSONSamples/elements_array_with_different_tags';
@@ -24,7 +24,7 @@ const testsData = [
 
 describe('XMLRawParser', () => {
   let parser: XMLRawParser;
-  const xmlFileAdaptor = new LocalXMLFileAdaptor();
+  const xmlFileAdaptor = new LocalFileAdaptor();
 
   beforeEach(() => {
     parser = new XMLRawParser();
