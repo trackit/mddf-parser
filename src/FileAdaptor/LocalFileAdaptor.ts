@@ -1,7 +1,7 @@
 import * as fs from 'fs/promises';
-import { IXMLFileAdaptor } from '../../interfaces/IXMLFileAdaptor';
+import { FileAdaptor } from './FileAdaptor';
 
-export class LocalXMLFileAdaptor implements IXMLFileAdaptor {
+export class LocalFileAdaptor implements FileAdaptor {
   async readFile(path: string): Promise<string> {
     const res = await fs.readFile(path, { encoding: 'utf-8' });
     return res;
