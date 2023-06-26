@@ -1,0 +1,15 @@
+{
+    "$schema": "https://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "sample": {
+            "type": "object",
+            "required": ["item"],
+            "properties": {
+                "item": {"type": "string"}
+            }
+        }
+    },
+    "properties": {
+        "sample": {"$ref": "#/definitions/sample"}
+    }
+}
