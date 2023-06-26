@@ -7,7 +7,7 @@ import generateManyAttributeOnSameTagJSON from '../../assets/JSONSamples/many_at
 import generateOptionalAttributeJSON from '../../assets/JSONSamples/optional_attribute';
 import generateDifferentArrayLengthJSON from '../../assets/JSONSamples/same_array_with_different_lenght';
 import generateManyElementsArrayJSON from '../../assets/JSONSamples/many_elements_array';
-import generateSimpleStringJSON from '../../assets/JSONSamples/simple_string';
+import generateRawSimpleStringJSON from '../../assets/RawJSONSamples/simple_string';
 import generateSingleElementArrayRawJSON from '../../assets/RawJSONSamples/simple_array_single_element';
 import generateLibrary from '../../assets/RawJSONSamples/library';
 
@@ -20,7 +20,7 @@ const testsData = [
   { generateJSON: generateDifferentArrayLengthJSON, fileName: 'same_array_with_different_lenght.xml' },
   { generateJSON: generateSingleElementArrayRawJSON, fileName: 'single_element_array.xml' },
   { generateJSON: generateManyElementsArrayJSON, fileName: 'many_elements_array.xml' },
-  { generateJSON: generateSimpleStringJSON, fileName: 'simple_string.xml' },
+  { generateJSON: generateRawSimpleStringJSON, fileName: 'simple_string.xml' },
   { generateJSON: generateLibrary, fileName: 'library.xml' },
 ];
 

@@ -1,7 +1,7 @@
-export default function generateSimpleStringJSON(charkey: string): object {
+export default function generateSimpleStringJSON(): object {
   return {
     sample: {
-      item: { [charkey]: 'Sample Item' },
+      item: 'Sample Item',
     },
   };
 }
