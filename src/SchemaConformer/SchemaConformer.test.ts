@@ -1,24 +1,28 @@
-import generateSingleElementArrayRawJSON from '../../assets/RawJSONSamples/simple_array_single_element';
-import generateSingleElementArrayJSON from '../../assets/JSONSamples/simple_array_single_element';
 import SchemaConformer from './SchemaConformer';
 import { LocalFileAdaptor } from '../FileAdaptor/LocalFileAdaptor';
+import generateRawSimpleStringJSON from '../../assets/RawJSONSamples/simple_string';
+import generateSimpleStringJSON from '../../assets/JSONSamples/simple_string';
 
 describe('SchemaConformer', () => {
+  const getSchema = async (path: string): Promise<object> => {
+    const fileReader = new LocalFileAdaptor();
+    return JSON.parse(await fileReader.readFile(path));
+  };
+
   const charKey = 'Value';
 
   describe('conform', () => {
-    const rawObject = generateSingleElementArrayRawJSON(charKey);
-    const expectedObject = generateSingleElementArrayJSON(charKey);
-
     it('should conform the object to the schema', async () => {
-      const fileReader = new LocalFileAdaptor();
-      const schema = JSON.parse(await fileReader.readFile('assets/JSONSchemaSamples/simple_array.json'));
+      const rawObject = generateRawSimpleStringJSON(charKey);
+      const expectedObject = generateSimpleStringJSON();
+
+      const schema = await getSchema('assets/JSONSchemaSamples/simple_string.json');
 
       const conformer = new SchemaConformer(schema);
 
-      console.log(JSON.stringify(conformer.getSchema(), null, 2));
+      conformer.conform(rawObject);
 
-      expect(conformer.conform(rawObject)).toEqual(expectedObject);
+      expect(rawObject).toEqual(expectedObject);
     });
   });
 });
