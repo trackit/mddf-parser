@@ -54,4 +54,59 @@ describe('ObjectUtils', () => {
       });
     });
   });
+
+  describe('setDeepProperty', () => {
+    it('should set the title of the first book', () => {
+      const objectUtils = new ObjectUtils();
+      const rawLibrary = generateLibrary('Value');
+
+      const path: ObjectPath = [
+        { propertyName: 'library' },
+        { propertyName: 'book', arrayIndex: 0 },
+        { propertyName: 'title' },
+        { propertyName: 'Value' },
+      ];
+
+      objectUtils.setDeepProperty(rawLibrary, path, 'New Book Title');
+
+      const title = objectUtils.getDeepProperty(rawLibrary, path);
+      expect(title).toEqual('New Book Title');
+    });
+
+    it('should set the rating of the second review of the first book', () => {
+      const objectUtils = new ObjectUtils();
+      const rawLibrary = generateLibrary('Value');
+
+      const path: ObjectPath = [
+        { propertyName: 'library' },
+        { propertyName: 'book', arrayIndex: 0 },
+        { propertyName: 'reviews' },
+        { propertyName: 'review', arrayIndex: 1 },
+        { propertyName: 'rating' },
+        { propertyName: 'Value' },
+      ];
+
+      objectUtils.setDeepProperty(rawLibrary, path, 5);
+
+      const rating = objectUtils.getDeepProperty(rawLibrary, path);
+      expect(rating).toEqual(5);
+    });
+
+    it('should set the author of the second book', () => {
+      const objectUtils = new ObjectUtils();
+      const rawLibrary = generateLibrary('Value');
+
+      const path: ObjectPath = [
+        { propertyName: 'library' },
+        { propertyName: 'book', arrayIndex: 1 },
+        { propertyName: 'author' },
+        { propertyName: 'Value' },
+      ];
+
+      objectUtils.setDeepProperty(rawLibrary, path, 'New Author');
+
+      const author = objectUtils.getDeepProperty(rawLibrary, path);
+      expect(author).toEqual('New Author');
+    });
+  });
 });
