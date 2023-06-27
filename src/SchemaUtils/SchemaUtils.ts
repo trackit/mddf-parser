@@ -17,10 +17,20 @@ export default class SchemaUtils {
         return undefined;
       }
 
+      if (current.type === 'array' && current.items?.properties && current.items?.properties[part]) {
+        // eslint-disable-next-line no-param-reassign
+        current = current.items?.properties[part] as JSONSchema;
+        return this.handleNextSchema(schema, current);
+      }
+
       // If current is an object, move to the next part of the path
       if (current.properties && current.properties[part]) {
         // eslint-disable-next-line no-param-reassign
         current = current.properties[part] as JSONSchema;
+
+        if (current.type === 'array') {
+          return this.handleNextSchemaArray(schema, current);
+        }
 
         return this.handleNextSchema(schema, current);
       }
@@ -54,6 +64,20 @@ export default class SchemaUtils {
       return current.items;
     }
 
+    return current;
+  }
+
+  private handleNextSchemaArray(schema: JSONSchema, current: JSONSchema): JSONSchema | undefined {
+    if (this.isArrayDefinition(current)) {
+      if (this.isArrayReference(current)) {
+        // eslint-disable-next-line no-param-reassign
+        current = { type: 'array', items: this.getDefinition(schema, current.items.$ref) } as JSONSchema;
+        return current;
+      }
+      // eslint-disable-next-line no-param-reassign
+      current = { type: 'array', items: current.items } as JSONSchema;
+      return current;
+    }
     return current;
   }
 

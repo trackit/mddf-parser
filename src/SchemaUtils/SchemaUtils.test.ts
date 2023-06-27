@@ -31,17 +31,34 @@ describe('SchemaUtils', () => {
 
       const schemaUtils = new SchemaUtils();
 
+      // expect(schemaUtils.accessDefinition(librarySchema, ['library', 'book'])).toEqual({
+      //   type: 'object',
+      //   required: [
+      //     'title',
+      //     'author',
+      //     'reviews',
+      //   ],
+      //   properties: {
+      //     title: { type: 'string' },
+      //     author: { type: 'string' },
+      //     reviews: { $ref: '#/definitions/library.book.reviews' },
+      //   },
+      // });
+
       expect(schemaUtils.accessDefinition(librarySchema, ['library', 'book'])).toEqual({
-        type: 'object',
-        required: [
-          'title',
-          'author',
-          'reviews',
-        ],
-        properties: {
-          title: { type: 'string' },
-          author: { type: 'string' },
-          reviews: { $ref: '#/definitions/library.book.reviews' },
+        type: 'array',
+        items: {
+          type: 'object',
+          required: [
+            'title',
+            'author',
+            'reviews',
+          ],
+          properties: {
+            title: { type: 'string' },
+            author: { type: 'string' },
+            reviews: { $ref: '#/definitions/library.book.reviews' },
+          },
         },
       });
     });
@@ -64,20 +81,23 @@ describe('SchemaUtils', () => {
       });
     });
 
-    it('should return the deeply nested book review definition', async () => {
+    it('should return the deeply nested book review array definition', async () => {
       const librarySchema = await getLibrarySchema();
 
       const schemaUtils = new SchemaUtils();
 
       expect(schemaUtils.accessDefinition(librarySchema, ['library', 'book', 'reviews', 'review'])).toEqual({
-        type: 'object',
-        required: [
-          'text',
-          'rating',
-        ],
-        properties: {
-          text: { type: 'string' },
-          rating: { type: 'number' },
+        type: 'array',
+        items: {
+          type: 'object',
+          required: [
+            'text',
+            'rating',
+          ],
+          properties: {
+            text: { type: 'string' },
+            rating: { type: 'number' },
+          },
         },
       });
     });
