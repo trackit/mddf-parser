@@ -24,7 +24,6 @@ export default class SchemaUtils {
 
       // If current is an object, move to the next part of the path
       if (current.properties && current.properties[part]) {
-        // eslint-disable-next-line no-param-reassign
         const nextSchema = current.properties[part] as JSONSchema;
         if (nextSchema.type === 'array') {
           return this.handleNextSchemaArray(schema, nextSchema);
@@ -50,33 +49,33 @@ export default class SchemaUtils {
     return schema.definitions?.[definitionKey];
   }
 
-  private handleNextSchema(schema: JSONSchema, current: JSONSchema): JSONSchema | undefined {
-    if (this.isReference(current)) {
-      return this.getDefinition(schema, current.$ref);
+  private handleNextSchema(schema: JSONSchema, schemaPart: JSONSchema): JSONSchema | undefined {
+    if (this.isReference(schemaPart)) {
+      return this.getDefinition(schema, schemaPart.$ref);
     }
 
-    if (this.isArrayDefinition(current)) {
-      if (this.isArrayReference(current)) {
-        return this.getDefinition(schema, current.items.$ref);
+    if (this.isArrayDefinition(schemaPart)) {
+      if (this.isArrayReference(schemaPart)) {
+        return this.getDefinition(schema, schemaPart.items.$ref);
       }
-      return current.items;
+      return schemaPart.items;
     }
 
-    return current;
+    return schemaPart;
   }
 
-  private handleNextSchemaArray(schema: JSONSchema, current: JSONSchema): JSONSchema | undefined {
-    if (this.isArrayDefinition(current)) {
-      if (this.isArrayReference(current)) {
-        // eslint-disable-next-line no-param-reassign
-        current = { type: 'array', items: this.getDefinition(schema, current.items.$ref) } as JSONSchema;
-        return current;
+  private handleNextSchemaArray(schema: JSONSchema, schemaPart: JSONSchema): JSONSchema | undefined {
+    const nextPart = { type: 'array', items: {} } as JSONSchema;
+
+    if (this.isArrayDefinition(schemaPart)) {
+      if (this.isArrayReference(schemaPart)) {
+        nextPart.items = this.getDefinition(schema, schemaPart.items.$ref);
+        return nextPart;
       }
-      // eslint-disable-next-line no-param-reassign
-      current = { type: 'array', items: current.items } as JSONSchema;
-      return current;
+      nextPart.items = schemaPart.items;
+      return nextPart;
     }
-    return current;
+    return schemaPart;
   }
 
   private isCurrentArray(schema: JSONSchema, part: string): schema is { type: 'array'; items: { properties: Record<string, JSONSchema> } } {
