@@ -31,20 +31,6 @@ describe('SchemaUtils', () => {
 
       const schemaUtils = new SchemaUtils();
 
-      // expect(schemaUtils.accessDefinition(librarySchema, ['library', 'book'])).toEqual({
-      //   type: 'object',
-      //   required: [
-      //     'title',
-      //     'author',
-      //     'reviews',
-      //   ],
-      //   properties: {
-      //     title: { type: 'string' },
-      //     author: { type: 'string' },
-      //     reviews: { $ref: '#/definitions/library.book.reviews' },
-      //   },
-      // });
-
       expect(schemaUtils.accessDefinition(librarySchema, ['library', 'book'])).toEqual({
         type: 'array',
         items: {

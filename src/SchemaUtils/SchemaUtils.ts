@@ -17,22 +17,20 @@ export default class SchemaUtils {
         return undefined;
       }
 
-      if (current.type === 'array' && current.items?.properties && current.items?.properties[part]) {
-        // eslint-disable-next-line no-param-reassign
-        current = current.items?.properties[part] as JSONSchema;
-        return this.handleNextSchema(schema, current);
+      if (this.isCurrentArray(current, part)) {
+        const nextSchema = current.items?.properties[part] as JSONSchema;
+        return this.handleNextSchema(schema, nextSchema);
       }
 
       // If current is an object, move to the next part of the path
       if (current.properties && current.properties[part]) {
         // eslint-disable-next-line no-param-reassign
-        current = current.properties[part] as JSONSchema;
-
-        if (current.type === 'array') {
-          return this.handleNextSchemaArray(schema, current);
+        const nextSchema = current.properties[part] as JSONSchema;
+        if (nextSchema.type === 'array') {
+          return this.handleNextSchemaArray(schema, nextSchema);
         }
 
-        return this.handleNextSchema(schema, current);
+        return this.handleNextSchema(schema, nextSchema);
       }
 
       return undefined;
@@ -79,6 +77,10 @@ export default class SchemaUtils {
       return current;
     }
     return current;
+  }
+
+  private isCurrentArray(schema: JSONSchema, part: string): schema is { type: 'array'; items: { properties: Record<string, JSONSchema> } } {
+    return (schema.type === 'array' && !!schema.items?.properties && !!schema.items?.properties[part]);
   }
 
   private isReference(schema: JSONSchema): schema is { $ref: string } {
