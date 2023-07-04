@@ -1,4 +1,4 @@
-export default function generateSingleElementArrayRawJSON(charKey: string): object {
+export default function generateSingleElementArrayRawJSON(charKey: string): Record<string, any> {
   return {
     sample: {
       items: {

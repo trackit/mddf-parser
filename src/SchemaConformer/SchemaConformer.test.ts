@@ -2,6 +2,8 @@ import SchemaConformer from './SchemaConformer';
 import { LocalFileAdaptor } from '../FileAdaptor/LocalFileAdaptor';
 import generateRawSimpleStringJSON from '../../assets/RawJSONSamples/simple_string';
 import generateSimpleStringJSON from '../../assets/JSONSamples/simple_string';
+import generateSingleElementArrayJSON from '../../assets/JSONSamples/simple_array_single_element';
+import generateSingleElementArrayRawJSON from '../../assets/RawJSONSamples/simple_array_single_element';
 
 describe('SchemaConformer', () => {
   const getSchema = async (path: string): Promise<object> => {
@@ -17,6 +19,19 @@ describe('SchemaConformer', () => {
       const expectedObject = generateSimpleStringJSON();
 
       const schema = await getSchema('assets/JSONSchemaSamples/simple_string.json');
+
+      const conformer = new SchemaConformer(schema);
+
+      conformer.conform(rawObject);
+
+      expect(rawObject).toEqual(expectedObject);
+    });
+
+    it('should conform the object to the schema with a single element array', async () => {
+      const rawObject = generateSingleElementArrayRawJSON(charKey);
+      const expectedObject = generateSingleElementArrayJSON();
+
+      const schema = await getSchema('assets/JSONSchemaSamples/simple_array.json');
 
       const conformer = new SchemaConformer(schema);
 

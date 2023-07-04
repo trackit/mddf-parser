@@ -1,13 +1,16 @@
 {
     "$schema": "https://json-schema.org/draft-04/schema#",
     "definitions": {
+        "sample.items.item":{
+            "type": "string"
+        },
         "sample.items": {
             "type": "object",
             "required": ["item"],
             "properties": {
                 "item": {
                     "type": "array",
-                    "items": {"type": "string"},
+                    "items": {"$ref": "#/definitions/sample.items.item"},
                     "minItems": 1
                 }
             }

@@ -1,9 +1,9 @@
-export default function generateSingleElementArrayJSON(charKey: string): object {
+export default function generateSingleElementArrayJSON(): object {
   return {
     sample: {
-      items: [{
-        item: { [charKey]: 'Sample Item 1' },
-      }],
+      items: {
+        item: ['Sample Item 1'],
+      },
     },
   };
 }

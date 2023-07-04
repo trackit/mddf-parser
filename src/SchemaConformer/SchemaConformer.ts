@@ -4,6 +4,10 @@ import ObjectUtils from '../ObjectUtils/ObjectUtils';
 
 export type Primitive = string | number | boolean | null;
 
+export type ArrayElement = {
+  [key: string]: unknown[];
+};
+
 export default class SchemaConformer {
   private schemaUtils = new SchemaUtils();
 
@@ -48,6 +52,15 @@ export default class SchemaConformer {
       this.objectUtils.setDeepProperty(rawObject, pathStack, this.conformPrimitive(currentObject));
     }
 
+    if (this.isArraySchema(currentSchema)) {
+      this.objectUtils.setDeepProperty(rawObject, pathStack, this.conformArray(currentObject));
+      if (Array.isArray(currentObject)) {
+        currentObject.forEach((pathStep: PathStep) => {
+          this.conformRecursive(rawObject, [...pathStack, pathStep]);
+        });
+      }
+    }
+
     if (this.isObjectSchema(currentSchema)) {
       if (this.isObject(currentObject)) {
         ObjectPathUtils.fromObject(currentObject).forEach((pathStep: PathStep) => {
@@ -57,15 +70,41 @@ export default class SchemaConformer {
     }
   }
 
-  public conformPrimitive(rawObject: unknown): Primitive {
+  public conformPrimitive(rawObject: unknown): Primitive | Primitive[] {
+    if (this.isArray(rawObject)) {
+      const nextValue = rawObject[0] as Record<string, unknown>;
+      if (nextValue) {
+        if (nextValue[this.charkey]) {
+          return this.conformArrayCharKey(rawObject);
+        }
+        return rawObject as Primitive[];
+      }
+    }
     if (this.isObject(rawObject)) {
       if (rawObject[this.charkey]) {
         return rawObject[this.charkey] as Primitive;
       }
-    } else if (this.isPrimitive(rawObject)) {
+    }
+    if (this.isPrimitive(rawObject)) {
       return rawObject;
     }
     throw new Error(`The object ${rawObject} must be a primitive or an object with a "${this.charkey}" property.`);
+  }
+
+  public conformArray(rawObject: unknown): ArrayElement {
+    return Object.fromEntries(
+      Object.entries(rawObject as Record<string, unknown>).map(([key, value]) => [key, [value]]),
+    );
+  }
+
+  public conformArrayCharKey(rawObject: unknown): Primitive[] {
+    const transformedRawObject = (rawObject as Record<string, unknown>[]).map((item) => {
+      if (this.charkey in item) {
+        return item.Value;
+      }
+      return item;
+    });
+    return transformedRawObject as Primitive[];
   }
 
   public isPrimitiveSchema(schema: JSONSchema): boolean {
@@ -88,7 +127,19 @@ export default class SchemaConformer {
   }
 
   public isArraySchema(schema: JSONSchema): boolean {
-    return schema.type === 'array' || !!schema.items;
+    let isArray = false;
+
+    if (schema.properties) {
+      Object.keys(schema.properties).forEach((key: string) => {
+        if (schema.properties) {
+          if (schema.properties[key].type === 'array') {
+            isArray = true;
+          }
+        }
+      });
+    }
+
+    return isArray;
   }
 
   getSchema(): object {
@@ -97,5 +148,9 @@ export default class SchemaConformer {
 
   private isObject(rawObject: any): rawObject is Record<string, unknown> {
     return typeof rawObject === 'object' && rawObject !== null && !Array.isArray(rawObject);
+  }
+
+  private isArray(rawObject: any): rawObject is unknown[] {
+    return Array.isArray(rawObject);
   }
 }
