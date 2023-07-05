@@ -4,8 +4,8 @@ import generateRawSimpleStringJSON from '../../assets/RawJSONSamples/simple_stri
 import generateSimpleStringJSON from '../../assets/JSONSamples/simple_string';
 import generateSingleElementArrayJSON from '../../assets/JSONSamples/simple_array_single_element';
 import generateSingleElementArrayRawJSON from '../../assets/RawJSONSamples/simple_array_single_element';
-import generateObjectElementArrayRawJSON from "../../assets/RawJSONSamples/object_array_single_element";
-import generateObjectElementArrayJSON from "../../assets/JSONSamples/object_array_single_element";
+import generateObjectElementArrayRawJSON from '../../assets/RawJSONSamples/object_array_single_element';
+import generateObjectElementArrayJSON from '../../assets/JSONSamples/object_array_single_element';
 
 describe('SchemaConformer', () => {
   const getSchema = async (path: string): Promise<object> => {
