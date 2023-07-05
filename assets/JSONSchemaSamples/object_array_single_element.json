@@ -1,0 +1,36 @@
+{
+    "$schema": "https://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "sample.items.item.inside":{
+            "type": "string"
+        },
+        "sample.items.item":{
+            "type": "object",
+            "required": ["inside"],
+            "properties": {
+                "inside": {"$ref": "#/definitions/sample.items.item.inside"}
+            }
+        },
+        "sample.items": {
+            "type": "object",
+            "required": ["item"],
+            "properties": {
+                "item": {
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/sample.items.item"},
+                    "minItems": 1
+                }
+            }
+        },
+        "sample": {
+            "type": "object",
+            "required": ["items"],
+            "properties": {
+                "items": {"$ref": "#/definitions/sample.items"}
+            }
+        }
+    },
+    "properties": {
+        "sample": {"$ref": "#/definitions/sample"}
+    }
+}
