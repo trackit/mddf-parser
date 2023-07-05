@@ -6,6 +6,8 @@ import generateSingleElementArrayJSON from '../../assets/JSONSamples/simple_arra
 import generateSingleElementArrayRawJSON from '../../assets/RawJSONSamples/simple_array_single_element';
 import generateObjectElementArrayRawJSON from '../../assets/RawJSONSamples/object_array_single_element';
 import generateObjectElementArrayJSON from '../../assets/JSONSamples/object_array_single_element';
+import generateObjectElementMultiArrayRawJSON from '../../assets/RawJSONSamples/object_multi_array_single_element';
+import generateObjectElementMultiArrayJSON from '../../assets/JSONSamples/object_multi_array_single_element';
 
 describe('SchemaConformer', () => {
   const getSchema = async (path: string): Promise<object> => {
@@ -47,6 +49,19 @@ describe('SchemaConformer', () => {
       const expectedObject = generateObjectElementArrayJSON();
 
       const schema = await getSchema('assets/JSONSchemaSamples/object_array_single_element.json');
+
+      const conformer = new SchemaConformer(schema);
+
+      conformer.conform(rawObject);
+
+      expect(rawObject).toEqual(expectedObject);
+    });
+
+    it('should conform the object to the schema with a object element in multiple arrays', async () => {
+      const rawObject = generateObjectElementMultiArrayRawJSON(charKey);
+      const expectedObject = generateObjectElementMultiArrayJSON();
+
+      const schema = await getSchema('assets/JSONSchemaSamples/object_multi_array_single_element.json');
 
       const conformer = new SchemaConformer(schema);
 

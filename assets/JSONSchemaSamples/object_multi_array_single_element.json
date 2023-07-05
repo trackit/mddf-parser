@@ -1,0 +1,50 @@
+{
+    "$schema": "https://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "sample.items.item.inside.name":{
+            "type": "string"
+        },
+        "sample.items.item.inside":{
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "items": {"$ref": "#/definitions/sample.items.item.inside.name"}
+                }
+            }
+        },
+        "sample.items.item":{
+            "type": "object",
+            "required": ["inside"],
+            "properties": {
+                "inside": {
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/sample.items.item.inside"},
+                    "minItems": 1
+                }
+            }
+        },
+        "sample.items": {
+            "type": "object",
+            "required": ["item"],
+            "properties": {
+                "item": {
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/sample.items.item"},
+                    "minItems": 1
+                }
+            }
+        },
+        "sample": {
+            "type": "object",
+            "required": ["items"],
+            "properties": {
+                "items": {"$ref": "#/definitions/sample.items"}
+            }
+        }
+    },
+    "properties": {
+        "sample": {"$ref": "#/definitions/sample"}
+    }
+}

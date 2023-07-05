@@ -1,3 +1,5 @@
+import { PathStep } from '../ObjectPath/ObjectPath';
+
 export interface JSONSchema {
   $schema?: string;
   definitions?: Record<string, JSONSchema>;
@@ -10,22 +12,25 @@ export interface JSONSchema {
 }
 
 export default class SchemaUtils {
-  public accessDefinition(schema: JSONSchema, path: string[]): JSONSchema | undefined {
+  public accessDefinition(schema: JSONSchema, path: PathStep[]): JSONSchema | undefined {
     return path.reduce<JSONSchema | undefined>((current, part) => {
       if (!current) {
         // If current is undefined, the path does not exist in the schema
         return undefined;
       }
 
-      if (this.isCurrentArray(current, part)) {
-        const nextSchema = current.items?.properties[part] as JSONSchema;
+      if (this.isCurrentArray(current, part.propertyName)) {
+        const nextSchema = current.items?.properties[part.propertyName] as JSONSchema;
         return this.handleNextSchema(schema, nextSchema);
       }
 
       // If current is an object, move to the next part of the path
-      if (current.properties && current.properties[part]) {
-        const nextSchema = current.properties[part] as JSONSchema;
+      if (current.properties && current.properties[part.propertyName]) {
+        const nextSchema = current.properties[part.propertyName] as JSONSchema;
         if (nextSchema.type === 'array') {
+          if (part.arrayIndex !== undefined) {
+            return this.handleNextSchema(schema, nextSchema.items as JSONSchema);
+          }
           return this.handleNextSchemaArray(schema, nextSchema);
         }
 
