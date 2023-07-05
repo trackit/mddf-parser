@@ -46,7 +46,7 @@ describe('SchemaConformer', () => {
       const rawObject = generateObjectElementArrayRawJSON(charKey);
       const expectedObject = generateObjectElementArrayJSON();
 
-      const schema = await getSchema('assets/JSONSchemaSamples/simple_array.json');
+      const schema = await getSchema('assets/JSONSchemaSamples/object_array_single_element.json');
 
       const conformer = new SchemaConformer(schema);
 
