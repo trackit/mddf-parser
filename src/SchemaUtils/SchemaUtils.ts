@@ -17,12 +17,19 @@ export default class SchemaUtils {
         return undefined;
       }
 
+      if (this.isCurrentArray(current, part)) {
+        const nextSchema = current.items?.properties[part] as JSONSchema;
+        return this.handleNextSchema(schema, nextSchema);
+      }
+
       // If current is an object, move to the next part of the path
       if (current.properties && current.properties[part]) {
-        // eslint-disable-next-line no-param-reassign
-        current = current.properties[part] as JSONSchema;
+        const nextSchema = current.properties[part] as JSONSchema;
+        if (nextSchema.type === 'array') {
+          return this.handleNextSchemaArray(schema, nextSchema);
+        }
 
-        return this.handleNextSchema(schema, current);
+        return this.handleNextSchema(schema, nextSchema);
       }
 
       return undefined;
@@ -42,19 +49,37 @@ export default class SchemaUtils {
     return schema.definitions?.[definitionKey];
   }
 
-  private handleNextSchema(schema: JSONSchema, current: JSONSchema): JSONSchema | undefined {
-    if (this.isReference(current)) {
-      return this.getDefinition(schema, current.$ref);
+  private handleNextSchema(schema: JSONSchema, schemaPart: JSONSchema): JSONSchema | undefined {
+    if (this.isReference(schemaPart)) {
+      return this.getDefinition(schema, schemaPart.$ref);
     }
 
-    if (this.isArrayDefinition(current)) {
-      if (this.isArrayReference(current)) {
-        return this.getDefinition(schema, current.items.$ref);
+    if (this.isArrayDefinition(schemaPart)) {
+      if (this.isArrayReference(schemaPart)) {
+        return this.getDefinition(schema, schemaPart.items.$ref);
       }
-      return current.items;
+      return schemaPart.items;
     }
 
-    return current;
+    return schemaPart;
+  }
+
+  private handleNextSchemaArray(schema: JSONSchema, schemaPart: JSONSchema): JSONSchema | undefined {
+    const nextPart = { type: 'array', items: {} } as JSONSchema;
+
+    if (this.isArrayDefinition(schemaPart)) {
+      if (this.isArrayReference(schemaPart)) {
+        nextPart.items = this.getDefinition(schema, schemaPart.items.$ref);
+        return nextPart;
+      }
+      nextPart.items = schemaPart.items;
+      return nextPart;
+    }
+    return schemaPart;
+  }
+
+  private isCurrentArray(schema: JSONSchema, part: string): schema is { type: 'array'; items: { properties: Record<string, JSONSchema> } } {
+    return (schema.type === 'array' && !!schema.items?.properties && !!schema.items?.properties[part]);
   }
 
   private isReference(schema: JSONSchema): schema is { $ref: string } {
