@@ -32,8 +32,6 @@ export default class SchemaConformer {
 
     this.validateCurrentSchemaAndObject(currentSchema, currentObject, pathStack);
 
-    console.log(currentObject);
-    console.log(currentSchema);
     if (this.isPrimitiveSchema(currentSchema)) {
       this.conformPrimitive(rootObject, currentObject, pathStack);
     }
