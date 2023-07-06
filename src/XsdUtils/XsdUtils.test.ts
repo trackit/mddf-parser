@@ -25,7 +25,8 @@ describe('XsdUtils', () => {
       const array: Array<string> = ["sample2", "sample"]
 
       xsdUtils.runJsonToXmlTest(testXsd, testJson);
-      console.log(xsdUtils.searchElementNamespaceInXsd("sample5", testXsd, ""));
+      //console.log(xsdUtils.searchElementNamespaceInXsd("sample5", testXsd, ""));
+      console.log(xsdUtils.isElementInTheObjectFirstsElements("sample5", testXsd, ""));
     })
   });
 

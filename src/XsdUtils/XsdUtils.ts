@@ -61,16 +61,28 @@ export class XsdUtils {
     return false;
   }
 
-  // private isElementInTheObject(elementName: string, object: Record<string, unknown>): boolean {
-  //   for (var field in object) {
-  //     if (field.includes("element") && this.isElementTheWantedOne(object as Record<string, unknown>, elementName)) {
-  //       return true;
-  //     }
-  //     else if (this.isObject(object[field])) {
-  //       this.isElementInTheObject(elementName, object[field] as Record<string, unknown>);
-  //     }
-  //   }
-  // }
+  public isElementInTheObjectFirstsElements(elementName: string, object: Record<string, unknown>, nodeName: string): boolean {
+    var temp: boolean = false;
+    if (nodeName.includes("element")) {
+      if (this.isElementTheWantedOne(object as Record<string, unknown>, elementName)) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+    else {
+      for (var field in object) {
+        if (this.isObject(object[field])) {
+          temp = this.isElementInTheObjectFirstsElements(elementName, object[field] as Record<string, unknown>, field);
+          if (temp == true) {
+            return temp;
+          }
+        }
+      }
+      return temp;
+    }
+  }
 
   private parseNamespace(element: string) {
     var splittedString: Array<string> = element.split(':');
