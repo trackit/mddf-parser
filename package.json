@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "docs": "typedoc --out docs './src/**/*.ts'"
+    "docs": "typedoc --out docs './src/**/*.ts'",
+    "generate-interface": "ts-node scripts/json_schema_to_interface.ts"
   },
   "jest": {
     "preset": "ts-jest",
