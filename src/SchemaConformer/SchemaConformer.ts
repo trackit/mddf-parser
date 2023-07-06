@@ -21,7 +21,7 @@ export default class SchemaConformer {
       throw new Error('The schema must have properties.');
     }
 
-    ObjectPathUtils.objectPathFromObject(root).forEach((pathStep: PathStep) => {
+    ObjectPathUtils.pathStepsFromObjectProperties(root).forEach((pathStep: PathStep) => {
       this.conformRecursive(root, [pathStep]);
     });
   }
@@ -57,7 +57,7 @@ export default class SchemaConformer {
 
   private conformObject(root: Record<string, unknown>, current: unknown, pathStack: PathStep[]): void {
     if (this.isObject(current)) {
-      ObjectPathUtils.objectPathFromObject(current).forEach((pathStep: PathStep) => {
+      ObjectPathUtils.pathStepsFromObjectProperties(current).forEach((pathStep: PathStep) => {
         this.conformRecursive(root, [...pathStack, pathStep]);
       });
     }
