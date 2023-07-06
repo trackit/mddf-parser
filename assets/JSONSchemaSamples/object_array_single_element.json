@@ -1,8 +1,15 @@
 {
     "$schema": "https://json-schema.org/draft-04/schema#",
     "definitions": {
-        "sample.items.item":{
+        "sample.items.item.inside":{
             "type": "string"
+        },
+        "sample.items.item":{
+            "type": "object",
+            "required": ["inside"],
+            "properties": {
+                "inside": {"$ref": "#/definitions/sample.items.item.inside"}
+            }
         },
         "sample.items": {
             "type": "object",
