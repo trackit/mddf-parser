@@ -30,7 +30,7 @@ export default class SchemaConformer {
     const current = this.objectUtils.getDeepProperty(root, pathStack);
     const currentSchema = this.schemaUtils.accessDefinition(this.schema, pathStack);
 
-    this.validateCurrentSchemaAndObject(currentSchema, current, pathStack);
+    this.verifyNotUndefined(currentSchema, current, pathStack);
 
     if (this.isPrimitiveSchema(currentSchema)) {
       this.conformPrimitive(root, current, pathStack);
@@ -46,10 +46,13 @@ export default class SchemaConformer {
   }
 
   public conformPrimitive(root: Record<string, unknown>, current: unknown, pathStack: PathStep[]): void {
+    // Transforms an object with a [charKey] property into a primitive.
     if (this.isObject(current)) {
       if (current[this.charkey]) {
         this.objectUtils.setDeepProperty(root, pathStack, current[this.charkey]);
       }
+      return;
+    } if (this.isPrimitive(current)) {
       return;
     }
     throw new Error(`The object ${current} must be a primitive or an object with a "${this.charkey}" property.`);
@@ -60,18 +63,23 @@ export default class SchemaConformer {
       ObjectPathUtils.pathStepsFromObjectProperties(current).forEach((pathStep: PathStep) => {
         this.conformRecursive(root, [...pathStack, pathStep]);
       });
+    } else {
+      throw new Error(`The object ${JSON.stringify(current, null, 2)} is expected to be an object.`);
     }
   }
 
   public conformArray(root: Record<string, unknown>, pathStack: PathStep[], current: unknown): void {
     if (this.isArray(current)) {
-      this.recurseOverArray(root, current, pathStack);
+      this.recurseOverArray(root, pathStack);
     } else if (this.isObject(current)) {
       this.wrapSingleObjectInArray(root, current, pathStack);
+      this.recurseOverArray(root, pathStack);
     }
   }
 
-  private recurseOverArray(root: Record<string, unknown>, current: unknown[], pathStack: PathStep[]): void {
+  private recurseOverArray(root: Record<string, unknown>, pathStack: PathStep[]): void {
+    const current = this.objectUtils.getDeepProperty(root, pathStack) as unknown[];
+
     current.forEach((element: unknown, index: number) => {
       const lastStep: PathStep = {
         propertyName: pathStack[pathStack.length - 1].propertyName,
@@ -84,16 +92,9 @@ export default class SchemaConformer {
 
   private wrapSingleObjectInArray(root: Record<string, unknown>, current: object, pathStack: PathStep[]): void {
     this.objectUtils.setDeepProperty(root, pathStack, [current]);
-
-    const lastStep: PathStep = {
-      propertyName: pathStack[pathStack.length - 1].propertyName,
-      arrayIndex: 0,
-    };
-
-    this.conformRecursive(root, this.replaceLastPathStep(pathStack, lastStep));
   }
 
-  private validateCurrentSchemaAndObject(currentSchema: unknown, current: unknown, pathStack: ObjectPath): asserts currentSchema is JSONSchema {
+  private verifyNotUndefined(currentSchema: unknown, current: unknown, pathStack: ObjectPath): asserts currentSchema is JSONSchema {
     if (!currentSchema) {
       throw new Error(`The path ${pathStack} does not exist in the schema.`);
     }
@@ -127,18 +128,18 @@ export default class SchemaConformer {
   }
 
   public isArraySchema(schema: JSONSchema): boolean {
-    return schema.type === 'array';
+    return schema.type === 'array' || !!schema.items;
   }
 
   public getSchema(): object {
     return this.schema;
   }
 
-  private isObject(root: unknown): root is Record<string, unknown> {
-    return typeof root === 'object' && root !== null && !Array.isArray(root);
+  private isObject(unk: unknown): unk is Record<string, unknown> {
+    return typeof unk === 'object' && unk !== null && !Array.isArray(unk);
   }
 
-  private isArray(root: unknown): root is unknown[] {
-    return Array.isArray(root);
+  private isArray(unk: unknown): unk is unknown[] {
+    return Array.isArray(unk);
   }
 }
