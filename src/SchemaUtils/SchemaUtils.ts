@@ -19,7 +19,7 @@ export default class SchemaUtils {
         return undefined;
       }
 
-      if (this.isCurrentArray(current, part.propertyName)) {
+      if (this.isPropertyArray(current, part.propertyName)) {
         const nextSchema = current.items?.properties[part.propertyName] as JSONSchema;
         return this.handleNextSchema(schema, nextSchema);
       }
@@ -83,7 +83,7 @@ export default class SchemaUtils {
     return schemaPart;
   }
 
-  private isCurrentArray(schema: JSONSchema, part: string): schema is { type: 'array'; items: { properties: Record<string, JSONSchema> } } {
+  private isPropertyArray(schema: JSONSchema, part: string): schema is { type: 'array'; items: { properties: Record<string, JSONSchema> } } {
     return (schema.type === 'array' && !!schema.items?.properties && !!schema.items?.properties[part]);
   }
 

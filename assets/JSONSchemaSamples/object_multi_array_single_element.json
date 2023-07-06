@@ -1,16 +1,12 @@
 {
     "$schema": "https://json-schema.org/draft-04/schema#",
     "definitions": {
-        "sample.items.item.inside.name":{
-            "type": "string"
-        },
         "sample.items.item.inside":{
             "type": "object",
             "required": ["name"],
             "properties": {
                 "name": {
-                    "type": "string",
-                    "items": {"$ref": "#/definitions/sample.items.item.inside.name"}
+                    "type": "string"
                 }
             }
         },
