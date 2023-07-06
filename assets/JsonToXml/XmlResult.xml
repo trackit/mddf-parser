@@ -1,0 +1,10 @@
+<sample>
+    <item>Sample Item</item>
+    <book>Book Item</book>
+</sample>
+<sample2>
+    <sample>
+        <item>Sample Item</item>
+        <book>Book Item</book>
+    </sample>
+</sample2>

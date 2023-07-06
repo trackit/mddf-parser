@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xf:element name="sample">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="book" type="xs:string"/>
+                <xs:element name="item" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xf:element>
+    <xd:element name="sample2">
+        <xd:complexType>
+            <xc:element name="sample5">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="book" type="xs:string"/>
+                        <xs:element name="item" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xc:element>
+        </xd:complexType>
+    </xd:element>
+    <xy:element name="sample4">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="book" type="xs:string"/>
+                <xs:element name="item" type="xs:string"/>
+                <xx:element name="sample5">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="book" type="xs:string"/>
+                            <xs:element name="item" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xx:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xy:element>
+</xs:schema>
