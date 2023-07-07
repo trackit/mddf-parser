@@ -4,7 +4,7 @@ export default function generateObjectElementArrayJSON(): object {
       items: {
         item: [
           {
-            inside: "Sample Item 1"
+            inside: 'Sample Item 1',
           },
         ],
       },

@@ -7,8 +7,8 @@ export default function generateObjectElementMultiArrayJSON(): object {
             inside: [
               {
                 name: 'Sample Item 1',
-              }
-            ]
+              },
+            ],
           },
         ],
       },
