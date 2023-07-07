@@ -1,0 +1,56 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "ManifestSourceLicensor": {
+        "$ref": "#/definitions/ManifestSourceLicensortype"
+      },
+      "OrgName": {
+        "$ref": "#/definitions/OrgNametype"
+      }
+    },
+    "definitions": {
+      "ManifestSourceLicensortype": {
+        "allOf": [
+          { "$ref": "#/definitions/OrgNametype" },
+          {
+            "type": "object",
+            "properties": {
+              "ALID": {
+                "type": "array",
+                "items": {
+                  "type": [
+                    "string",
+                    "number",
+                    "integer",
+                    "boolean",
+                    "null",
+                    "object",
+                    "array"
+                  ]
+                },
+                "minItems": 0
+              }
+            }
+          }
+        ]
+      },
+      "OrgNametype": {
+        "type": "object",
+        "required": ["DisplayName"],
+        "properties": {
+          "DisplayName": { "type": "string" },
+          "SortName": { "type": "string" },
+          "AlternateName": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 0
+          },
+          "organizationID": { "type": "string" },
+          "departmentID": { "type": "string" },
+          "idType": { "type": "string" }
+        }
+      }
+    }
+  }
+  
