@@ -1,10 +1,17 @@
 import { JSONSchema } from '../SchemaUtils/SchemaUtils';
 
 export default class SchemaCharKey {
-  private charKey: string = 'charKey';
-
-  constructor(private readonly schema: JSONSchema) {
-    this.schema = schema;
+  constructor(private readonly schema: JSONSchema, private readonly charKey: string = 'charKey') {
+    if (!this.schema) { throw new Error('The schema must be defined.'); }
+    const { definitions } = this.schema;
+    if (!definitions) { throw new Error('The schema must have definitions.'); }
+    Object.keys(definitions).forEach((key: string) => {
+      if (!definitions) { throw new Error('The schema must have definitions.'); }
+      const object = definitions[key];
+      if (!object) { throw new Error('The schema cant be undefined.'); }
+      this.processSchema(object);
+      this.processAdditionalProperties(object);
+    });
   }
 
   private processSchema(object: JSONSchema): void {
@@ -26,7 +33,7 @@ export default class SchemaCharKey {
         throw new Error('The schema must have properties.');
       }
       if (key === 'Value'
-        || (required && !required.includes(key))) {
+        && (!required || !required.includes(key))) {
         props[this.charKey] = props[key];
         delete props[key];
       } else {
@@ -42,24 +49,16 @@ export default class SchemaCharKey {
     }
   }
 
-  public process(): void {
-    let object;
-
-    if (!this.schema) { throw new Error('The schema must be defined.'); }
-    const { definitions } = this.schema;
-    if (!definitions) { throw new Error('The schema must have definitions.'); }
-    Object.keys(definitions).forEach((key: string) => {
-      if (!definitions) { throw new Error('The schema must have definitions.'); }
-      object = definitions[key];
-      if (!object) { throw new Error('The schema cant be undefined.'); }
-      this.processSchema(object);
-      this.processAdditionalProperties(object);
-    });
+  public static process(schema: JSONSchema, charKey: string = 'charKey'): void {
+    const schemaCharKey = new SchemaCharKey(schema, charKey);
+    if (!schemaCharKey) { throw new Error('SchemaCharKey occurred an error.'); }
   }
 
   private isObjectSchema(schema: JSONSchema): boolean {
     if (!schema) { throw new Error('The schema must be defined.'); }
-    if (!schema.type) { throw new Error('The schema must have type.'); }
+    if (!schema.type) {
+      return false;
+    }
     return schema.type === 'object' || !!schema.properties;
   }
 }

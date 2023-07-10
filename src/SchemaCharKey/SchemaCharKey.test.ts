@@ -23,8 +23,7 @@ describe('SchemaCharKey', () => {
           },
         },
       };
-      const schemaCharKey = new SchemaCharKey(schema);
-      schemaCharKey.process();
+      SchemaCharKey.process(schema, 'charKey');
       expect(schema).toEqual({
         definitions: {
           Test: {
@@ -49,7 +48,7 @@ describe('SchemaCharKey', () => {
       });
     });
 
-    it('should process the schema with required', () => {
+    it('should process the schema with array', () => {
       const schema = {
         definitions: {
           MediaProfiletype: {
@@ -74,8 +73,7 @@ describe('SchemaCharKey', () => {
           },
         },
       };
-      const schemaCharKey = new SchemaCharKey(schema);
-      schemaCharKey.process();
+      SchemaCharKey.process(schema, 'charKey');
       expect(schema).toEqual({
         definitions: {
           MediaProfiletype: {
@@ -99,6 +97,48 @@ describe('SchemaCharKey', () => {
                 minItems: 1,
               },
             },
+          },
+        },
+      });
+    });
+    it('should process the schema with required', () => {
+      const schema = {
+        definitions: {
+          NVPairMoneytype: {
+            type: 'object',
+            required: [
+              'Name',
+              'Value',
+            ],
+            properties: {
+              Name: {
+                type: 'string',
+              },
+              Value: {
+                $ref: '#/definitions/Moneytype',
+              },
+            },
+          },
+        },
+      };
+      SchemaCharKey.process(schema, 'charKey');
+      expect(schema).toEqual({
+        definitions: {
+          NVPairMoneytype: {
+            type: 'object',
+            required: [
+              'Name',
+              'Value',
+            ],
+            properties: {
+              Name: {
+                type: 'string',
+              },
+              Value: {
+                $ref: '#/definitions/Moneytype',
+              },
+            },
+            additionalProperties: false,
           },
         },
       });
