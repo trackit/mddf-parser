@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "docs": "typedoc --out docs './src/**/*.ts'"
+    "docs": "typedoc --out docs './src/**/*.ts'",
+    "schemacharkey": "tsc ./src/SchemaCharKey/SchemaCharKey.ts && node ./dist/SchemaCharKey.js"
   },
   "jest": {
     "preset": "ts-jest",

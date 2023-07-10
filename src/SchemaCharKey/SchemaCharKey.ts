@@ -1,4 +1,4 @@
-import {JSONSchema} from "../SchemaUtils/SchemaUtils";
+import { JSONSchema } from '../SchemaUtils/SchemaUtils';
 
 export default class SchemaCharKey {
   private charKey: string = 'charKey';
@@ -8,68 +8,46 @@ export default class SchemaCharKey {
   }
 
   private processSchema(object: JSONSchema): void {
-    let props = object.properties
-    let required = object.required
+    const props = object.properties;
+    const { required } = object;
 
-    if (!props)
-      return
+    if (!props) { return; }
     Object.keys(props).forEach((key: string) => {
-      if (!props)
-        throw new Error('The schema must have properties.')
+      if (!props) { throw new Error('The schema must have properties.'); }
       if (key === 'Value'
         || (required && !required.includes(key))) {
-        props[this.charKey] = props[key]
-        delete props[key]
+        props[this.charKey] = props[key];
+        delete props[key];
       } else {
-        if (this.isObjectSchema(props[key]))
-          this.processAdditionalProperties(props[key])
-        this.processSchema(props[key])
+        if (this.isObjectSchema(props[key])) { this.processAdditionalProperties(props[key]); }
+        this.processSchema(props[key]);
       }
     });
   }
 
   private processAdditionalProperties(object: JSONSchema): void {
     if (this.isObjectSchema(object)) {
-      // @ts-ignore
-      object['additionalProperties'] = false
+      // eslint-disable-next-line no-param-reassign
+      object.additionalProperties = false;
     }
   }
 
   public process(): void {
-    let object
-    let definitions : Record<string, JSONSchema> | undefined
+    let object;
 
-    if (!this.schema)
-      throw new Error('The schema must be defined.')
-    definitions = this.schema.definitions
-    if (!definitions)
-      throw new Error('The schema must have definitions.')
+    if (!this.schema) { throw new Error('The schema must be defined.'); }
+    const { definitions } = this.schema;
+    if (!definitions) { throw new Error('The schema must have definitions.'); }
     Object.keys(definitions).forEach((key: string) => {
-      if (!definitions)
-        throw new Error('The schema must have definitions.')
-      object = definitions[key]
-      if (!object)
-        throw new Error('The schema cant be undefined.')
-      this.processSchema(object)
-      this.processAdditionalProperties(object)
+      if (!definitions) { throw new Error('The schema must have definitions.'); }
+      object = definitions[key];
+      if (!object) { throw new Error('The schema cant be undefined.'); }
+      this.processSchema(object);
+      this.processAdditionalProperties(object);
     });
   }
 
   private isObjectSchema(schema: JSONSchema): boolean {
     return schema.type === 'object' || !!schema.properties;
-  }
-
-  private isArraySchema(schema: JSONSchema): boolean {
-    let isArray = false;
-    if (schema.properties) {
-      Object.keys(schema.properties).forEach((key: string) => {
-        if (schema.properties) {
-          if (schema.properties[key].type === 'array') {
-            isArray = true;
-          }
-        }
-      });
-    }
-    return isArray;
   }
 }
