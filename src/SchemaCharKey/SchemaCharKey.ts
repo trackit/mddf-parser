@@ -11,15 +11,25 @@ export default class SchemaCharKey {
     const props = object.properties;
     const { required } = object;
 
-    if (!props) { return; }
+    this.processAdditionalProperties(object);
+    if (object.type === 'array') {
+      if (object.items) {
+        this.processSchema(object.items);
+      }
+      return;
+    }
+    if (!props) {
+      return;
+    }
     Object.keys(props).forEach((key: string) => {
-      if (!props) { throw new Error('The schema must have properties.'); }
+      if (!props) {
+        throw new Error('The schema must have properties.');
+      }
       if (key === 'Value'
         || (required && !required.includes(key))) {
         props[this.charKey] = props[key];
         delete props[key];
       } else {
-        if (this.isObjectSchema(props[key])) { this.processAdditionalProperties(props[key]); }
         this.processSchema(props[key]);
       }
     });
@@ -48,6 +58,8 @@ export default class SchemaCharKey {
   }
 
   private isObjectSchema(schema: JSONSchema): boolean {
+    if (!schema) { throw new Error('The schema must be defined.'); }
+    if (!schema.type) { throw new Error('The schema must have type.'); }
     return schema.type === 'object' || !!schema.properties;
   }
 }
