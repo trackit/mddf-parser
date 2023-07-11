@@ -7,6 +7,10 @@ describe('SchemaUtils', () => {
 
   const getAllOfMMCSchema = async () => JSON.parse(await fileReader.readFile('assets/JSONSchemaSamples/allof_mmc_schema.json'));
 
+  const getPropertiesAndDefinitionsSchema = async () => JSON.parse(
+    await fileReader.readFile('assets/JSONSchemaSamples/properties_and_definitions_with_different_name.json'),
+  );
+
   describe('accessDefinition', () => {
     it('should return the library definition', async () => {
       const librarySchema = await getLibrarySchema();
@@ -199,6 +203,26 @@ describe('SchemaUtils', () => {
           },
           minItems: 0,
         },
+      },
+    });
+  });
+
+  it('should return correct schema and not undefined if properties and definitions dont have the same name', async () => {
+    const schema = await getPropertiesAndDefinitionsSchema();
+
+    const schemaUtils = new SchemaUtils();
+
+    expect(schemaUtils.accessDefinition(schema, [{ propertyName: 'studentType' }])).toEqual({
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+      },
+    });
+
+    expect(schemaUtils.accessDefinition(schema, [{ propertyName: 'teacherType' }])).toEqual({
+      type: 'object',
+      properties: {
+        subject: { type: 'string' },
       },
     });
   });
