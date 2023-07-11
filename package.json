@@ -2,11 +2,11 @@
   "name": "xmltotypescript",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.ts",
   "scripts": {
     "test": "jest",
     "docs": "typedoc --out docs './src/**/*.ts'",
-    "schemacharkey": "tsc scripts/SchemaCharKeyLaunch.ts --outDir ./dist/ && node ./dist/SchemaCharKey/SchemaCharKeyLaunch.js"
+    "generate-interface": "ts-node scripts/json_schema_to_interface.ts"
   },
   "jest": {
     "preset": "ts-jest",
@@ -32,7 +32,7 @@
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-promise": "^6.1.1",
     "jest": "^29.5.0",
-    "json-schema-to-typescript": "^13.0.1",
+    "json-schema-to-typescript": "^13.0.2",
     "ts-jest": "^29.1.0",
     "ts-json-schema-generator": "^1.2.0",
     "typedoc": "^0.24.6",
@@ -44,13 +44,6 @@
     "ajv-formats": "^2.1.1",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-plugin-jest": "^27.2.1",
-    "fast-xml-parser": "^4.2.2",
-    "fs": "^0.0.1-security",
-    "pretty-data": "^0.40.0",
-    "typescript-collections": "^1.3.3",
-    "xml2js": "^0.6.0",
-    "xml2json": "^0.12.0",
-    "xmldom": "^0.6.0",
-    "xpath": "^0.0.32"
+    "xml2js": "^0.6.0"
   }
 }

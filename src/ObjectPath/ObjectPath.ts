@@ -14,7 +14,7 @@ export default class ObjectPathUtils {
     return path.map((propertyName: string) => ({ propertyName }));
   }
 
-  public static fromObject(obj: Record<string, unknown>): PathStep[] {
+  public static pathStepsFromObjectProperties(obj: Record<string, unknown>): PathStep[] {
     return Object.entries(obj).reduce((acc: PathStep[], [propertyName, value]) => {
       if (Array.isArray(value)) {
         const arraySteps: PathStep[] = value.map((_, arrayIndex) => ({ propertyName, arrayIndex }));
