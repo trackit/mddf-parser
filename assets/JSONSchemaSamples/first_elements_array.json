@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "stringType": {
+            "type": "string"
+        }
+    },
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "book": {
+                "$ref": "#/definitions/stringType"
+            }
+        },
+        "additionalProperties": false
+    }
+}

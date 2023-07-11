@@ -13,7 +13,11 @@ export default class SchemaConformer {
     this.schema = schema;
   }
 
-  public conform(root: Record<string, unknown>): void {
+  public conform(root: unknown): void {
+    if (this.isArray(root)) {
+      this.conformFirstLevelArray(root as Record<string, unknown>[]);
+      return;
+    }
     if (!this.isObject(root)) {
       throw new Error('The object to conform must be an object.');
     }
@@ -75,6 +79,16 @@ export default class SchemaConformer {
       this.wrapSingleObjectInArray(root, current, pathStack);
       this.recurseOverArray(root, pathStack);
     }
+  }
+
+  public conformFirstLevelArray(root: Record<string, unknown>[]): void {
+    root.forEach((element: unknown) => {
+      if (this.isObject(element)) {
+        ObjectPathUtils.pathStepsFromObjectProperties(element).forEach((pathStep: PathStep) => {
+          this.conformRecursive(element, [pathStep]);
+        });
+      }
+    });
   }
 
   private recurseOverArray(root: Record<string, unknown>, pathStack: PathStep[]): void {

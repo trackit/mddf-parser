@@ -3,7 +3,7 @@ export default function generateObjectElementArrayRawJSON(charKey: string): Reco
     sample: {
       items: {
         item: {
-          inside : { [charKey]: 'Sample Item 1' },
+          inside: { [charKey]: 'Sample Item 1' },
         },
       },
     },
