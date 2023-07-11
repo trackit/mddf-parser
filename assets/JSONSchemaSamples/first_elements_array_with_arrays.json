@@ -11,9 +11,7 @@
       "Element": {
         "type": "object",
         "properties": {
-          "book": { "type": "string" },
-          "movie": { "type": "string" },
-          "game": { "type": "string" }
+          "book": { "type": "string" }
         },
         "additionalProperties": false,
         "minProperties": 1,

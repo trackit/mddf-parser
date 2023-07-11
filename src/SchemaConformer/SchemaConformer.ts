@@ -88,11 +88,6 @@ export default class SchemaConformer {
           this.conformRecursive(element, [pathStep]);
         });
       }
-      // Need to be implemented
-      // if (this.isArray(element)) {
-      // }
-      // if (this.isPrimitive(element)) {
-      // }
     });
   }
 

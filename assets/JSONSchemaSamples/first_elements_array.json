@@ -11,12 +11,6 @@
         "properties": {
             "book": {
                 "$ref": "#/definitions/stringType"
-            },
-            "movie": {
-                "$ref": "#/definitions/stringType"
-            },
-            "game": {
-                "$ref": "#/definitions/stringType"
             }
         },
         "additionalProperties": false
