@@ -1,6 +1,6 @@
 import * as fs from 'fs';
-import SchemaCharKey from './SchemaCharKey';
-import { JSONSchema } from '../SchemaUtils/SchemaUtils';
+import SchemaCharKey from '../src/SchemaCharKey/SchemaCharKey';
+import { JSONSchema } from '../src/SchemaUtils/SchemaUtils';
 
 const schemaPath = process.argv[2];
 const outputPath = process.argv[3];

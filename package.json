@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "docs": "typedoc --out docs './src/**/*.ts'",
-    "schemacharkey": "tsc ./src/SchemaCharKey/SchemaCharKeyLaunch.ts --outDir ./dist/ && node ./dist/SchemaCharKey/SchemaCharKeyLaunch.js"
+    "schemacharkey": "tsc scripts/SchemaCharKeyLaunch.ts --outDir ./dist/ && node ./dist/SchemaCharKey/SchemaCharKeyLaunch.js"
   },
   "jest": {
     "preset": "ts-jest",
