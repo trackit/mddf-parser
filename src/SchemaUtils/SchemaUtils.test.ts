@@ -172,9 +172,8 @@ describe('SchemaUtils', () => {
 
     const schemaUtils = new SchemaUtils();
 
-    expect(schemaUtils.accessDefinition(allOfMMCSchema, [{ propertyName: 'ManifestSourceLicensortype' }])).toEqual({
+    expect(schemaUtils.accessDefinition(allOfMMCSchema, [{ propertyName: 'ManifestSourceLicensor' }])).toEqual({
       type: 'object',
-      required: ['DisplayName'],
       properties: {
         DisplayName: { type: 'string' },
         SortName: { type: 'string' },

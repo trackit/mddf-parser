@@ -9,6 +9,7 @@ export interface JSONSchema {
   items?: JSONSchema;
   minItems?: number;
   $ref?: string;
+  allOf?: JSONSchema[];
 }
 
 export default class SchemaUtils {
@@ -56,17 +57,44 @@ export default class SchemaUtils {
 
   private handleNextSchema(schema: JSONSchema, schemaPart: JSONSchema): JSONSchema | undefined {
     if (this.isReference(schemaPart)) {
-      return this.getDefinition(schema, schemaPart.$ref);
+      return this.handleReference(schema, schemaPart);
+    }
+
+    if (schemaPart.allOf) {
+      return this.handleAllOf(schema, schemaPart);
     }
 
     if (this.isArrayDefinition(schemaPart)) {
-      if (this.isArrayReference(schemaPart)) {
-        return this.getDefinition(schema, schemaPart.items.$ref);
-      }
-      return schemaPart.items;
+      return this.handleArrayReference(schema, schemaPart);
     }
 
     return schemaPart;
+  }
+
+  private handleReference(schema: JSONSchema, schemaPart: JSONSchema): JSONSchema | undefined {
+    const definition = this.getDefinition(schema, schemaPart.$ref as string);
+    return definition && definition.allOf ? this.handleAllOf(schema, definition) : definition;
+  }
+
+  private handleArrayReference(schema: JSONSchema, schemaPart: JSONSchema): JSONSchema | undefined {
+    if (this.isArrayReference(schemaPart)) {
+      return this.getDefinition(schema, schemaPart.items.$ref as string);
+    }
+    return schemaPart.items;
+  }
+
+  private handleAllOf(schema: JSONSchema, schemaPart: JSONSchema): JSONSchema {
+    const newSchemaPart = { type: 'object', properties: {} } as JSONSchema;
+
+    schemaPart.allOf?.forEach((part) => {
+      const definition = this.getDefinitionOrSchema(schema, part);
+
+      if (definition?.properties) {
+        this.mergeProperties(newSchemaPart, definition);
+      }
+    });
+
+    return newSchemaPart;
   }
 
   private handleNextSchemaArray(schema: JSONSchema, schemaPart: JSONSchema): JSONSchema | undefined {
@@ -81,6 +109,15 @@ export default class SchemaUtils {
       return nextPart;
     }
     return schemaPart;
+  }
+
+  private getDefinitionOrSchema(schema: JSONSchema, part: JSONSchema): JSONSchema | undefined {
+    return this.isReference(part) ? this.getDefinition(schema, part.$ref as string) : part;
+  }
+
+  private mergeProperties(targetSchema: JSONSchema, sourceSchema: JSONSchema) {
+    // eslint-disable-next-line no-param-reassign
+    targetSchema.properties = { ...targetSchema.properties, ...sourceSchema.properties };
   }
 
   private isPropertyArray(schema: JSONSchema, part: string): schema is { type: 'array'; items: { properties: Record<string, JSONSchema> } } {
