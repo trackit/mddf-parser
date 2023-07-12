@@ -2,15 +2,15 @@ import { JSONSchema } from '../SchemaUtils/SchemaUtils';
 
 export default class SchemaCharKey {
   constructor(private readonly schema: JSONSchema, private readonly charKey: string = 'charKey') {
-    if (!this.schema) { throw new Error('The schema must be defined.'); }
+    this.process();
+  }
+
+  private process() {
     const { definitions } = this.schema;
     if (!definitions) { throw new Error('The schema must have definitions.'); }
     Object.keys(definitions).forEach((key: string) => {
-      if (!definitions) { throw new Error('The schema must have definitions.'); }
       const object = definitions[key];
-      if (!object) { throw new Error('The schema cant be undefined.'); }
       this.processSchema(object);
-      this.processAdditionalProperties(object);
     });
   }
 
@@ -55,7 +55,6 @@ export default class SchemaCharKey {
   }
 
   private isObjectSchema(schema: JSONSchema): boolean {
-    if (!schema) { throw new Error('The schema must be defined.'); }
     if (!schema.type) {
       return false;
     }
