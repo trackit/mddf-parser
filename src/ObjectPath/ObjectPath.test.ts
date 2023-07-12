@@ -10,7 +10,7 @@ describe('ObjectPathUtils', () => {
         property4: [true, false],
       };
 
-      const result = ObjectPathUtils.fromObject(input);
+      const result = ObjectPathUtils.pathStepsFromObjectProperties(input);
 
       expect(result).toEqual([
         { propertyName: 'property1' },

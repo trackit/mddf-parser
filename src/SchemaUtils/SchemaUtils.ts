@@ -1,3 +1,5 @@
+import { PathStep } from '../ObjectPath/ObjectPath';
+
 export interface JSONSchema {
   $schema?: string;
   definitions?: Record<string, JSONSchema>;
@@ -11,19 +13,29 @@ export interface JSONSchema {
 }
 
 export default class SchemaUtils {
-  public accessDefinition(schema: JSONSchema, path: string[]): JSONSchema | undefined {
+  public accessDefinition(schema: JSONSchema, path: PathStep[]): JSONSchema | undefined {
     return path.reduce<JSONSchema | undefined>((current, part) => {
       if (!current) {
         // If current is undefined, the path does not exist in the schema
         return undefined;
       }
 
-      // If current is an object, move to the next part of the path
-      if (current.properties && current.properties[part]) {
-        // eslint-disable-next-line no-param-reassign
-        current = current.properties[part] as JSONSchema;
+      if (this.isPropertyArray(current, part.propertyName)) {
+        const nextSchema = current.items?.properties[part.propertyName] as JSONSchema;
+        return this.handleNextSchema(schema, nextSchema);
+      }
 
-        return this.handleNextSchema(schema, current);
+      // If current is an object, move to the next part of the path
+      if (current.properties && current.properties[part.propertyName]) {
+        const nextSchema = current.properties[part.propertyName] as JSONSchema;
+        if (nextSchema.type === 'array') {
+          if (part.arrayIndex !== undefined) {
+            return this.handleNextSchema(schema, nextSchema.items as JSONSchema);
+          }
+          return this.handleNextSchemaArray(schema, nextSchema);
+        }
+
+        return this.handleNextSchema(schema, nextSchema);
       }
 
       return undefined;
@@ -43,19 +55,37 @@ export default class SchemaUtils {
     return schema.definitions?.[definitionKey];
   }
 
-  private handleNextSchema(schema: JSONSchema, current: JSONSchema): JSONSchema | undefined {
-    if (this.isReference(current)) {
-      return this.getDefinition(schema, current.$ref);
+  private handleNextSchema(schema: JSONSchema, schemaPart: JSONSchema): JSONSchema | undefined {
+    if (this.isReference(schemaPart)) {
+      return this.getDefinition(schema, schemaPart.$ref);
     }
 
-    if (this.isArrayDefinition(current)) {
-      if (this.isArrayReference(current)) {
-        return this.getDefinition(schema, current.items.$ref);
+    if (this.isArrayDefinition(schemaPart)) {
+      if (this.isArrayReference(schemaPart)) {
+        return this.getDefinition(schema, schemaPart.items.$ref);
       }
-      return current.items;
+      return schemaPart.items;
     }
 
-    return current;
+    return schemaPart;
+  }
+
+  private handleNextSchemaArray(schema: JSONSchema, schemaPart: JSONSchema): JSONSchema | undefined {
+    const nextPart = { type: 'array', items: {} } as JSONSchema;
+
+    if (this.isArrayDefinition(schemaPart)) {
+      if (this.isArrayReference(schemaPart)) {
+        nextPart.items = this.getDefinition(schema, schemaPart.items.$ref);
+        return nextPart;
+      }
+      nextPart.items = schemaPart.items;
+      return nextPart;
+    }
+    return schemaPart;
+  }
+
+  private isPropertyArray(schema: JSONSchema, part: string): schema is { type: 'array'; items: { properties: Record<string, JSONSchema> } } {
+    return (schema.type === 'array' && !!schema.items?.properties && !!schema.items?.properties[part]);
   }
 
   private isReference(schema: JSONSchema): schema is { $ref: string } {
