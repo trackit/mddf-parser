@@ -1,8 +1,11 @@
 import { JSONSchema } from '../SchemaUtils/SchemaUtils';
 
 export default class SchemaCharKey {
-  constructor(private readonly schema: JSONSchema, private readonly charKey: string = 'charKey') {
-    this.process();
+  constructor(private readonly schema: JSONSchema, private readonly charKey: string = 'charKey') {}
+
+  public static process(schema: JSONSchema, charKey: string = 'charKey'): void {
+    const schemaCharKey = new SchemaCharKey(schema, charKey);
+    schemaCharKey.process();
   }
 
   private process() {
@@ -47,11 +50,6 @@ export default class SchemaCharKey {
       // eslint-disable-next-line no-param-reassign
       object.additionalProperties = false;
     }
-  }
-
-  public static process(schema: JSONSchema, charKey: string = 'charKey'): void {
-    const schemaCharKey = new SchemaCharKey(schema, charKey);
-    if (!schemaCharKey) { throw new Error('SchemaCharKey occurred an error.'); }
   }
 
   private isObjectSchema(schema: JSONSchema): boolean {
