@@ -4,6 +4,7 @@ export interface JSONSchema {
   $schema?: string;
   definitions?: Record<string, JSONSchema>;
   properties?: Record<string, JSONSchema>;
+  additionalProperties?: boolean;
   required?: string[];
   type?: string;
   items?: JSONSchema;
