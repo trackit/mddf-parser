@@ -1,35 +1,72 @@
-// ---------------------------------------- //
-//   Utils needed to deal with XSD files    //
-// ---------------------------------------- //
-
-import { parseString,  } from 'xml2js';
-import { readFileSync, readFile } from 'fs';
 import { json2xml } from 'xml-js';
-
 import { LocalFileAdaptor } from '../FileAdaptor/LocalFileAdaptor';
 
 export class XsdUtils {
 
-  public runJsonToXmlTest(testXsd: Record<string, unknown>, testObject: JSON): void {
-    const fileReader = new LocalFileAdaptor();
+  // Public functions
 
-    const json = JSON.stringify(testObject);
-    const xml = json2xml(json, { compact: true, spaces: 4 });
+  public addNamespaceToElementInObject(currentObject: Record<string, unknown>, path: Array<string>, xsd: Record<string, unknown>): Record<string, unknown> {
+    var tempObject: Record<string, unknown>;
+    var tempValue;
+    var namespace: string = '';
 
-    fileReader.writeFile('assets/JsonToXml/XmlResult.xml', xml);
+    for (var field in currentObject) {
+      if (this.isObject(currentObject[field])) {
+        path.push(field)
+        namespace = this.searchPreciseElementObjectNamespaceInXsd(xsd, path) + ':' + field;
+        tempObject = currentObject[field] as Record<string, unknown>;
+        delete currentObject[field];
+        currentObject[namespace] = tempObject;
+        this.addNamespaceToElementInObject(currentObject[namespace] as Record<string, unknown>, path, xsd);
+        path.pop();
+      }
+      else {
+        path.push(field);
+        namespace = this.searchPreciseElementObjectNamespaceInXsd(xsd, path) + ':' + field;
+        tempValue = currentObject[field];
+        delete currentObject[field];
+        currentObject[namespace] = tempValue;
+        path.pop();
+      }
+    }
+    return currentObject;
   }
-  
-  // Function that returns the namespace of the first <element> with right elementName encountered; 
-  public searchElementNamespaceInXsd(elementName: string, xsd: Record<string, unknown>, nodeName: string): string {
-    var temp: string = "";
-    if (nodeName.includes("element") && this.isElementTheWantedOne(xsd as Record<string, unknown>, elementName)) {
-      return this.parseNamespace(nodeName);
+
+  // Private functions
+
+  private searchPreciseElementObjectNamespaceInXsd(xsd: Record<string, unknown>, path: Array<string>): string {
+    var currentObj: Record<string, unknown> = xsd;    
+    var nodeName = '';
+    for (var element in path) {
+      nodeName = this.searchFirstElementNamespaceInXsd(path[element], currentObj, nodeName);
+      currentObj = this.goToFirstElementInXsd(path[element], currentObj, nodeName);
+    }
+    return this.parseNamespace(nodeName);
+  }
+
+  // private searchPreciseElementNamespaceInXsd(xsd: Record<string, unknown>, path: Array<string>): string {
+  //   var lastElement: string = path.pop() as string;
+    
+  //   var currentObj: Record<string, unknown> = xsd;
+  //   var nodeName = '';
+  //   for (var element in path) {
+  //     nodeName = this.searchFirstElementNamespaceInXsd(path[element], currentObj, nodeName);
+  //     currentObj = this.goToFirstElementInXsd(path[element], currentObj, nodeName);
+  //   }
+
+  //   return this.parseNamespace(currentObj[lastElement]);
+  // }
+
+  private searchFirstElementNamespaceInXsd(elementName: string, xsd: Record<string, unknown>, nodeName: string): string {
+    var temp: string = '';
+    if (nodeName.includes('element') && this.isElementTheWantedOne(xsd as Record<string, unknown>, elementName)) {
+      return nodeName;
     }
     else {
       for (var field in xsd) {
         if (this.isObject(xsd[field])) {
-          temp = this.searchElementNamespaceInXsd(elementName, xsd[field] as Record<string, unknown>, field);
-          if (temp != "") {
+          temp = this.searchFirstElementNamespaceInXsd(elementName, xsd[field] as Record<string, unknown>, field);
+          if (temp != '') {
             return temp;
           }
         }
@@ -38,50 +75,44 @@ export class XsdUtils {
     }
   }
 
-  // public searchPreciseElementNameSpaceInXsd(elementName: string, xsd: Record<string, unknown>, path: Array<string>): string {
-  //   var currentObj: Record<string, unknown> = xsd;
-  //   for (var field in path) {
-  //     if (field) {
-
-  //     }
-  //   }
-  //   return "";
-  // }
+  private goToFirstElementInXsd(elementName: string, xsd: Record<string, unknown>, nodeName: string): Record<string, unknown> {
+    var temp: Record<string, unknown> = {};
+    if (nodeName.includes('element') && this.isElementTheWantedOne(xsd as Record<string, unknown>, elementName)) {
+      return xsd;
+    }
+    else {
+      for (var field in xsd) {
+        if (this.isObject(xsd[field])) {
+          temp = this.goToFirstElementInXsd(elementName, xsd[field] as Record<string, unknown>, field);
+          for (var value in temp) {
+            return temp;
+          }
+        }
+      }
+      return temp;
+    }
+  }
 
   private isObject(obj: unknown): obj is object {
-    return typeof obj == "object";
+    return typeof obj == 'object';
   }
 
   private isElementTheWantedOne(field: Record<string, unknown>, elementName: string): boolean {
     for (var subField in field) {      
-      if (subField == "name" && field[subField] == elementName) {
+      if (subField == 'name' && field[subField] == elementName) {
         return true;
       }
-    }
-    return false;
-  }
-
-  public isElementInTheObjectFirstsElements(elementName: string, object: Record<string, unknown>, nodeName: string): boolean {
-    var temp: boolean = false;
-    if (nodeName.includes("element")) {
-      if (this.isElementTheWantedOne(object as Record<string, unknown>, elementName)) {
-        return true;
+      else if (this.isObject(field[subField])) {
+        var temp : Record<string, unknown> = field[subField] as Record<string, unknown>;
+        if (temp['name'] == elementName) {
+          return true
+        } 
       }
       else {
         return false;
       }
     }
-    else {
-      for (var field in object) {
-        if (this.isObject(object[field])) {
-          temp = this.isElementInTheObjectFirstsElements(elementName, object[field] as Record<string, unknown>, field);
-          if (temp == true) {
-            return temp;
-          }
-        }
-      }
-      return temp;
-    }
+    return false;
   }
 
   private parseNamespace(element: string) {

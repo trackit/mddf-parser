@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xf:element name="sample">
+    <xf:element name="sample5">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="book" type="xs:string"/>

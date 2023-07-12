@@ -1,18 +1,18 @@
 {
-  "sample5": {
+  "xf:element": {
     "item": "Sample Item",
     "book": "Book Item"
   },
-  "sample2": {
-    "sample5": {
+  "xd:element": {
+    "xc:element": {
       "item": "Sample Item",
       "book": "Book Item"
     }
   },
-  "sample4": {
+  "xy:element": {
     "item": "Sample Item",
     "book": "Book Item",
-    "sample5": {
+    "xx:element": {
       "item": "Sample Item",
       "book": "Book Item"
     }

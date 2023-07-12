@@ -2,7 +2,7 @@
   "xs:schema": {
     "xmlns:xs": "http://www.w3.org/2001/XMLSchema",
     "xf:element": {
-      "name": "sample",
+      "name": "sample5",
       "xs:complexType": {
         "xs:sequence": {
           "xs:element": [
