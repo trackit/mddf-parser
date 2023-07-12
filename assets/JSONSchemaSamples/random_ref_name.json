@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "student": {
+      "$ref": "#/definitions/qwertyuipasdfghjkl"
+    },
+    "teacher": {
+      "$ref": "#/definitions/zxcvbnmasdfghjkl"
+    }
+  },
+  "definitions": {
+    "qwertyuipasdfghjkl": {
+      "type": "object",
+      "properties": {
+        "name": { "$ref": "#/definitions/asdfghjkl123456789" }
+      }
+    },
+    "zxcvbnmasdfghjkl": {
+      "type": "object",
+      "properties": {
+        "subject": { "type": "string" }
+      }
+    },
+    "asdfghjkl123456789": {
+      "type": "string"
+    }
+  }
+}

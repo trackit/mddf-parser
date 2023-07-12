@@ -10,8 +10,6 @@ import generateObjectElementMultiArrayRawJSON from '../../assets/RawJSONSamples/
 import generateObjectElementMultiArrayJSON from '../../assets/JSONSamples/object_multi_array_single_element';
 import generateFirstElementsArrayRawJSON from '../../assets/RawJSONSamples/first_elements_array';
 import generateFirstElementsArrayJSON from '../../assets/JSONSamples/first_elements_array';
-import generateFirstElementsArrayWithArraysRawJSON from '../../assets/RawJSONSamples/first_elements_array_with_arrays';
-import generateFirstElementsArrayWithArraysJSON from '../../assets/JSONSamples/first_elements_array_with_arrays';
 
 describe('SchemaConformer', () => {
   const getSchema = async (path: string): Promise<object> => {
@@ -86,18 +84,5 @@ describe('SchemaConformer', () => {
 
       expect(rawObject).toEqual(expectedObject);
     });
-
-    // it('should conform the object to the schema with first element in array with arrays', async () => {
-    //   const rawObject = generateFirstElementsArrayWithArraysRawJSON(charKey);
-    //   const expectedObject = generateFirstElementsArrayWithArraysJSON();
-
-    //   const schema = await getSchema('assets/JSONSchemaSamples/first_elements_array_with_arrays.json');
-
-    //   const conformer = new SchemaConformer(schema);
-
-    //   conformer.conform(rawObject);
-
-    //   expect(rawObject).toEqual(expectedObject);
-    // });
   });
 });

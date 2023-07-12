@@ -1,11 +1,13 @@
 import { LocalFileAdaptor } from '../FileAdaptor/LocalFileAdaptor';
 import SchemaUtils from './SchemaUtils';
 
+const fileReader = new LocalFileAdaptor();
 describe('SchemaUtils', () => {
-  const getLibrarySchema = async () => {
-    const fileReader = new LocalFileAdaptor();
-    return JSON.parse(await fileReader.readFile('assets/JSONSchemaSamples/library.json'));
-  };
+  const getLibrarySchema = async () => JSON.parse(await fileReader.readFile('assets/JSONSchemaSamples/library.json'));
+
+  const getAllOfMMCSchema = async () => JSON.parse(await fileReader.readFile('assets/JSONSchemaSamples/allof_mmc_schema.json'));
+
+  const getRandomRefNameSchema = async () => JSON.parse(await fileReader.readFile('assets/JSONSchemaSamples/random_ref_name.json'));
 
   describe('accessDefinition', () => {
     it('should return the library definition', async () => {
@@ -161,6 +163,67 @@ describe('SchemaUtils', () => {
       properties: {
         text: { type: 'string' },
         rating: { type: 'number' },
+      },
+    });
+  });
+
+  it('should return all properties defined in all of', async () => {
+    const allOfMMCSchema = await getAllOfMMCSchema();
+
+    const schemaUtils = new SchemaUtils();
+
+    expect(schemaUtils.accessDefinition(allOfMMCSchema, [{ propertyName: 'ManifestSourceLicensor' }])).toEqual({
+      type: 'object',
+      properties: {
+        DisplayName: { type: 'string' },
+        SortName: { type: 'string' },
+        AlternateName: {
+          type: 'array',
+          items: { type: 'string' },
+          minItems: 0,
+        },
+        organizationID: { type: 'string' },
+        departmentID: { type: 'string' },
+        idType: { type: 'string' },
+        ALID: {
+          type: 'array',
+          items: {
+            type: [
+              'string',
+              'number',
+              'integer',
+              'boolean',
+              'null',
+              'object',
+              'array',
+            ],
+          },
+          minItems: 0,
+        },
+      },
+    });
+  });
+
+  it('should return correct schema and not undefined if properties and definitions dont have the same name', async () => {
+    const schema = await getRandomRefNameSchema();
+
+    const schemaUtils = new SchemaUtils();
+
+    expect(schemaUtils.accessDefinition(schema, [{ propertyName: 'student' }])).toEqual({
+      type: 'object',
+      properties: {
+        name: { $ref: '#/definitions/asdfghjkl123456789' },
+      },
+    });
+
+    expect(schemaUtils.accessDefinition(schema, [{ propertyName: 'student' }, { propertyName: 'name' }])).toEqual({
+      type: 'string',
+    });
+
+    expect(schemaUtils.accessDefinition(schema, [{ propertyName: 'teacher' }])).toEqual({
+      type: 'object',
+      properties: {
+        subject: { type: 'string' },
       },
     });
   });
